@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import SportsGrid from "./components/SportsGrid";
+import Navbar from "./components/Navbar";
+import "./styles/App.css";
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("currentUser");
+    if (savedUser) setUser(JSON.parse(savedUser));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {user ? (
+        <>
+          <Navbar setUser={setUser} />
+          <SportsGrid />
+        </>
+      ) : (
+        <>
+          <Signup setUser={setUser} />
+          <Login setUser={setUser} />
+        </>
+      )}
     </div>
   );
 }
