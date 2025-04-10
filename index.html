@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Dashboard</title>
+    <link rel="stylesheet" href="i_style.css">
+    <style>
+        .hidden { display: none; }
+        .correct { background-color: green; color: white; }
+        .wrong { background-color: red; color: white; }
+        button { padding: 10px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sports Gamified Platform</h1>
+        <a href="games.html" style="color: white;">Play Educational Games</a>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search for a sport...">
+            <button id="voice-command">🎙️</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sports Grid -->
+        <div class="sports-container">
+            <div class="sport-card" onclick="navigateTo('football')">
+                <img src="assets/football.png" alt="Football">
+                <h2>Football</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('basketball')">
+                <img src="assets/basketball.png" alt="Basketball">
+                <h2>Basketball</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('cricket')">
+                <img src="assets/cricket.png" alt="Cricket">
+                <h2>Cricket</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('tennis')">
+                <img src="assets/tennis.png" alt="Tennis">
+                <h2>Tennis</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('swimming')">
+                <img src="assets/swim.png" alt="Swimming">
+                <h2>Swimming</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('badminton')">
+                <img src="assets/badmin.png" alt="Badminton">
+                <h2>Badminton</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('hockey')">
+                <img src="assets/hock.png" alt="Hockey">
+                <h2>Hockey</h2>
+            </div>
+            <div class="sport-card" onclick="navigateTo('golf')">
+                <img src="assets/golf2.png" alt="Golf">
+                <h2>Golf</h2>
+            </div>
+        </div>
+    <!-- Footer Section -->
+    <div class="quiz-container">
+        <button onclick="startQuiz('football')">⚽ Football Quiz</button>
+        <button onclick="startQuiz('basketball')">🏀 Basketball Quiz</button>
+        <button onclick="startQuiz('cricket')">🏏 Cricket Quiz</button>
+        <button onclick="startQuiz('tennis')">🎾 Tennis Quiz</button>
+        <button onclick="startQuiz('swimming')">🏊 Swimming Quiz</button>
+        <button onclick="startQuiz('badminton')">🏸 Badminton Quiz</button>
+        <button onclick="startQuiz('hockey')">🏑 Hockey Quiz</button>
+        <button onclick="startQuiz('golf')">⛳ Golf Quiz</button>
+    </div>
+    
+    <div id="quiz-section" class="hidden">
+        <h2 id="quiz-title"></h2>
+        <div id="quiz-container">
+            <p id="question"></p>
+            <div id="options"></div>
+            <div id="explanation-section" class="hidden">
+                <p id="explanation"></p>
+                <button onclick="nextQuestion()">Next Question</button>
+            </div>
+        </div>
+        <div id="quiz-completion" class="hidden">
+            <h2>Quiz Completed! Well done!</h2>
+            <button onclick="resetQuiz()">Back to Selection</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Sports Gamified Platform. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+    <script src="quiz_script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
