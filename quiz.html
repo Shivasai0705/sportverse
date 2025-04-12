@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Quiz | Sports Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+         
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(245, 245, 245, 0.9);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: var(--light);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+        
+        .main-content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .quiz-header {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .sport-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .quiz-description {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+        
+        .difficulty-selector {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .difficulty-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .difficulty-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .question-container {
+            margin-bottom: 2rem;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .option-btn {
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option-btn:hover {
+            background: #d5dbdb;
+        }
+        
+        .option-letter {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .correct {
+            background: var(--success) !important;
+            color: white;
+        }
+        
+        .wrong {
+            background: var(--accent) !important;
+            color: white;
+        }
+        
+        .explanation-container {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--secondary);
+            display: none;
+        }
+        
+        .explanation-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .nav-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .next-btn {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .finish-btn {
+            background: var(--success);
+            color: white;
+        }
+        
+        .results-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            display: none;
+        }
+        
+        .results-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 1rem;
+        }
+        
+        .results-score {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .results-feedback {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .restart-btn {
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+        
+        .restart-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .leaderboard {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+        
+        .leaderboard h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .leaderboard-name {
+            font-weight: 600;
+        }
+        
+        .leaderboard-score {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6rem;
+                padding: 0 2rem;
+            }
+            
+            .main-content {
+                padding: 0 0.5rem;
+            }
+            
+            .quiz-header, .quiz-container {
+                padding: 1rem;
+            }
+            
+            .nav-btn {
+                padding: 0.6rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>Football Quiz</h1>
+        <p>Test your knowledge of the beautiful game</p>
+    </header>
+
+    <div class="main-content">
+        <div class="quiz-header">
+            <div class="sport-icon"><i class="fas fa-futbol"></i></div>
+            <p class="quiz-description">
+                Challenge yourself with this football quiz covering rules, history, and famous players. 
+                Select your difficulty level and see how much you really know!
+            </p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <button id="start-quiz" class="restart-btn">Start Quiz</button>
+        </div>
+
+        <div id="quiz-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <span id="question-count">Question 1 of 10</span>
+                    <span id="score">Score: 0</span>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progress-bar"></div>
+                </div>
+                
+                <div class="question-container">
+                    <p class="question-text" id="question-text">What is the maximum number of substitutions allowed in most professional football matches?</p>
+                    
+                    <div class="options-container" id="options-container">
+                        <button class="option-btn"><span class="option-letter">A</span> 3</button>
+                        <button class="option-btn"><span class="option-letter">B</span> 5</button>
+                        <button class="option-btn"><span class="option-letter">C</span> 7</button>
+                        <button class="option-btn"><span class="option-letter">D</span> Unlimited</button>
+                    </div>
+                    
+                    <div class="explanation-container" id="explanation-container">
+                        <p class="explanation-title">Explanation:</p>
+                        <p id="explanation-text">Typically 3 substitutions are allowed, though temporary rules during COVID allowed for 5.</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+                    <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <div class="results-icon"><i class="fas fa-trophy"></i></div>
+            <h2>Quiz Completed!</h2>
+            <div class="results-score">You scored <span id="final-score">8</span> out of <span id="total-questions">10</span></div>
+            <p class="results-feedback" id="results-feedback">Great job! You know your football!</p>
+            <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+        </div>
+
+        <div class="leaderboard">
+            <h2><i class="fas fa-crown"></i> Leaderboard</h2>
+            <div class="leaderboard-item">
+                <span class="leaderboard-name">Alex</span>
+                <span class="leaderboard-score">10/10</span>
+            </div>
+            <div class="leaderboard-item">
+                <span class="leaderboard-name">Sam</span>
+                <span class="leaderboard-score">9/10</span>
+            </div>
+            <div class="leaderboard-item">
+                <span class="leaderboard-name">Jordan</span>
+                <span class="leaderboard-score">9/10</span>
+            </div>
+            <div class="leaderboard-item">
+                <span class="leaderboard-name">Taylor</span>
+                <span class="leaderboard-score">8/10</span>
+            </div>
+            <div class="leaderboard-item">
+                <span class="leaderboard-name">Casey</span>
+                <span class="leaderboard-score">8/10</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Sports Hub. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+
+    <script>
+        // Quiz data for football (example)
+        const quizData = {
+            easy: [
+                {
+                    question: "How many players are on a football team during a match?",
+                    options: ["9", "10", "11", "12"],
+                    answer: 2,
+                    explanation: "A standard football match is played between two teams of 11 players each."
+                },
+                {
+                    question: "What is the maximum number of substitutions allowed in most professional matches?",
+                    options: ["3", "5", "7", "Unlimited"],
+                    answer: 1,
+                    explanation: "Typically 3 substitutions are allowed, though temporary rules during COVID allowed for 5."
+                },
+                {
+                    question: "How long is a standard football match?",
+                    options: ["60 minutes", "90 minutes", "120 minutes", "180 minutes"],
+                    answer: 1,
+                    explanation: "A standard match consists of two 45-minute halves with a 15-minute halftime break."
+                }
+            ],
+            medium: [
+                {
+                    question: "Which country has won the most FIFA World Cup titles?",
+                    options: ["Germany", "Brazil", "Italy", "Argentina"],
+                    answer: 1,
+                    explanation: "Brazil has won the World Cup 5 times (1958, 1962, 1970, 1994, 2002)."
+                },
+                {
+                    question: "What is the name of the trophy awarded to the Champions League winners?",
+                    options: ["European Cup", "Big Ears", "Golden Ball", "Jules Rimet Trophy"],
+                    answer: 1,
+                    explanation: "The trophy is nicknamed 'Big Ears' due to its large handles."
+                }
+            ],
+            hard: [
+                {
+                    question: "Which player has scored the most goals in a single Premier League season?",
+                    options: ["Alan Shearer (1994-95)", "Mohamed Salah (2017-18)", "Erling Haaland (2022-23)", "Andy Cole (1993-94)"],
+                    answer: 2,
+                    explanation: "Erling Haaland scored 36 goals in the 2022-23 season, breaking the previous record."
+                },
+                {
+                    question: "Which team went undefeated in the 2003-04 Premier League season?",
+                    options: ["Manchester United", "Chelsea", "Arsenal", "Liverpool"],
+                    answer: 2,
+                    explanation: "Arsenal's 'Invincibles' went 38 matches without losing in the 2003-04 season."
+                }
+            ]
+        };
+
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            // Shuffle questions
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${(currentQuestionIndex / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Calculate percentage
+            const percentage = (score / currentQuestions.length) * 100;
+            
+            // Provide feedback
+            if (percentage >= 80) {
+                resultsFeedback.textContent = "Excellent! You're a football expert!";
+            } else if (percentage >= 60) {
+                resultsFeedback.textContent = "Great job! You know your football!";
+            } else if (percentage >= 40) {
+                resultsFeedback.textContent = "Good effort! Keep learning about football!";
+            } else {
+                resultsFeedback.textContent = "Keep practicing! Watch more matches and try again!";
+            }
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

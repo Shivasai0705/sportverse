@@ -1,32 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Football Activities</title>
-    <link rel="stylesheet" href="../styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Football - Sports Gamified Platform</title>
+  <link rel="stylesheet" href="/b.css">
 </head>
 <body>
-    <header>
-        <h1>⚽ Football Activities</h1>
-        <a href="../index.html">⬅ Back to Dashboard</a>
-    </header>
+  <header>
+    <h1>Football</h1>
+    <a href="../index.html" class="back-btn">← Back to Main Page</a>
+  </header>
 
-    <main>
-        <div class="activities">
-            <button onclick="startQuiz()">Start Football Quiz</button>
-            <button onclick="showTrivia()">Football Trivia</button>
-        </div>
-    </main>
+  <main class="container">
 
-    <script>
-        function startQuiz() {
-            alert("Football quiz starting soon!");
-        }
+    <!-- Importance of the Game -->
+    <section class="section">
+      <h2>Importance of the Game</h2>
+      <p>
+        Football, also known as soccer in some countries, is the most popular sport in the world. It promotes cardiovascular health, team-building skills, and strategic thinking. Football is an inclusive sport enjoyed by people of all ages, across all cultures, and can be played in varied environments — from lush fields to concrete streets.
+      </p>
+      <p>
+        The game encourages discipline, teamwork, perseverance, and mental alertness. It improves reflexes and decision-making abilities, making it both a physical and mental workout. Football inspires unity and passion, evident through international events like the FIFA World Cup, which draws billions of viewers.
+      </p>
+    </section>
 
-        function showTrivia() {
-            alert("Did you know? The first FIFA World Cup was held in 1930.");
-        }
-    </script>
+    <!-- Materials of the Game -->
+    <section class="section">
+      <h2>Materials Required</h2>
+      <ul>
+        <li><strong>Football:</strong> Made of synthetic leather or polyurethane, sizes vary by age group (Size 3, 4, 5).</li>
+        <li><strong>Football Boots:</strong> Equipped with cleats to provide grip on grassy surfaces.</li>
+        <li><strong>Goalposts:</strong> 24 feet wide and 8 feet high for standard matches.</li>
+        <li><strong>Shin Guards:</strong> Essential for lower-leg protection.</li>
+        <li><strong>Jersey & Shorts:</strong> Lightweight and breathable for comfort during play.</li>
+        <li><strong>Gloves (Goalkeepers):</strong> Padded to protect hands and improve grip on the ball.</li>
+      </ul>
+    </section>
+
+    <!-- Physical Benefits -->
+    <section class="section">
+      <h2>Physical Benefits</h2>
+      <p>
+        Football is an intense cardio sport that provides numerous health and fitness benefits:
+      </p>
+      <ul>
+        <li><strong>Enhances Cardiovascular Endurance:</strong> Constant movement strengthens the heart and lungs.</li>
+        <li><strong>Builds Muscle and Strength:</strong> Involves all major muscle groups — especially legs, core, and back.</li>
+        <li><strong>Improves Coordination:</strong> Balancing while running and controlling the ball improves motor skills.</li>
+        <li><strong>Boosts Agility and Speed:</strong> Dribbling, sprinting, and quick changes in direction train explosive power.</li>
+        <li><strong>Mental Resilience:</strong> Helps handle pressure, make quick decisions, and build sportsmanship.</li>
+      </ul>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="section grid-3">
+      <div class="card">
+        <h3>Calories Burned</h3>
+        <p>Football can burn <strong>400 to 700+ calories</strong> per hour, depending on effort and match intensity.</p>
+      </div>
+      <div class="card">
+        <h3>Recommended Age</h3>
+        <p>Kids can start as early as <strong>age 5</strong>. It’s a lifelong sport — enjoyed by amateurs and professionals alike.</p>
+      </div>
+      <div class="card">
+        <h3>Required Equipment</h3>
+        <p>Football, jersey, cleats, shin guards, and a goalpost. Optional: water bottle, sweatbands, and GPS vests for training.</p>
+      </div>
+    </section>
+
+    <!-- Court Layout -->
+    <section class="section court-layout">
+      <h2>Football Field Layout</h2>
+      <div class="court-image">
+        <img src="/assets/foot.png" alt="Football Field Layout">
+      </div>
+      <div class="court-info">
+        <p><strong>Dimensions:</strong> Vary by level; standard full-size pitch is <strong>100-110 meters</strong> long and <strong>64-75 meters</strong> wide.</p>
+        <p><strong>Important Zones:</strong>
+          <ul>
+            <li>Goal Area</li>
+            <li>Penalty Area</li>
+            <li>Center Circle</li>
+            <li>Corner Arcs</li>
+            <li>Halfway Line</li>
+            <li>Sidelines and Goal Lines</li>
+          </ul>
+        </p>
+        <p>The field is marked to define boundaries and ensure fair gameplay. Lines are 12 cm wide and clearly visible.</p>
+      </div>
+    </section>
+
+    <!-- Rules of the Game -->
+    <section class="section">
+      <h2>Rules of the Game</h2>
+      <p>
+        Governed by FIFA (Fédération Internationale de Football Association), football rules ensure fair play and safety. Here are the major ones:
+      </p>
+      <ul>
+        <li>A match is played over <strong>90 minutes</strong>, split into two halves of 45 minutes with a 15-minute halftime.</li>
+        <li>Each team has <strong>11 players</strong> on the field, including a goalkeeper.</li>
+        <li>Goals are scored by getting the ball into the opposing net without using hands or arms.</li>
+        <li>Only goalkeepers may use hands — and only within their own penalty area.</li>
+        <li><strong>Offside Rule:</strong> Prevents attackers from staying too close to the goal when receiving the ball.</li>
+        <li><strong>Fouls:</strong> Illegal physical contact like tripping, pushing, or handball results in free kicks or penalties.</li>
+        <li><strong>Yellow and Red Cards:</strong> Used for warnings or expulsions. Two yellows = red card → ejection.</li>
+        <li>Games may have <strong>extra time</strong> and <strong>penalty shootouts</strong> in knockouts.</li>
+      </ul>
+      <p>For official details, visit <a href="https://www.fifa.com" target="_blank">FIFA's official website</a>.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.fifa.com" target="_blank">FIFA Official Site</a></p>
+    </footer>
+
+  </main>
 </body>
 </html>

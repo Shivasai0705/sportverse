@@ -3,95 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Dashboard</title>
-    <link rel="stylesheet" href="i_style.css">
+    <title>Sports Hub - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .hidden { display: none; }
-        .correct { background-color: green; color: white; }
-        .wrong { background-color: red; color: white; }
-        button { padding: 10px; margin: 5px; cursor: pointer; }
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+         
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(245, 245, 245, 0.9);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 1rem auto;
+            max-width: 600px;
+        }
+        
+        #search {
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 30px;
+            width: 80%;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        #search:focus {
+            outline: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+        
+        #voice-command {
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #voice-command:hover {
+            background: var(--light);
+            transform: scale(1.1);
+        }
+        
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .hero-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .hero-title {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .sports-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .sport-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .sport-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .sport-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+        }
+        
+        .sport-card h2 {
+            padding: 0.5rem;
+            text-align: center;
+            background: white;
+        }
+        
+        .sport-card .sport-info {
+            padding: 0 1rem 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .sport-card .view-btn {
+            display: block;
+            text-align: center;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .sport-card .view-btn:hover {
+            background: #2980b9;
+        }
+        
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .newsletter {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .newsletter h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+            width: 70%;
+            font-size: 1rem;
+        }
+        
+        .newsletter-form button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background: #c0392b;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            margin: 1rem 0;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 0.5rem;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .sports-container {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .features-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+                border-radius: 4px;
+                margin: 0.5rem 0;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>Sports Gamified Platform</h1>
-        <a href="games.html" style="color: white;">Play Educational Games</a>
+        <h1>SPORTS HUB</h1>
+        <p class="tagline">Your Ultimate Sports Education Platform</p>
         <div class="search-container">
             <input type="text" id="search" placeholder="Search for a sport...">
-            <button id="voice-command">🎙️</button>
+            <button id="voice-command" title="Voice Search"><i class="fas fa-microphone"></i></button>
         </div>
+        <a href="quiz.html" style="color: black;">quiz</a>
     </header>
 
-    <main>
-        <!-- Sports Grid -->
-        <div class="sports-container">
-            <div class="sport-card" onclick="navigateTo('football')">
-                <img src="assets/football.png" alt="Football">
-                <h2>Football</h2>
+    <div class="main-content">
+        <section class="hero-section">
+            <h2 class="hero-title">Discover the World of Sports</h2>
+            <p class="hero-description">
+                Learn about your favorite sports, their rules, history, and famous players. 
+                Dive deep into the world of athletics with our comprehensive guides.
+            </p>
+            <button class="cta-button" onclick="navigateTo('football')">Explore Football</button>
+        </section>
+
+        <section>
+            <h2 style="text-align: center; margin-bottom: 1rem; color: var(--primary);">Popular Sports</h2>
+            <div class="sports-container">
+                <div class="sport-card">
+                    <img src="assets/football.png" alt="Football">
+                    <h2>Football</h2>
+                    <div class="sport-info">
+                        The world's most popular sport with over 4 billion fans worldwide.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('football')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/basketball.png" alt="Basketball">
+                    <h2>Basketball</h2>
+                    <div class="sport-info">
+                        Fast-paced game invented in 1891 by Dr. James Naismith.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('basketball')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/cricket.png" alt="Cricket">
+                    <h2>Cricket</h2>
+                    <div class="sport-info">
+                        A bat-and-ball game played between two teams of 11 players.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('cricket')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/tennis.png" alt="Tennis">
+                    <h2>Tennis</h2>
+                    <div class="sport-info">
+                        Played individually against a single opponent or between teams.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('tennis')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/swim.png" alt="Swimming">
+                    <h2>Swimming</h2>
+                    <div class="sport-info">
+                        One of the most popular Olympic sports with four major strokes.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('swimming')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/badmin.png" alt="Badminton">
+                    <h2>Badminton</h2>
+                    <div class="sport-info">
+                        The fastest racket sport with shuttlecock speeds over 300 km/h.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('badminton')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/hock.png" alt="Hockey">
+                    <h2>Hockey</h2>
+                    <div class="sport-info">
+                        Played on ice, field, or roller surfaces with different variations.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('hockey')">View Details</a>
+                </div>
+                
+                <div class="sport-card">
+                    <img src="assets/golf2.png" alt="Golf">
+                    <h2>Golf</h2>
+                    <div class="sport-info">
+                        A precision club-and-ball sport played on a course with 18 holes.
+                    </div>
+                    <a class="view-btn" onclick="navigateTo('golf')">View Details</a>
+                </div>
             </div>
-            <div class="sport-card" onclick="navigateTo('basketball')">
-                <img src="assets/basketball.png" alt="Basketball">
-                <h2>Basketball</h2>
+        </section>
+
+        <section class="features-section">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                <h3 class="feature-title">Comprehensive Guides</h3>
+                <p>Detailed information about rules, history, and techniques for each sport.</p>
             </div>
-            <div class="sport-card" onclick="navigateTo('cricket')">
-                <img src="assets/cricket.png" alt="Cricket">
-                <h2>Cricket</h2>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+                <h3 class="feature-title">Player Profiles</h3>
+                <p>Learn about legendary athletes and their career achievements.</p>
             </div>
-            <div class="sport-card" onclick="navigateTo('tennis')">
-                <img src="assets/tennis.png" alt="Tennis">
-                <h2>Tennis</h2>
+            
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-video"></i></div>
+                <h3 class="feature-title">Video Tutorials</h3>
+                <p>Watch professional demonstrations of techniques and strategies.</p>
             </div>
-            <div class="sport-card" onclick="navigateTo('swimming')">
-                <img src="assets/swim.png" alt="Swimming">
-                <h2>Swimming</h2>
-            </div>
-            <div class="sport-card" onclick="navigateTo('badminton')">
-                <img src="assets/badmin.png" alt="Badminton">
-                <h2>Badminton</h2>
-            </div>
-            <div class="sport-card" onclick="navigateTo('hockey')">
-                <img src="assets/hock.png" alt="Hockey">
-                <h2>Hockey</h2>
-            </div>
-            <div class="sport-card" onclick="navigateTo('golf')">
-                <img src="assets/golf2.png" alt="Golf">
-                <h2>Golf</h2>
-            </div>
-        </div>
-    <!-- Footer Section -->
-    <div class="quiz-container">
-        <button onclick="startQuiz('football')">⚽ Football Quiz</button>
-        <button onclick="startQuiz('basketball')">🏀 Basketball Quiz</button>
-        <button onclick="startQuiz('cricket')">🏏 Cricket Quiz</button>
-        <button onclick="startQuiz('tennis')">🎾 Tennis Quiz</button>
-        <button onclick="startQuiz('swimming')">🏊 Swimming Quiz</button>
-        <button onclick="startQuiz('badminton')">🏸 Badminton Quiz</button>
-        <button onclick="startQuiz('hockey')">🏑 Hockey Quiz</button>
-        <button onclick="startQuiz('golf')">⛳ Golf Quiz</button>
-    </div>
-    
-    <div id="quiz-section" class="hidden">
-        <h2 id="quiz-title"></h2>
-        <div id="quiz-container">
-            <p id="question"></p>
-            <div id="options"></div>
-            <div id="explanation-section" class="hidden">
-                <p id="explanation"></p>
-                <button onclick="nextQuestion()">Next Question</button>
-            </div>
-        </div>
-        <div id="quiz-completion" class="hidden">
-            <h2>Quiz Completed! Well done!</h2>
-            <button onclick="resetQuiz()">Back to Selection</button>
-        </div>
+        </section>
+
+        <section class="newsletter">
+            <h2>Stay Updated</h2>
+            <p>Subscribe to our newsletter for the latest sports news and updates</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+            </form>
+        </section>
     </div>
 
     <footer>
-        <p>© 2025 Sports Gamified Platform. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <p>© 2023 Sports Hub. All rights reserved.</p>
         <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
     </footer>
-    <script src="quiz_script.js"></script>
-    <script src="script.js"></script>
+
+    <script>
+        // Navigation function to sport pages
+        function navigateTo(sport) {
+            window.location.href = `activities/${sport}.html`;
+        }
+        
+        // Search functionality
+        document.getElementById('search').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.sport-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h2').textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Voice command functionality
+        document.getElementById('voice-command').addEventListener('click', function() {
+            alert("Voice search would be implemented here with the Web Speech API");
+            // Actual implementation would use:
+            // const recognition = new webkitSpeechRecognition();
+            // recognition.onresult = function(event) {
+            //     const transcript = event.results[0][0].transcript;
+            //     document.getElementById('search').value = transcript;
+            // };
+            // recognition.start();
+        });
+        
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert(`Thank you for subscribing with ${email}!`);
+            this.querySelector('input').value = '';
+        });
+    </script>
 </body>
 </html>
-
