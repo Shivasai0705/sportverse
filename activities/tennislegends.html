@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Immortal Tennis Legends | Sports Gamified</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Bebas+Neue&display=swap">
+  <link rel="stylesheet" href="../legends.css">
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>IMMORTAL TENNIS LEGENDS</h1>
+      <p>The racket maestros who dominated courts with their skill, passion, and unforgettable rivalries</p>
+    </div>
+  </div>
+  
+  <div class="player-tabs">
+    <div class="player-tab active" onclick="showPlayer('federer')">Federer</div>
+    <div class="player-tab" onclick="showPlayer('nadal')">Nadal</div>
+    <div class="player-tab" onclick="showPlayer('djokovic')">Djokovic</div>
+    <div class="player-tab" onclick="showPlayer('serena')">Serena</div>
+    <div class="player-tab" onclick="showPlayer('graff')">Graf</div>
+  </div>
+  
+  <!-- Roger Federer -->
+  <div id="federer" class="player-section" style="display: block;">
+    <div class="player-header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGeWBQ0cVy0YWV6Bc-qzW0COtA5_rykaa6Pw&s" 
+           alt="Roger Federer" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">ROGER FEDERER</h2>
+        <p class="player-nickname">"FedEx" | "The Swiss Maestro"</p>
+        <p class="player-quote">"I always believe if you're stuck in a hole and maybe things aren't going well, you will come out stronger."</p>
+        <p>The artist who redefined tennis elegance with his flawless movement and shot-making. Held No. 1 for 310 weeks and won 20 Grand Slams with unprecedented consistency.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Grand Slams</h3>
+        <div class="stat-value">20</div>
+        <p>6 Australian, 1 French, 8 Wimbledon, 5 US</p>
+      </div>
+      <div class="stat-card">
+        <h3>Weeks at No.1</h3>
+        <div class="stat-value">310</div>
+        <p>Record until surpassed by Djokovic</p>
+      </div>
+      <div class="stat-card">
+        <h3>ATP Titles</h3>
+        <div class="stat-value">103</div>
+        <p>2nd most in Open Era</p>
+      </div>
+      <div class="stat-card">
+        <h3>Win Percentage</h3>
+        <div class="stat-value">82%</div>
+        <p>1251-275 career record</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2003</div>
+        <div class="timeline-content">
+          <h4>First Grand Slam</h4>
+          <p>Wimbledon title at age 21</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2004-07</div>
+        <div class="timeline-content">
+          <h4>Dominance</h4>
+          <p>Won 11 of 16 Grand Slams</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2009</div>
+        <div class="timeline-content">
+          <h4>Career Slam</h4>
+          <p>Completed set at French Open</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2017</div>
+        <div class="timeline-content">
+          <h4>Resurgence</h4>
+          <p>Won 3 more Slams after 35</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-content">
+          <h4>Retirement</h4>
+          <p>Final match at Laver Cup</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Signature Achievements</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Switzerland.svg/1200px-Flag_of_Switzerland.svg.png" alt="Switzerland">
+        <span>Olympic Gold (Doubles 2008)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/be/ATP_Tour_logo.svg/1200px-ATP_Tour_logo.svg.png" alt="ATP">
+        <span>5 ATP Finals titles</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wimbledon.svg/1200px-Wimbledon.svg.png" alt="Wimbledon">
+        <span>8 Wimbledon titles</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/0-dTX6GPZsk?si=LlziPhc466wZbs9f" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Rafael Nadal -->
+  <div id="nadal" class="player-section">
+    <div class="player-header">
+      <img src="data:image/jpeg;base64,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" 
+           alt="Rafael Nadal" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">RAFAEL NADAL</h2>
+        <p class="player-nickname">"Rafa" | "King of Clay"</p>
+        <p class="player-quote">"I always work with a goal, and the goal is to improve as a player and a person."</p>
+        <p>The relentless warrior who owns Roland Garros with his topspin forehand and unmatched physicality. Won 14 French Opens among 22 Grand Slams.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Grand Slams</h3>
+        <div class="stat-value">22</div>
+        <p>2 Australian, 14 French, 2 Wimbledon, 4 US</p>
+      </div>
+      <div class="stat-card">
+        <h3>Clay Record</h3>
+        <div class="stat-value">474-45</div>
+        <p>91.3% win percentage</p>
+      </div>
+      <div class="stat-card">
+        <h3>French Opens</h3>
+        <div class="stat-value">14</div>
+        <p>Most at any Slam event</p>
+      </div>
+      <div class="stat-card">
+        <h3>Olympic Gold</h3>
+        <div class="stat-value">2</div>
+        <p>Singles 2008, Doubles 2016</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2005</div>
+        <div class="timeline-content">
+          <h4>First French Open</h4>
+          <p>Won debut at age 19</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-content">
+          <h4>Wimbledon Epic</h4>
+          <p>Beat Federer in 5-set classic</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2010</div>
+        <div class="timeline-content">
+          <h4>Career Slam</h4>
+          <p>Completed set at US Open</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-content">
+          <h4>Historic 22nd</h4>
+          <p>Won Australian & French Open</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-content">
+          <h4>Injury Comeback</h4>
+          <p>Final French Open appearance</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Signature Achievements</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/1200px-Flag_of_Spain.svg.png" alt="Spain">
+        <span>5 Davis Cup titles</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Roland_Garros_logo.svg/1200px-Roland_Garros_logo.svg.png" alt="French Open">
+        <span>14 French Open titles</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Olympic_rings_without_rims.svg/1200px-Olympic_rings_without_rims.svg.png" alt="Olympics">
+        <span>2 Olympic Golds</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/09IldmJeFLQ?si=UlW8NlKvdfAusg5_" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Novak Djokovic -->
+  <div id="djokovic" class="player-section">
+    <div class="player-header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Novak_Djokovic_2024_Paris_Olympics.jpg/330px-Novak_Djokovic_2024_Paris_Olympics.jpg" 
+           alt="Novak Djokovic" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">NOVAK DJOKOVIC</h2>
+        <p class="player-nickname">"Djoker" | "The Serbinator"</p>
+        <p class="player-quote">"I thrive under pressure. The bigger the challenge, the more I like it."</p>
+        <p>The ultimate competitor with the most weeks at No.1 and record 24 Grand Slams. Master of defense-to-offense transitions and mental toughness.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Grand Slams</h3>
+        <div class="stat-value">24</div>
+        <p>10 Australian, 3 French, 7 Wimbledon, 4 US</p>
+      </div>
+      <div class="stat-card">
+        <h3>Weeks at No.1</h3>
+        <div class="stat-value">400+</div>
+        <p>All-time record</p>
+      </div>
+      <div class="stat-card">
+        <h3>Big Titles</h3>
+        <div class="stat-value">71</div>
+        <p>Most in Open Era</p>
+      </div>
+      <div class="stat-card">
+        <h3>Win Percentage</h3>
+        <div class="stat-value">83.5%</div>
+        <p>1088-216 career record</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-content">
+          <h4>First Grand Slam</h4>
+          <p>Australian Open at age 20</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2011</div>
+        <div class="timeline-content">
+          <h4>Breakthrough Year</h4>
+          <p>Won 3 Slams and went 41-0</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2016</div>
+        <div class="timeline-content">
+          <h4>Career Slam</h4>
+          <p>Completed set at French Open</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2021</div>
+        <div class="timeline-content">
+          <h4>Calendar Slam Bid</h4>
+          <p>Won first 3 Slams of year</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-content">
+          <h4>Record 24th</h4>
+          <p>Surpassed Nadal at US Open</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Signature Achievements</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Flag_of_Serbia.svg/1200px-Flag_of_Serbia.svg.png" alt="Serbia">
+        <span>Davis Cup 2010</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/be/ATP_Tour_logo.svg/1200px-ATP_Tour_logo.svg.png" alt="ATP">
+        <span>Record 7 ATP Finals</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Roland_Garros_logo.svg/1200px-Roland_Garros_logo.svg.png" alt="French Open">
+        <span>Triple Career Slam</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/Y3_n-TtcGIo?si=NLVODjZA5cHsqPPv" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Serena Williams -->
+  <div id="serena" class="player-section">
+    <div class="player-header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Serena_Williams_at_2013_US_Open.jpg/330px-Serena_Williams_at_2013_US_Open.jpg" 
+           alt="Serena Williams" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">SERENA WILLIAMS</h2>
+        <p class="player-nickname">"Queen Serena" | "The Greatest"</p>
+        <p class="player-quote">"I really think a champion is defined not by their wins but by how they can recover when they fall."</p>
+        <p>The most dominant female player who revolutionized women's tennis with power and athleticism. Won 23 Grand Slams in Open Era while breaking barriers.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Grand Slams</h3>
+        <div class="stat-value">23</div>
+        <p>7 Australian, 3 French, 7 Wimbledon, 6 US</p>
+      </div>
+      <div class="stat-card">
+        <h3>Weeks at No.1</h3>
+        <div class="stat-value">319</div>
+        <p>3rd most in WTA history</p>
+      </div>
+      <div class="stat-card">
+        <h3>Career Golden Slam</h3>
+        <div class="stat-value">1</div>
+        <p>All 4 Slams + Olympic Gold</p>
+      </div>
+      <div class="stat-card">
+        <h3>Win Percentage</h3>
+        <div class="stat-value">85%</div>
+        <p>858-156 career record</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1999</div>
+        <div class="timeline-content">
+          <h4>First Grand Slam</h4>
+          <p>US Open at age 17</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2002-03</div>
+        <div class="timeline-content">
+          <h4>Serena Slam</h4>
+          <p>Won all 4 consecutively</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2012</div>
+        <div class="timeline-content">
+          <h4>Olympic Gold</h4>
+          <p>Completed Golden Slam</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2017</div>
+        <div class="timeline-content">
+          <h4>Pregnancy Comeback</h4>
+          <p>Reached 4 Slam finals</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-content">
+          <h4>Retirement</h4>
+          <p>Final match at US Open</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Signature Achievements</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/1200px-Flag_of_the_United_States.svg.png" alt="USA">
+        <span>4 Olympic Golds</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wimbledon.svg/1200px-Wimbledon.svg.png" alt="Wimbledon">
+        <span>7 Wimbledon titles</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/24/WTA_logo.svg/1200px-WTA_logo.svg.png" alt="WTA">
+        <span>73 WTA titles</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/l_AaPrkz4lY?si=aoqG6JwJbdQAh4P0" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Steffi Graf -->
+  <div id="graff" class="player-section">
+    <div class="player-header">
+      <img src="https://wallpapersok.com/images/high/caption-legendary-tennis-player-steffi-graf-in-action-df1awep0t9dyjjhs.jpg" 
+           alt="Steffi Graf" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">STEFFI GRAF</h2>
+        <p class="player-nickname">"Fräulein Forehand" | "The Graf"</p>
+        <p class="player-quote">"I don't think about my opponents, I think about my game."</p>
+        <p>The only player to achieve the Golden Slam (all 4 Slams + Olympic Gold in same year). Held No.1 for record 377 weeks with devastating forehand.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Grand Slams</h3>
+        <div class="stat-value">22</div>
+        <p>4 Australian, 6 French, 7 Wimbledon, 5 US</p>
+      </div>
+      <div class="stat-card">
+        <h3>Weeks at No.1</h3>
+        <div class="stat-value">377</div>
+        <p>Record until surpassed</p>
+      </div>
+      <div class="stat-card">
+        <h3>Golden Slam</h3>
+        <div class="stat-value">1988</div>
+        <p>Only player in history</p>
+      </div>
+      <div class="stat-card">
+        <h3>Win Percentage</h3>
+        <div class="stat-value">89%</div>
+        <p>902-115 career record</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1982</div>
+        <div class="timeline-content">
+          <h4>Pro Debut</h4>
+          <p>At age 13</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1987</div>
+        <div class="timeline-content">
+          <h4>First No.1</h4>
+          <p>Youngest at the time (18)</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1988</div>
+        <div class="timeline-content">
+          <h4>Golden Slam</h4>
+          <p>Unprecedented achievement</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1999</div>
+        <div class="timeline-content">
+          <h4>Final French Open</h4>
+          <p>6th title at Roland Garros</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1999</div>
+        <div class="timeline-content">
+          <h4>Retirement</h4>
+          <p>At age 30 while ranked No.3</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Signature Achievements</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" alt="Germany">
+        <span>Olympic Gold 1988</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Wimbledon.svg/1200px-Wimbledon.svg.png" alt="Wimbledon">
+        <span>7 Wimbledon titles</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Roland_Garros_logo.svg/1200px-Roland_Garros_logo.svg.png" alt="French Open">
+        <span>6 French Open titles</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/vTdAW0XazRo?si=Irxa1nHSiuhq9tJ9" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <a href="./tennis.html" class="back-btn">← Back to Tennis</a>
+  <script src="../legends.js"></script>
+</body>
+</html>

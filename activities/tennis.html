@@ -4,8 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Tennis - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
+<style>
+   .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+   .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
 <body>
   <header>
     <h1>Tennis</h1>
@@ -73,7 +205,7 @@
     <section class="section court-layout">
       <h2>Tennis Court Layout</h2>
       <div class="court-image">
-        <img src="/assets/tennis-court.png" alt="Tennis Court Layout">
+        <img src="/assets/tenn.png" alt="Tennis Court Layout">
       </div>
       <div class="court-info">
         <p><strong>Dimensions:</strong> A standard tennis court is 78 feet (23.77 meters) long and 27 feet (8.23 meters) wide for singles, and 36 feet (10.97 meters) wide for doubles.</p>
@@ -112,12 +244,243 @@
       </p>
       <p>For full rules, visit <a href="https://www.itftennis.com" target="_blank">ITF Official Website</a> or <a href="https://www.atptour.com" target="_blank">ATP Tour</a>.</p>
     </section>
+    <div class="visualization-box">
+      <h3>Interactive Tennis Court Demo</h3>
+      <div id="tennis-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+    <!-- Tennis Legends Card -->
+<div class="legends-card" onclick="window.location.href='tennislegends.html'">
+  <img src="data:image/jpeg;base64,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" 
+" 
+       alt="Tennis Legends" 
+       class="legends-photo">
+  
+  <div class="legends-overlay">
+    <h3>Meet The Legends</h3>
+    <p>Explore tennis's greatest players</p>
+    <div class="click-hint">Click anywhere to enter</div>
+  </div>
+</div>
 
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.itftennis.com" target="_blank">ITF</a> & <a href="https://www.atptour.com" target="_blank">ATP</a></p>
     </footer>
-
+    <script>
+      function initTennisDemo() {
+        const container = document.getElementById('tennis-demo');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+      
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+        
+        // Court dimensions (standard singles court)
+        const courtLength = 23.77; // meters (78 feet)
+        const courtWidth = 8.23; // meters (27 feet)
+        const serviceBoxLength = 6.4; // meters (21 feet)
+        const alleyWidth = 1.37; // meters (4.5 feet)
+        const netHeight = 0.914; // meters (3 feet at center)
+        
+        // Court surface (blue hard court)
+        const courtGeometry = new THREE.PlaneGeometry(courtWidth + alleyWidth*2, courtLength);
+        const courtMaterial = new THREE.MeshBasicMaterial({ 
+          color: 0x4169E1, // Royal blue
+          side: THREE.DoubleSide
+        });
+        const court = new THREE.Mesh(courtGeometry, courtMaterial);
+        court.rotation.x = Math.PI / 2;
+        scene.add(court);
+      
+        // Court markings (white lines)
+        function addLine(x1, z1, x2, z2, linewidth = 0.05, color = 0xffffff) {
+          const points = [
+            new THREE.Vector3(x1, 0.01, z1),
+            new THREE.Vector3(x2, 0.01, z2)
+          ];
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          const material = new THREE.LineBasicMaterial({ color, linewidth });
+          const line = new THREE.Line(geometry, material);
+          scene.add(line);
+        }
+      
+        // Outer boundary (doubles lines)
+        addLine(-(courtWidth/2 + alleyWidth), -courtLength/2, courtWidth/2 + alleyWidth, -courtLength/2);
+        addLine(courtWidth/2 + alleyWidth, -courtLength/2, courtWidth/2 + alleyWidth, courtLength/2);
+        addLine(courtWidth/2 + alleyWidth, courtLength/2, -(courtWidth/2 + alleyWidth), courtLength/2);
+        addLine(-(courtWidth/2 + alleyWidth), courtLength/2, -(courtWidth/2 + alleyWidth), -courtLength/2);
+      
+        // Singles sidelines
+        addLine(-courtWidth/2, -courtLength/2, -courtWidth/2, courtLength/2);
+        addLine(courtWidth/2, -courtLength/2, courtWidth/2, courtLength/2);
+      
+        // Baselines
+        addLine(-(courtWidth/2 + alleyWidth), -courtLength/2, courtWidth/2 + alleyWidth, -courtLength/2);
+        addLine(-(courtWidth/2 + alleyWidth), courtLength/2, courtWidth/2 + alleyWidth, courtLength/2);
+      
+        // Service lines
+        addLine(-(courtWidth/2 + alleyWidth), -courtLength/2 + serviceBoxLength, courtWidth/2 + alleyWidth, -courtLength/2 + serviceBoxLength);
+        addLine(-(courtWidth/2 + alleyWidth), courtLength/2 - serviceBoxLength, courtWidth/2 + alleyWidth, courtLength/2 - serviceBoxLength);
+      
+        // Center service line
+        addLine(0, -courtLength/2, 0, -courtLength/2 + serviceBoxLength);
+        addLine(0, courtLength/2, 0, courtLength/2 - serviceBoxLength);
+      
+        // Center mark
+        addLine(0, -courtLength/2, 0, -courtLength/2 + 0.15, 0.1);
+        addLine(0, courtLength/2, 0, courtLength/2 - 0.15, 0.1);
+      
+        // Net
+        function createNet() {
+          // Net posts
+          const postHeight = 1.07; // meters (3.5 feet)
+          const postRadius = 0.05;
+          const postMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+          
+          // Left post
+          const leftPost = new THREE.Mesh(
+            new THREE.CylinderGeometry(postRadius, postRadius, postHeight),
+            postMaterial
+          );
+          leftPost.position.set(-(courtWidth/2 + alleyWidth), postHeight/2, 0);
+          scene.add(leftPost);
+          
+          // Right post
+          const rightPost = new THREE.Mesh(
+            new THREE.CylinderGeometry(postRadius, postRadius, postHeight),
+            postMaterial
+          );
+          rightPost.position.set(courtWidth/2 + alleyWidth, postHeight/2, 0);
+          scene.add(rightPost);
+          
+          // Net mesh
+          const netWidth = (courtWidth + alleyWidth*2) * 0.98;
+          const netDepth = 0.1;
+          const netGeometry = new THREE.PlaneGeometry(netWidth, netHeight);
+          const netMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0xcccccc,
+            transparent: true,
+            opacity: 0.7,
+            side: THREE.DoubleSide
+          });
+          const net = new THREE.Mesh(netGeometry, netMaterial);
+          net.position.set(0, netHeight/2, 0);
+          scene.add(net);
+          
+          // Net band (white top)
+          const bandGeometry = new THREE.BoxGeometry(netWidth, 0.05, netDepth);
+          const bandMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+          const band = new THREE.Mesh(bandGeometry, bandMaterial);
+          band.position.set(0, netHeight, 0);
+          scene.add(band);
+        }
+      
+        createNet();
+      
+        // Players
+        function addPlayer(x, z, color, isServing = false) {
+          const height = isServing ? 1.9 : 1.8;
+          const geometry = new THREE.ConeGeometry(0.3, height, 8);
+          const material = new THREE.MeshBasicMaterial({ color });
+          const player = new THREE.Mesh(geometry, material);
+          player.position.set(x, height/2, z);
+          player.rotation.x = Math.PI;
+          scene.add(player);
+          
+          // Add racket if serving
+          if (isServing) {
+            const racketGeometry = new THREE.CircleGeometry(0.4, 16);
+            const racketMaterial = new THREE.MeshBasicMaterial({ 
+              color: 0x333333,
+              side: THREE.DoubleSide
+            });
+            const racket = new THREE.Mesh(racketGeometry, racketMaterial);
+            racket.position.set(x + 0.5, height * 0.7, z);
+            racket.rotation.y = Math.PI/2;
+            scene.add(racket);
+            
+            const handleGeometry = new THREE.CylinderGeometry(0.03, 0.03, 0.7);
+            const handle = new THREE.Mesh(handleGeometry, racketMaterial);
+            handle.position.set(x + 0.25, height * 0.35, z);
+            handle.rotation.z = Math.PI/4;
+            scene.add(handle);
+          }
+          
+          return player;
+        }
+      
+        // Example tennis scenario
+        const player1 = addPlayer(-2, -courtLength/2 + 3, 0xff0000, true); // Red player serving
+        const player2 = addPlayer(3, courtLength/2 - 2, 0x0000ff); // Blue player receiving
+      
+        // Ball
+        const ball = new THREE.Mesh(
+          new THREE.SphereGeometry(0.067, 16, 16), // 6.7cm diameter
+          new THREE.MeshBasicMaterial({ 
+            color: 0xfffafa, // Off-white
+            wireframe: false
+          })
+        );
+        ball.position.set(-1, 1.5, -5); // Ball in flight during serve
+        scene.add(ball);
+      
+        // Ball trajectory line (for serve)
+        const trajectoryPoints = [];
+        trajectoryPoints.push(new THREE.Vector3(-1, 1.5, -5));
+        trajectoryPoints.push(new THREE.Vector3(0.5, 0.5, 2));
+        trajectoryPoints.push(new THREE.Vector3(2, 0.1, 8));
+        
+        const trajectoryGeometry = new THREE.BufferGeometry().setFromPoints(trajectoryPoints);
+        const trajectoryMaterial = new THREE.LineDashedMaterial({
+          color: 0xffff00,
+          dashSize: 0.2,
+          gapSize: 0.1
+        });
+        const trajectoryLine = new THREE.Line(trajectoryGeometry, trajectoryMaterial);
+        trajectoryLine.computeLineDistances();
+        scene.add(trajectoryLine);
+      
+        // Camera position
+        camera.position.set(10, 15, 10);
+        controls.update();
+      
+        // Animation loop
+        function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // <-- Add this line (required for damping)
+    renderer.render(scene, camera);
+}
+        animate();
+      
+        window.resetCamera = () => {
+          camera.position.set(10, 15, 10);
+          controls.target.set(0, 0, 0);
+          controls.update();
+        };
+      
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      }
+      
+      // Initialize when page loads
+      window.onload = function() {
+        if(document.getElementById('tennis-demo')) {
+          initTennisDemo();
+        }
+      };
+      </script>
   </main>
 </body>
 </html>

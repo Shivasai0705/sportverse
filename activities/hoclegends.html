@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Immortal Hockey Legends | Sports Gamified</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Bebas+Neue&display=swap">
+  <link rel="stylesheet" href="../legends.css">
+</head>
+<body>
+  <div class="hero">
+    <div class="hero-content">
+      <h1>IMMORTAL HOCKEY LEGENDS</h1>
+      <p>The icons who redefined the fastest game on ice with skill, passion, and unforgettable moments</p>
+    </div>
+  </div>
+  
+  <div class="player-tabs">
+    <div class="player-tab active" onclick="showPlayer('gretzky')">Gretzky</div>
+    <div class="player-tab" onclick="showPlayer('lemieux')">Lemieux</div>
+    <div class="player-tab" onclick="showPlayer('howe')">Howe</div>
+    <div class="player-tab" onclick="showPlayer('orr')">Orr</div>
+    <div class="player-tab" onclick="showPlayer('jagr')">Jagr</div>
+  </div>
+  
+  <!-- Wayne Gretzky -->
+  <div id="gretzky" class="player-section" style="display: block;">
+    <div class="player-header">
+      <img src="https://vault.si.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTY5MDk5MTY3NzI0MDIxMjEx/wayne-gretzky-1981jpg.jpg" 
+           alt="Wayne Gretzky" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">WAYNE GRETZKY</h2>
+        <p class="player-nickname">"The Great One"</p>
+        <p class="player-quote">"You miss 100% of the shots you don't take."</p>
+        <p>The most dominant player in NHL history who holds or shares 61 league records. Revolutionized the game with his unparalleled vision and playmaking.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Career Points</h3>
+        <div class="stat-value">2,857</div>
+        <p>Most in NHL history</p>
+      </div>
+      <div class="stat-card">
+        <h3>Goals</h3>
+        <div class="stat-value">894</div>
+        <p>NHL record</p>
+      </div>
+      <div class="stat-card">
+        <h3>Assists</h3>
+        <div class="stat-value">1,963</div>
+        <p>More than any player's total points</p>
+      </div>
+      <div class="stat-card">
+        <h3>Hart Trophies</h3>
+        <div class="stat-value">9</div>
+        <p>Most MVP awards</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1978</div>
+        <div class="timeline-content">
+          <h4>WHA Debut</h4>
+          <p>Signed by Indianapolis Racers at 17</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1981</div>
+        <div class="timeline-content">
+          <h4>First Hart Trophy</h4>
+          <p>First of 9 MVP awards</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1985</div>
+        <div class="timeline-content">
+          <h4>215 Point Season</h4>
+          <p>Single-season record</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1988</div>
+        <div class="timeline-content">
+          <h4>Trade to LA Kings</h4>
+          <p>Changed hockey in California</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1999</div>
+        <div class="timeline-content">
+          <h4>Retirement</h4>
+          <p>Jersey retired league-wide</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Teams Represented</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Edmonton_Oilers_logo.svg/1200px-Edmonton_Oilers_logo.svg.png" alt="Oilers">
+        <span>Edmonton Oilers (1978-1988)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/60/Los_Angeles_Kings_logo.svg/1200px-Los_Angeles_Kings_logo.svg.png" alt="Kings">
+        <span>LA Kings (1988-1996)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/New_York_Rangers_logo.svg/1200px-New_York_Rangers_logo.svg.png" alt="Rangers">
+        <span>NY Rangers (1996-1999)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1200px-Flag_of_Canada_%28Pantone%29.svg.png" alt="Canada">
+        <span>Canada (1978-1998)</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/jM8dsk-zwIc?si=EKbkQhwbKFupxPm-" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Mario Lemieux -->
+  <div id="lemieux" class="player-section">
+    <div class="player-header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsyE3PSAgFMcOUjrQIvhxIT-N2biwzvwir1Q&s  " 
+           alt="Mario Lemieux" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">MARIO LEMIEUX</h2>
+        <p class="player-nickname">"Le Magnifique" | "Super Mario"</p>
+        <p class="player-quote">"I skate to where the puck is going to be, not where it has been."</p>
+        <p>The most naturally gifted player in hockey history who overcame cancer and back injuries to become one of the game's all-time greats.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Career Points</h3>
+        <div class="stat-value">1,723</div>
+        <p>In 915 games (1.88 PPG)</p>
+      </div>
+      <div class="stat-card">
+        <h3>Goals</h3>
+        <div class="stat-value">690</div>
+        <p>10th all-time</p>
+      </div>
+      <div class="stat-card">
+        <h3>1992-93 Season</h3>
+        <div class="stat-value">160</div>
+        <p>Points in 60 games</p>
+      </div>
+      <div class="stat-card">
+        <h3>Hart Trophies</h3>
+        <div class="stat-value">3</div>
+        <p>MVP awards</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1984</div>
+        <div class="timeline-content">
+          <h4>#1 Draft Pick</h4>
+          <p>Selected by Pittsburgh Penguins</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1989</div>
+        <div class="timeline-content">
+          <h4>First Hart Trophy</h4>
+          <p>First of 3 MVP awards</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1993</div>
+        <div class="timeline-content">
+          <h4>Cancer Battle</h4>
+          <p>Missed 2 months for treatment</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1997</div>
+        <div class="timeline-content">
+          <h4>First Retirement</h4>
+          <p>Due to chronic back problems</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2006</div>
+        <div class="timeline-content">
+          <h4>Final Retirement</h4>
+          <p>After saving Penguins franchise</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Teams Represented</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pittsburgh_Penguins_logo_2016.svg/1200px-Pittsburgh_Penguins_logo_2016.svg.png" alt="Penguins">
+        <span>Pittsburgh Penguins (1984-2006)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1200px-Flag_of_Canada_%28Pantone%29.svg.png" alt="Canada">
+        <span>Canada (1985-2002)</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/qaXZ9nMtfSo?si=ZGwom565BRK9jgSJ" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Gordie Howe -->
+  <div id="howe" class="player-section">
+    <div class="player-header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtMtW07U1XMc-uCcGOGyiRr-gaz7la6mv7mw&s" 
+           alt="Gordie Howe" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">GORDIE HOWE</h2>
+        <p class="player-nickname">"Mr. Hockey"</p>
+        <p class="player-quote">"You don't score 800 goals by being a nice guy."</p>
+        <p>The original power forward who dominated the NHL for five decades. The namesake of the "Gordie Howe Hat Trick" (goal, assist, fight in one game).</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Career Goals</h3>
+        <div class="stat-value">801</div>
+        <p>Second all-time when retired</p>
+      </div>
+      <div class="stat-card">
+        <h3>Games Played</h3>
+        <div class="stat-value">1,767</div>
+        <p>Professional games (NHL/WHA)</p>
+      </div>
+      <div class="stat-card">
+        <h3>Hart Trophies</h3>
+        <div class="stat-value">6</div>
+        <p>MVP awards</p>
+      </div>
+      <div class="stat-card">
+        <h3>Seasons Played</h3>
+        <div class="stat-value">32</div>
+        <p>Professional seasons</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1946</div>
+        <div class="timeline-content">
+          <h4>NHL Debut</h4>
+          <p>With Detroit Red Wings</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1953</div>
+        <div class="timeline-content">
+          <h4>First Hart Trophy</h4>
+          <p>First of 6 MVP awards</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1971</div>
+        <div class="timeline-content">
+          <h4>First Retirement</h4>
+          <p>After 25 seasons with Detroit</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1973</div>
+        <div class="timeline-content">
+          <h4>WHA Comeback</h4>
+          <p>Played with sons Mark and Marty</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1980</div>
+        <div class="timeline-content">
+          <h4>Final NHL Game</h4>
+          <p>At age 52 with Hartford</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Teams Represented</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Detroit_Red_Wings_logo.svg/1200px-Detroit_Red_Wings_logo.svg.png" alt="Red Wings">
+        <span>Detroit Red Wings (1946-1971)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1200px-Flag_of_Canada_%28Pantone%29.svg.png" alt="Canada">
+        <span>Canada (1974)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1e/Hartford_Whalers_logo.svg/1200px-Hartford_Whalers_logo.svg.png" alt="Whalers">
+        <span>Hartford Whalers (1979-1980)</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/Q06RGuCbVa0?si=LxZF0n71mrQyJW0H" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Bobby Orr -->
+  <div id="orr" class="player-section">
+    <div class="player-header">
+      <img src="data:image/jpeg;base64,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" 
+           alt="Bobby Orr" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">BOBBY ORR</h2>
+        <p class="player-nickname">"The Perfect Defenseman"</p>
+        <p class="player-quote">"I'm not paid to fight, I'm paid to play hockey."</p>
+        <p>The revolutionary defenseman who changed how the position was played. The only blueliner to win the Art Ross Trophy as scoring champion.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Career Points</h3>
+        <div class="stat-value">915</div>
+        <p>In 657 games (1.39 PPG)</p>
+      </div>
+      <div class="stat-card">
+        <h3>Norris Trophies</h3>
+        <div class="stat-value">8</div>
+        <p>Consecutive as best defenseman</p>
+      </div>
+      <div class="stat-card">
+        <h3>1970-71 Season</h3>
+        <div class="stat-value">139</div>
+        <p>Points (defenseman record)</p>
+      </div>
+      <div class="stat-card">
+        <h3>Hart Trophies</h3>
+        <div class="stat-value">3</div>
+        <p>MVP awards</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1966</div>
+        <div class="timeline-content">
+          <h4>NHL Debut</h4>
+          <p>With Boston Bruins at 18</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1970</div>
+        <div class="timeline-content">
+          <h4>Stanley Cup Winner</h4>
+          <p>Famous flying goal celebration</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1975</div>
+        <div class="timeline-content">
+          <h4>Last Full Season</h4>
+          <p>Final Norris Trophy at 26</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1978</div>
+        <div class="timeline-content">
+          <h4>Final Game</h4>
+          <p>With Chicago Black Hawks</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1979</div>
+        <div class="timeline-content">
+          <h4>Retirement</h4>
+          <p>At age 30 due to knee injuries</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Teams Represented</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Boston_Bruins.svg/1200px-Boston_Bruins.svg.png" alt="Bruins">
+        <span>Boston Bruins (1966-1976)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Flag_of_Canada_%28Pantone%29.svg/1200px-Flag_of_Canada_%28Pantone%29.svg.png" alt="Canada">
+        <span>Canada (1976)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Chicago_Blackhawks_logo.svg/1200px-Chicago_Blackhawks_logo.svg.png" alt="Blackhawks">
+        <span>Chicago Black Hawks (1976-1978)</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/Au8acStAvzw?si=JyiN5mY2FkatIBOH" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Jaromir Jagr -->
+  <div id="jagr" class="player-section">
+    <div class="player-header">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW7-kU103hX-ExtuJqhEE8Rnew8N7yGCYb0w&s" 
+           alt="Jaromir Jagr" 
+           class="player-image">
+      <div class="player-bio">
+        <h2 class="player-name">JAROMIR JAGR</h2>
+        <p class="player-nickname">"Jags" | "The Ageless Wonder"</p>
+        <p class="player-quote">"I don't play hockey for the money. I play because I love the game."</p>
+        <p>The legendary winger with unparalleled longevity who played professional hockey across five decades. Second only to Gretzky in career points.</p>
+      </div>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Career Points</h3>
+        <div class="stat-value">1,921</div>
+        <p>Second most in NHL history</p>
+      </div>
+      <div class="stat-card">
+        <h3>Games Played</h3>
+        <div class="stat-value">1,733</div>
+        <p>Third most in NHL history</p>
+      </div>
+      <div class="stat-card">
+        <h3>Art Ross Trophies</h3>
+        <div class="stat-value">5</div>
+        <p>Scoring championships</p>
+      </div>
+      <div class="stat-card">
+        <h3>Seasons Played</h3>
+        <div class="stat-value">33</div>
+        <p>Professional seasons</p>
+      </div>
+    </div>
+    
+    <h3>Career Timeline</h3>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1990</div>
+        <div class="timeline-content">
+          <h4>NHL Debut</h4>
+          <p>With Pittsburgh Penguins</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1995</div>
+        <div class="timeline-content">
+          <h4>First Art Ross</h4>
+          <p>First of 5 scoring titles</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2008</div>
+        <div class="timeline-content">
+          <h4>KHL Era</h4>
+          <p>3 seasons with Avangard Omsk</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2016</div>
+        <div class="timeline-content">
+          <h4>Florida Panthers</h4>
+          <p>45-year-old team captain</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-content">
+          <h4>Final Game</h4>
+          <p>With Kladno at age 51</p>
+        </div>
+      </div>
+    </div>
+    
+    <h3>Teams Represented</h3>
+    <div class="teams">
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Pittsburgh_Penguins_logo_2016.svg/1200px-Pittsburgh_Penguins_logo_2016.svg.png" alt="Penguins">
+        <span>Pittsburgh Penguins (1990-2001)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Flag_of_the_Czech_Republic.svg/1200px-Flag_of_the_Czech_Republic.svg.png" alt="Czech">
+        <span>Czech Republic (1990-2018)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/New_York_Rangers_logo.svg/1200px-New_York_Rangers_logo.svg.png" alt="Rangers">
+        <span>NY Rangers (2003-2008)</span>
+      </div>
+      <div class="team-badge">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8a/HC_Kladno_logo.png/1200px-HC_Kladno_logo.png" alt="Kladno">
+        <span>Kladno (2022-2023)</span>
+      </div>
+    </div>
+    
+    <div class="highlight-reel">
+      <h3>Iconic Moments</h3>
+      <div class="video-container">
+        <iframe width="560" height="315" 
+                src="https://www.youtube-nocookie.com/embed/7VJSFxpJ9tg?si=hPbTO0ezSFQkjpQd" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+  </div>
+  
+  <a href="./hockey.html" class="back-btn">← Back to Hockey</a>
+  <script src="../legends.js"></script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hockey Quiz | Sports Hub</title>
+    <link rel="stylesheet" href="../cssfiles/quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>Hockey Quiz</h1>
+        <p>Test your knowledge of the fast-paced world of hockey!</p>
+    </header>
+    
+    <div class="main-content">
+        <div class="quiz-header">
+            <p class="quiz-description">
+                Dive into the exciting world of hockey with this quiz covering rules, history, famous players, and epic moments.
+                Choose a difficulty level and see if you’re a true hockey champion!
+            </p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <button id="start-quiz" class="restart-btn">Start Quiz</button>
+        </div>
+    
+        <div id="quiz-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <span id="question-count">Question 1 of 15</span>
+                    <span id="score">Score: 0</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <p class="question-text" id="question-text">How many players are there in a field hockey team?</p>
+                    
+                    <div class="options-container" id="options-container">
+                        <button class="option-btn"><span class="option-letter">A</span> 9</button>
+                        <button class="option-btn"><span class="option-letter">B</span> 10</button>
+                        <button class="option-btn"><span class="option-letter">C</span> 11</button>
+                        <button class="option-btn"><span class="option-letter">D</span> 12</button>
+                    </div>
+                    
+                    <div class="explanation-container" id="explanation-container">
+                        <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+                        <p id="explanation-text">A standard field hockey team has 11 players on the field.</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+                    <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="results-container" id="results-container">
+            <div class="results-icon"><i class="fas fa-trophy"></i></div>
+            <h2>Quiz Completed!</h2>
+            <div class="results-score">
+                <span id="final-score">0</span>
+                <span>out of</span>
+                <span id="total-questions">0</span>
+            </div>
+            <p class="results-feedback" id="results-feedback">Great effort! You're a hockey pro!</p>
+            <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+        </div>
+    
+        <div class="scoreboard" id="scoreboard" style="display: none;">
+            <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+            <div class="scoreboard-grid">
+                <div class="score-card">
+                    <div class="score-category">Correct Answers</div>
+                    <div class="score-value" id="score-correct">0</div>
+                    <div class="score-description">Outstanding!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Wrong Answers</div>
+                    <div class="score-value" id="score-wrong">0</div>
+                    <div class="score-description">Keep practicing!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Percentage</div>
+                    <div class="score-value" id="score-percentage">0%</div>
+                    <div class="score-description">Room for growth!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Difficulty</div>
+                    <div class="score-value" id="score-difficulty">Easy</div>
+                    <div class="score-description" id="difficulty-description">Try a tougher level next!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Sports Hub. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+
+    <script>
+        const quizData = {
+            easy: [
+                { question: "How many players are there in a field hockey team?", options: ["9", "10", "11", "12"], answer: 2, explanation: "A field hockey team has 11 players on the field." },
+                { question: "What is the shape of a hockey stick's head?", options: ["Round", "Square", "J-shaped", "L-shaped"], answer: 2, explanation: "The head of a hockey stick is J-shaped for better ball control." },
+                { question: "Which surface is modern hockey mostly played on?", options: ["Gravel", "AstroTurf", "Clay", "Concrete"], answer: 1, explanation: "Most modern hockey is played on synthetic AstroTurf fields." },
+                { question: "Which country is known as the powerhouse of hockey?", options: ["India", "Australia", "Germany", "Netherlands"], answer: 0, explanation: "India has historically dominated international hockey." },
+                { question: "What is the duration of a standard hockey match?", options: ["60 minutes", "70 minutes", "80 minutes", "90 minutes"], answer: 0, explanation: "A standard hockey game is 60 minutes long (4 quarters of 15 minutes)." },
+                { question: "What is awarded when the ball crosses the goal line off a defender?", options: ["Free hit", "Penalty stroke", "Penalty corner", "Long corner"], answer: 2, explanation: "A penalty corner is awarded for defensive infringements in the circle." },
+                { question: "What is the area near the goal called?", options: ["Scoring circle", "Red zone", "Safe zone", "D-zone"], answer: 0, explanation: "Goals can only be scored from inside the scoring circle." },
+                { question: "Can players use the rounded side of the stick?", options: ["Yes", "No", "Only in defense", "Only in attack"], answer: 1, explanation: "Only the flat side of the stick is legal for play." },
+                { question: "What color card indicates a temporary suspension?", options: ["Red", "Yellow", "Green", "Blue"], answer: 1, explanation: "A yellow card results in a temporary suspension (5-10 minutes)." },
+                { question: "Which position guards the goal?", options: ["Midfielder", "Forward", "Goalkeeper", "Back"], answer: 2, explanation: "The goalkeeper protects the goal using special gear." }
+            ],
+            medium: [
+                { question: "Who won the first Olympic gold medal in field hockey?", options: ["India", "England", "Germany", "France"], answer: 0, explanation: "India won the first Olympic hockey gold in 1928." },
+                { question: "What is a drag flick?", options: ["A type of pass", "A penalty stroke", "A powerful flick from a penalty corner", "A goalkeeper move"], answer: 2, explanation: "A drag flick is a powerful goal-scoring technique during penalty corners." },
+                { question: "Which country introduced AstroTurf in Olympic hockey?", options: ["India", "Australia", "Germany", "Canada"], answer: 3, explanation: "AstroTurf was first used at the 1976 Montreal Olympics in Canada." },
+                { question: "Which team has the most men's hockey World Cup wins?", options: ["India", "Australia", "Germany", "Pakistan"], answer: 3, explanation: "Pakistan has won the Hockey World Cup 4 times." },
+                { question: "What happens after a tie in knockout matches?", options: ["Draw", "Replay", "Penalty shootout", "Coin toss"], answer: 2, explanation: "Knockout matches use a penalty shootout to decide the winner." },
+                { question: "Who is considered India’s greatest hockey player?", options: ["Sandeep Singh", "Dhanraj Pillay", "Balbir Singh Sr.", "Dhyan Chand"], answer: 3, explanation: "Major Dhyan Chand is widely regarded as India’s greatest hockey legend." },
+                { question: "When was women's hockey added to the Olympics?", options: ["1980", "1976", "1960", "1992"], answer: 0, explanation: "Women’s field hockey became an Olympic sport in 1980 (Moscow Games)." },
+                { question: "Which position is key in creating goal chances?", options: ["Goalkeeper", "Defender", "Midfielder", "Coach"], answer: 2, explanation: "Midfielders link defense and attack and often assist in goal creation." },
+                { question: "What is a green card in hockey?", options: ["Penalty", "Warning", "Suspension", "Disqualification"], answer: 1, explanation: "A green card serves as a warning for minor misconduct." },
+                { question: "How many goals did India score in the 1932 Olympic final?", options: ["14", "6", "12", "24"], answer: 3, explanation: "India defeated the USA 24–1 in the 1932 Olympic final." }
+            ],
+            hard: [
+                { question: "Which player has scored the most goals in international hockey?", options: ["Sohail Abbas", "Jamie Dwyer", "Dhanraj Pillay", "Teun de Nooijer"], answer: 0, explanation: "Pakistan’s Sohail Abbas scored over 350 international goals." },
+                { question: "What is the 'self pass' rule?", options: ["A defender’s free hit", "A sideline technique", "A free hit where the player can dribble", "A penalty stroke rule"], answer: 2, explanation: "The 'self pass' allows players to dribble directly from a free hit." },
+                { question: "Which country won the 2014 Men's Hockey World Cup?", options: ["Germany", "Netherlands", "Australia", "Argentina"], answer: 2, explanation: "Australia won the 2014 Hockey World Cup held in The Hague." },
+                { question: "How many golds has India won in Olympic hockey?", options: ["6", "8", "9", "10"], answer: 1, explanation: "India has won 8 Olympic hockey golds, the most in history." },
+                { question: "Which Indian goalkeeper was called the 'Wall of India'?", options: ["Sreejesh", "Shankar Laxman", "Devesh Chauhan", "Richard Allen"], answer: 0, explanation: "PR Sreejesh earned the nickname 'Wall of India' for his performances." },
+                { question: "What is the standard size of a hockey field?", options: ["100x60m", "91.4x55m", "90x60m", "92x56m"], answer: 1, explanation: "A standard field is 91.4 meters long and 55 meters wide." },
+                { question: "When did FIH introduce video referrals?", options: ["2002", "2010", "2006", "2014"], answer: 1, explanation: "Video referrals were introduced by the FIH in 2010." },
+                { question: "Which Dutch player won 5 Olympic medals?", options: ["Jeroen Delmee", "Teun de Nooijer", "Floris Evers", "Sander Baart"], answer: 1, explanation: "Teun de Nooijer won 5 Olympic hockey medals for the Netherlands." },
+                { question: "Which country hosted the first Hockey World Cup?", options: ["India", "Spain", "Pakistan", "Netherlands"], answer: 2, explanation: "Pakistan hosted the first Men's Hockey World Cup in 1971." },
+                { question: "Who was captain when India won bronze in Tokyo 2020?", options: ["Manpreet Singh", "Harmanpreet Singh", "PR Sreejesh", "Birendra Lakra"], answer: 0, explanation: "Manpreet Singh captained India to a bronze medal in Tokyo 2020." }
+            ]
+        };
+
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            
+            if (percentage >= 90) {
+    feedback = "Outstanding! You're a hockey genius! Try tackling harder questions next!";
+    difficultySuggestion = "Fantastic! Challenge yourself with the hard difficulty next!";
+} else if (percentage >= 75) {
+    feedback = "Great effort! You're definitely on your way to mastering hockey!";
+    difficultySuggestion = "Well done! Try medium or hard difficulty for more challenges!";
+} else if (percentage >= 50) {
+    feedback = "Good effort! You know hockey, but there's room to improve!";
+    difficultySuggestion = "Nice try! Practice more or try medium difficulty for more insights!";
+} else {
+    feedback = "Keep practicing! Watch more games to get familiar with the rules and strategies!";
+    difficultySuggestion = "Keep going! Stay at this level to improve your skills!";
+}
+
+            
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

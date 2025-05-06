@@ -4,8 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Badminton - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
+<style>
+  .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+   .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
 <body>
   <header>
     <h1>Badminton</h1>
@@ -115,12 +247,236 @@
       </ul>
       <p>For complete and official rules, visit the <a href="https://bwfbadminton.com" target="_blank">BWF website</a>.</p>
     </section>
+    <div class="visualization-box">
+      <h3>Interactive Badminton Court Demo</h3>
+      <div id="badminton-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+    <div class="legends-card" onclick="window.location.href='badmintonlegends.html'">
+      <img src="https://media.istockphoto.com/id/1437144644/photo/empty-indoor-sports-field.webp?a=1&b=1&s=612x612&w=0&k=20&c=tx2dvD9Lobkk5xTUKZ_BJUZ1z-zchCmR573usp_V1gk=" 
+           alt="Badminton Legends" 
+           class="legends-photo">
+      
+      <div class="legends-overlay">
+        <h3>Meet The Legends</h3>
+        <p>Explore badminton's greatest players</p>
+        <div class="click-hint">Click anywhere to enter</div>
+      </div>
+    </div>
+    
 
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.yogems.com/yopedia/badminton-india-govt/" target="_blank">Government Portal</a></p>
     </footer>
-
+    <script>
+      function initBadmintonDemo() {
+        const container = document.getElementById('badminton-demo');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+      
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+        
+        // Court dimensions (standard singles court)
+        const courtLength = 13.4; // meters (44 feet)
+        const courtWidth = 6.1; // meters (20 feet)
+        const serviceLineShort = 1.98; // meters (6.5 feet)
+        const serviceLineLong = 4.72; // meters (15.5 feet)
+        const netHeight = 1.55; // meters (5 feet 1 inch)
+        
+        // Court surface (wooden flooring)
+        const courtGeometry = new THREE.PlaneGeometry(courtWidth, courtLength);
+        const courtMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x8B4513, // Wooden brown
+          side: THREE.DoubleSide,
+          shininess: 30
+        });
+        const court = new THREE.Mesh(courtGeometry, courtMaterial);
+        court.rotation.x = Math.PI / 2;
+        scene.add(court);
+      
+        // Court markings (white lines)
+        function addLine(x1, z1, x2, z2, linewidth = 0.05, color = 0xffffff) {
+          const points = [
+            new THREE.Vector3(x1, 0.01, z1),
+            new THREE.Vector3(x2, 0.01, z2)
+          ];
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          const material = new THREE.LineBasicMaterial({ color, linewidth });
+          const line = new THREE.Line(geometry, material);
+          scene.add(line);
+        }
+      
+        // Outer boundary
+        addLine(-courtWidth/2, -courtLength/2, courtWidth/2, -courtLength/2);
+        addLine(courtWidth/2, -courtLength/2, courtWidth/2, courtLength/2);
+        addLine(courtWidth/2, courtLength/2, -courtWidth/2, courtLength/2);
+        addLine(-courtWidth/2, courtLength/2, -courtWidth/2, -courtLength/2);
+      
+        // Singles sidelines (narrower)
+        const singlesWidth = 5.18; // meters (17 feet)
+        addLine(-singlesWidth/2, -courtLength/2, -singlesWidth/2, courtLength/2);
+        addLine(singlesWidth/2, -courtLength/2, singlesWidth/2, courtLength/2);
+      
+        // Service lines (short and long)
+        addLine(-courtWidth/2, -courtLength/2 + serviceLineShort, courtWidth/2, -courtLength/2 + serviceLineShort);
+        addLine(-courtWidth/2, courtLength/2 - serviceLineShort, courtWidth/2, courtLength/2 - serviceLineShort);
+        addLine(-courtWidth/2, -courtLength/2 + serviceLineLong, courtWidth/2, -courtLength/2 + serviceLineLong);
+        addLine(-courtWidth/2, courtLength/2 - serviceLineLong, courtWidth/2, courtLength/2 - serviceLineLong);
+      
+        // Center line (divides left/right service courts)
+        addLine(0, -courtLength/2, 0, -courtLength/2 + serviceLineLong);
+        addLine(0, courtLength/2, 0, courtLength/2 - serviceLineLong);
+      
+        // Net
+        function createNet() {
+          // Net posts
+          const postHeight = 1.55; // meters (5 feet 1 inch)
+          const postRadius = 0.05;
+          const postMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+          
+          // Left post
+          const leftPost = new THREE.Mesh(
+            new THREE.CylinderGeometry(postRadius, postRadius, postHeight),
+            postMaterial
+          );
+          leftPost.position.set(-courtWidth/2, postHeight/2, 0);
+          scene.add(leftPost);
+          
+          // Right post
+          const rightPost = new THREE.Mesh(
+            new THREE.CylinderGeometry(postRadius, postRadius, postHeight),
+            postMaterial
+          );
+          rightPost.position.set(courtWidth/2, postHeight/2, 0);
+          scene.add(rightPost);
+          
+          // Net mesh (black with white tape)
+          const netWidth = courtWidth * 0.98;
+          const netGeometry = new THREE.PlaneGeometry(netWidth, netHeight);
+          const netMaterial = new THREE.MeshPhongMaterial({ 
+            color: 0x333333,
+            transparent: true,
+            opacity: 0.7,
+            side: THREE.DoubleSide
+          });
+          const net = new THREE.Mesh(netGeometry, netMaterial);
+          net.position.set(0, netHeight/2, 0);
+          scene.add(net);
+          
+          // Net tape (white border)
+          const tapeGeometry = new THREE.BoxGeometry(netWidth, 0.05, 0.1);
+          const tapeMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+          const topTape = new THREE.Mesh(tapeGeometry, tapeMaterial);
+          topTape.position.set(0, netHeight, 0);
+          scene.add(topTape);
+        }
+      
+        createNet();
+      
+        // Players
+        function addPlayer(x, z, color, isServing = false) {
+          const height = 1.7; // meters (average player height)
+          const geometry = new THREE.ConeGeometry(0.3, height, 8);
+          const material = new THREE.MeshPhongMaterial({ color });
+          const player = new THREE.Mesh(geometry, material);
+          player.position.set(x, height/2, z);
+          player.rotation.x = Math.PI;
+          scene.add(player);
+          
+          // Add racket if serving
+          if (isServing) {
+            const racketGeometry = new THREE.CircleGeometry(0.4, 16);
+            const racketMaterial = new THREE.MeshPhongMaterial({ 
+              color: 0x333333,
+              side: THREE.DoubleSide
+            });
+            const racket = new THREE.Mesh(racketGeometry, racketMaterial);
+            racket.position.set(x + 0.5, height * 0.7, z);
+            racket.rotation.y = Math.PI/2;
+            scene.add(racket);
+            
+            const handleGeometry = new THREE.CylinderGeometry(0.03, 0.03, 0.7);
+            const handle = new THREE.Mesh(handleGeometry, racketMaterial);
+            handle.position.set(x + 0.25, height * 0.35, z);
+            handle.rotation.z = Math.PI/4;
+            scene.add(handle);
+          }
+          
+          return player;
+        }
+      
+        // Example badminton scenario
+        const player1 = addPlayer(-2, -courtLength/2 + 2, 0xff0000, true); // Red player serving
+        const player2 = addPlayer(2, courtLength/2 - 2, 0x0000ff); // Blue player receiving
+      
+        // Shuttlecock
+        const shuttlecockGeometry = new THREE.ConeGeometry(0.15, 0.5, 16);
+        const shuttlecockMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0xffffff, // White feathers
+          shininess: 100
+        });
+        const shuttlecock = new THREE.Mesh(shuttlecockGeometry, shuttlecockMaterial);
+        shuttlecock.position.set(-1, 1.5, -3); // Shuttlecock in flight
+        shuttlecock.rotation.x = Math.PI/2;
+        scene.add(shuttlecock);
+      
+        // Shuttlecock base (rubber)
+        const baseGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+        const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        const base = new THREE.Mesh(baseGeometry, baseMaterial);
+        base.position.set(-1, 1.25, -3);
+        shuttlecock.add(base);
+      
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+      
+        // Camera position
+        camera.position.set(10, 15, 10);
+        controls.update();
+      
+        // Animation loop
+        function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // <-- Add this line (required for damping)
+    renderer.render(scene, camera);
+}
+        animate();
+      
+        window.resetCamera = () => {
+          camera.position.set(10, 15, 10);
+          controls.target.set(0, 0, 0);
+          controls.update();
+        };
+      
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      }
+      
+      // Initialize when page loads
+      window.onload = function() {
+        if(document.getElementById('badminton-demo')) {
+          initBadmintonDemo();
+        }
+      };
+      </script>
   </main>
 </body>
 </html>

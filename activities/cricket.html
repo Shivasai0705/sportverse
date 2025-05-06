@@ -4,14 +4,148 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cricket - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+  <style>
+     .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+  </style>
 </head>
 <body>
   <header>
     <h1>Cricket</h1>
     <a href="../index.html" class="back-btn">← Back to Main Page</a>
   </header>
+ 
 
+</a>
   <main class="container">
 
     <!-- Importance of the Game -->
@@ -123,11 +257,243 @@
         <p>Cricket promotes fair play, and players are expected to follow the "Spirit of Cricket," emphasizing respect for opponents and umpires.</p>
         <p>For official laws, refer to <a href="https://www.icc-cricket.com/about/cricket/rules-and-regulations" target="_blank">ICC Rules & Regulations</a>.</p>
       </section>
+      <div class="visualization-box">
+        <h3>Interactive Cricket Pitch Demo</h3>
+        <div id="cricket-demo" style="width:100%; height:400px;"></div>
+        <button onclick="resetCamera()">Reset View</button>
+      </div>
+      
+      <div class="legends-card" onclick="window.location.href='cricketlegends.html'">
+        <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+             alt="Cricket Legends" 
+             class="legends-photo">
+        
+        <div class="legends-overlay">
+          <h3>Meet The Legends</h3>
+          <p>Explore cricket's greatest players</p>
+          <div class="click-hint">Click anywhere to enter</div>
+        </div>
+      </div>
 
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.icc-cricket.com/" target="_blank">ICC Official Site</a></p>
     </footer>
+    <script>
+      function initCricketDemo() {
+  const container = document.getElementById('cricket-demo');
+  
+  
+  // Scene setup
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  container.appendChild(renderer.domElement);
+
+  // Controls
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+  
+  // Cricket field dimensions
+  const pitchLength = 20.12; // meters (22 yards)
+  const pitchWidth = 3.05; // meters (10 feet)
+  const fieldRadius = 70; // meters (approximate circular field)
+  
+  // Field (circular)
+  const fieldGeometry = new THREE.CircleGeometry(fieldRadius, 64);
+  const fieldMaterial = new THREE.MeshBasicMaterial({ 
+    color: 0x2e8b57,
+    side: THREE.DoubleSide
+  });
+  const field = new THREE.Mesh(fieldGeometry, fieldMaterial);
+  field.rotation.x = Math.PI / 2;
+  scene.add(field);
+
+  // Pitch (rectangular strip in center)
+  const pitchGeometry = new THREE.PlaneGeometry(pitchWidth, pitchLength);
+  const pitchMaterial = new THREE.MeshBasicMaterial({ 
+    color: 0xcdb87d, // Light brown color for pitch
+    side: THREE.DoubleSide
+  });
+  const pitch = new THREE.Mesh(pitchGeometry, pitchMaterial);
+  pitch.rotation.x = Math.PI / 2;
+  pitch.position.y = 0.01; // Slightly above field
+  scene.add(pitch);
+
+  // Pitch markings (white lines)
+  function addLine(x1, z1, x2, z2) {
+    const points = [
+      new THREE.Vector3(x1, 0.02, z1),
+      new THREE.Vector3(x2, 0.02, z2)
+    ];
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1 });
+    const line = new THREE.Line(geometry, material);
+    scene.add(line);
+  }
+
+  // Pitch boundary
+  addLine(-pitchWidth/2, -pitchLength/2, pitchWidth/2, -pitchLength/2);
+  addLine(pitchWidth/2, -pitchLength/2, pitchWidth/2, pitchLength/2);
+  addLine(pitchWidth/2, pitchLength/2, -pitchWidth/2, pitchLength/2);
+  addLine(-pitchWidth/2, pitchLength/2, -pitchWidth/2, -pitchLength/2);
+
+  // Crease lines
+  const creaseLength = 1.22; // meters (4 feet)
+  const poppingCreaseDist = 1.22; // meters from stumps
+  
+  // Bowling crease (back)
+  addLine(-pitchWidth/2, -pitchLength/2, pitchWidth/2, -pitchLength/2);
+  // Popping crease (front)
+  addLine(-pitchWidth/2, -pitchLength/2 + poppingCreaseDist, pitchWidth/2, -pitchLength/2 + poppingCreaseDist);
+  // Return crease (side)
+  addLine(-pitchWidth/2, -pitchLength/2, -pitchWidth/2, -pitchLength/2 + creaseLength);
+  addLine(pitchWidth/2, -pitchLength/2, pitchWidth/2, -pitchLength/2 + creaseLength);
+  
+  // Repeat for other end
+  addLine(-pitchWidth/2, pitchLength/2, pitchWidth/2, pitchLength/2);
+  addLine(-pitchWidth/2, pitchLength/2 - poppingCreaseDist, pitchWidth/2, pitchLength/2 - poppingCreaseDist);
+  addLine(-pitchWidth/2, pitchLength/2, -pitchWidth/2, pitchLength/2 - creaseLength);
+  addLine(pitchWidth/2, pitchLength/2, pitchWidth/2, pitchLength/2 - creaseLength);
+
+  // Center line
+  addLine(0, -pitchLength/2, 0, pitchLength/2);
+
+  // Stumps and bails
+  function createWicket(x, z) {
+    const stumpHeight = 0.71; // meters (28 inches)
+    const stumpRadius = 0.035; // meters
+    const bailLength = 0.11; // meters (4.375 inches)
+    
+    const stumpMaterial = new THREE.MeshBasicMaterial({ color: 0x8B4513 }); // Brown
+    
+    // Left stump
+    const leftStump = new THREE.Mesh(
+      new THREE.CylinderGeometry(stumpRadius, stumpRadius, stumpHeight),
+      stumpMaterial
+    );
+    leftStump.position.set(x - 0.1, stumpHeight/2, z);
+    scene.add(leftStump);
+    
+    // Middle stump
+    const middleStump = new THREE.Mesh(
+      new THREE.CylinderGeometry(stumpRadius, stumpRadius, stumpHeight),
+      stumpMaterial
+    );
+    middleStump.position.set(x, stumpHeight/2, z);
+    scene.add(middleStump);
+    
+    // Right stump
+    const rightStump = new THREE.Mesh(
+      new THREE.CylinderGeometry(stumpRadius, stumpRadius, stumpHeight),
+      stumpMaterial
+    );
+    rightStump.position.set(x + 0.1, stumpHeight/2, z);
+    scene.add(rightStump);
+    
+    // Bails
+    const bailMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF }); // White
+    
+    // Left bail
+    const leftBail = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.015, 0.015, bailLength),
+      bailMaterial
+    );
+    leftBail.position.set(x - 0.05, stumpHeight, z);
+    leftBail.rotation.z = Math.PI / 2;
+    scene.add(leftBail);
+    
+    // Right bail
+    const rightBail = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.015, 0.015, bailLength),
+      bailMaterial
+    );
+    rightBail.position.set(x + 0.05, stumpHeight, z);
+    rightBail.rotation.z = Math.PI / 2;
+    scene.add(rightBail);
+  }
+
+  // Create wickets at both ends
+  createWicket(0, -pitchLength/2); // Bowler's end
+  createWicket(0, pitchLength/2); // Batsman's end
+
+  // Players (cones)
+  function addPlayer(x, z, color, isKeeper = false) {
+    const height = isKeeper ? 2.2 : 2;
+    const geometry = new THREE.ConeGeometry(0.5, height, 8);
+    const material = new THREE.MeshBasicMaterial({ color });
+    const player = new THREE.Mesh(geometry, material);
+    player.position.set(x, height/2, z);
+    player.rotation.x = Math.PI;
+    scene.add(player);
+    return player;
+  }
+
+  // Example cricket scenario
+  const batsman = addPlayer(0, pitchLength/2 - 2, 0xff0000); // Red batsman
+  const nonStriker = addPlayer(0, -pitchLength/2 + 2, 0xff0000); // Red non-striker
+  
+  const bowler = addPlayer(0, -pitchLength/2 + 4, 0x0000ff); // Blue bowler
+  const wicketKeeper = addPlayer(0, pitchLength/2 + 1, 0x0000ff, true); // Blue wicket-keeper
+  const fielder1 = addPlayer(20, 15, 0x0000ff); // Blue fielder
+  const fielder2 = addPlayer(-25, -10, 0x0000ff); // Blue fielder
+  const fielder3 = addPlayer(15, -30, 0x0000ff); // Blue fielder
+
+  // Ball
+  const ball = new THREE.Mesh(
+    new THREE.SphereGeometry(0.1),
+    new THREE.MeshBasicMaterial({ color: 0xffffff })
+  );
+  ball.position.set(0, 0.1, 5); // Positioned near the batsman
+  scene.add(ball);
+
+  // Field boundary (circle)
+  const boundaryGeometry = new THREE.RingGeometry(fieldRadius - 0.5, fieldRadius, 64);
+  const boundaryMaterial = new THREE.MeshBasicMaterial({ 
+    color: 0xffffff, 
+    side: THREE.DoubleSide 
+  });
+  const boundary = new THREE.Mesh(boundaryGeometry, boundaryMaterial);
+  boundary.rotation.x = Math.PI / 2;
+  boundary.position.y = 0.02;
+  scene.add(boundary);
+
+  // Camera position
+  camera.position.set(30, 40, 30);
+  controls.update();
+  
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // <-- Add this line (required for damping)
+    renderer.render(scene, camera);
+}
+  animate();
+
+  window.resetCamera = () => {
+    camera.position.set(30, 40, 30);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  };
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(container.clientWidth, container.clientHeight);
+  });
+}
+
+// Initialize when page loads
+window.onload = function() {
+  if(document.getElementById('cricket-demo')) {
+    initCricketDemo();
+  }
+};
+    </script>
 
   </main>
 </body>

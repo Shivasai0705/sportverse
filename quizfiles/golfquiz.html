@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Quiz | Sports Hub</title>
+    <link rel="stylesheet" href="../cssfiles/quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>Golf Quiz</h1>
+        <p>Test your knowledge of the world of golf – from major tournaments to famous players!</p>
+    </header>
+    
+    <div class="main-content">
+        <div class="quiz-header">
+            <p class="quiz-description">
+                Tee off your brain! This golf quiz will challenge your knowledge of the game, legends, tournaments, and tricky rules.
+                Select a difficulty and swing into action!
+            </p>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+
+            <button id="start-quiz" class="restart-btn">Start Quiz</button>
+        </div>
+
+        <div id="quiz-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <span id="question-count">Question 1 of 15</span>
+                    <span id="score">Score: 0</span>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <p class="question-text" id="question-text"></p>
+                    <div class="options-container" id="options-container"></div>
+                    <div class="explanation-container" id="explanation-container">
+                        <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+                        <p id="explanation-text"></p>
+                    </div>
+                </div>
+
+                <div class="quiz-navigation">
+                    <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+                    <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <div class="results-icon"><i class="fas fa-trophy"></i></div>
+            <h2>Quiz Completed!</h2>
+            <div class="results-score">
+                <span id="final-score">0</span>
+                <span>out of</span>
+                <span id="total-questions">0</span>
+            </div>
+            <p class="results-feedback" id="results-feedback">Great job! You know your golf!</p>
+            <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+        </div>
+
+        <div class="scoreboard" id="scoreboard" style="display: none;">
+            <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+            <div class="scoreboard-grid">
+                <div class="score-card">
+                    <div class="score-category">Correct Answers</div>
+                    <div class="score-value" id="score-correct">0</div>
+                    <div class="score-description">Outstanding!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Wrong Answers</div>
+                    <div class="score-value" id="score-wrong">0</div>
+                    <div class="score-description">Keep practicing!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Percentage</div>
+                    <div class="score-value" id="score-percentage">0%</div>
+                    <div class="score-description">Room for growth!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Difficulty</div>
+                    <div class="score-value" id="score-difficulty">Easy</div>
+                    <div class="score-description" id="difficulty-description">Try a tougher level next!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 Sports Hub. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+
+    <script>
+        const quizData = {
+            easy: [
+                { question: "How many holes are there in a standard golf course?", options: ["9", "12", "18", "21"], answer: 2, explanation: "A standard golf course consists of 18 holes." },
+                { question: "What do you call one stroke under par?", options: ["Birdie", "Eagle", "Bogey", "Albatross"], answer: 0, explanation: "One stroke under par is called a Birdie." },
+                { question: "What is used to hit the ball in golf?", options: ["Bat", "Club", "Stick", "Pole"], answer: 1, explanation: "Golfers use a club to hit the ball." },
+                { question: "What is the maximum number of clubs allowed?", options: ["10", "12", "14", "16"], answer: 2, explanation: "Golfers are allowed up to 14 clubs in their bag." },
+                { question: "What is a 'tee' in golf?", options: ["A drink", "Scoring card", "Ball stand", "Uniform"], answer: 2, explanation: "A tee is a small stand used to support a golf ball." },
+                { question: "Which country is known for The Masters tournament?", options: ["UK", "USA", "Australia", "Spain"], answer: 1, explanation: "The Masters is held annually in Augusta, Georgia, USA." },
+                { question: "Which golfer is nicknamed 'The Golden Bear'?", options: ["Tiger Woods", "Jack Nicklaus", "Phil Mickelson", "Rory McIlroy"], answer: 1, explanation: "Jack Nicklaus is famously called 'The Golden Bear'." },
+                { question: "What is a 'hole-in-one'?", options: ["1 shot to hole", "2 shots to hole", "3 shots to hole", "4 shots to hole"], answer: 0, explanation: "A hole-in-one is when the ball is holed in a single stroke." },
+                { question: "What is the starting point of each hole called?", options: ["Green", "Fairway", "Tee box", "Bunker"], answer: 2, explanation: "The tee box is where golfers start each hole." },
+                { question: "Which surface is ideal for putting?", options: ["Sand", "Rough", "Green", "Fairway"], answer: 2, explanation: "The green is the smooth surface ideal for putting." }
+            ],
+            medium: [
+                { question: "Which golfer has the most major championships?", options: ["Tiger Woods", "Jack Nicklaus", "Arnold Palmer", "Gary Player"], answer: 1, explanation: "Jack Nicklaus won 18 major championships, the most in history." },
+                { question: "What is a 'par' in golf?", options: ["Max shots", "Min shots", "Standard shots", "No. of holes"], answer: 2, explanation: "Par is the standard number of strokes a golfer should take." },
+                { question: "Where is the Old Course at St Andrews?", options: ["England", "Scotland", "USA", "Ireland"], answer: 1, explanation: "The Old Course is located in Scotland, considered golf's birthplace." },
+                { question: "Which major golf event is played in April?", options: ["US Open", "PGA Championship", "The Masters", "British Open"], answer: 2, explanation: "The Masters is held every April in Augusta." },
+                { question: "What is the term for 2 under par?", options: ["Birdie", "Eagle", "Bogey", "Albatross"], answer: 1, explanation: "Two strokes under par is called an Eagle." },
+                { question: "What does PGA stand for?", options: ["Professional Golf Association", "Public Golf Authority", "Pro Golf Alliance", "Player Golf Academy"], answer: 0, explanation: "PGA stands for Professional Golfers' Association." },
+                { question: "Who was the first Black golfer to win the Masters?", options: ["Lee Elder", "Tiger Woods", "Tony Finau", "Calvin Peete"], answer: 1, explanation: "Tiger Woods became the first Black golfer to win the Masters in 1997." },
+                { question: "What is a 'bunker'?", options: ["Sand trap", "Water hazard", "Grass hill", "Stone pit"], answer: 0, explanation: "A bunker is a sand trap obstacle on a golf course." },
+                { question: "Which golfer is famous for his red shirt on Sundays?", options: ["Phil Mickelson", "Rory McIlroy", "Tiger Woods", "Justin Thomas"], answer: 2, explanation: "Tiger Woods wears a red shirt on the final day of tournaments." },
+                { question: "What is the Ryder Cup?", options: ["Individual tournament", "Women’s event", "US vs Europe team event", "Amateur cup"], answer: 2, explanation: "The Ryder Cup is a team event between the US and Europe." }
+            ],
+            hard: [
+                { question: "Who was the first female golfer to play in a men’s PGA event?", options: ["Annika Sörenstam", "Michelle Wie", "Babe Zaharias", "Lexi Thompson"], answer: 0, explanation: "Annika Sörenstam played in a PGA event in 2003." },
+                { question: "What is the longest club in a standard set?", options: ["Putter", "Iron", "Driver", "Wedge"], answer: 2, explanation: "The driver is the longest club used for tee shots." },
+                { question: "What is a 'double bogey'?", options: ["2 under par", "1 over par", "2 over par", "3 over par"], answer: 2, explanation: "A double bogey means two strokes over par." },
+                { question: "Which golf course hosts the Open Championship most?", options: ["Royal Troon", "St Andrews", "Royal Liverpool", "Carnoustie"], answer: 1, explanation: "The Old Course at St Andrews has hosted the most Open Championships." },
+                { question: "Who was the youngest player to win the Masters?", options: ["Tiger Woods", "Jordan Spieth", "Seve Ballesteros", "Danny Willett"], answer: 0, explanation: "Tiger Woods won the Masters at age 21 in 1997." },
+                { question: "What is a 'mulligan' in golf slang?", options: ["Hole-in-one", "Extra shot", "Free retry", "Practice swing"], answer: 2, explanation: "A mulligan is an informal term for a free retry shot." },
+                { question: "What is the term for three under par on a single hole?", options: ["Birdie", "Eagle", "Albatross", "Condor"], answer: 2, explanation: "Three under par is called an Albatross." },
+                { question: "Which country invented golf?", options: ["England", "USA", "Ireland", "Scotland"], answer: 3, explanation: "Modern golf originated in Scotland in the 15th century." },
+                { question: "What type of grass is often used on golf greens?", options: ["Ryegrass", "Bentgrass", "Fescue", "Bluegrass"], answer: 1, explanation: "Bentgrass is common on putting greens for its fine texture." },
+                { question: "Which female golfer has the most LPGA wins?", options: ["Annika Sörenstam", "Mickey Wright", "Kathy Whitworth", "Nancy Lopez"], answer: 2, explanation: "Kathy Whitworth won 88 LPGA events, the most in history." }
+            ]
+        };
+
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            
+            if (percentage >= 90) {
+    feedback = "Perfect score! You're a golf champion! Try mastering the hard questions next!";
+    difficultySuggestion = "Excellent! Move to hard difficulty for a greater challenge!";
+} else if (percentage >= 75) {
+    feedback = "Great work! You're on par with the best in golf!";
+    difficultySuggestion = "Good job! Try medium or hard difficulty for a new challenge!";
+} else if (percentage >= 50) {
+    feedback = "Nice work! You're improving your golf knowledge!";
+    difficultySuggestion = "Good effort! Try practicing more or move to medium difficulty!";
+} else {
+    feedback = "Keep practicing! Learn more about golf to improve your knowledge!";
+    difficultySuggestion = "Stick with this level for now, and practice to improve your skills!";
+}
+
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

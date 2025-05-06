@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Stories | SportVerse</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .search-logout {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            padding: 0.5rem;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+        }
+
+        .logout-btn {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Athlete Stories Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stories-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .sport-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .story-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .story-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .story-card:hover .story-img img {
+            transform: scale(1.1);
+        }
+
+        .story-content {
+            padding: 1.5rem;
+        }
+
+        .sport-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cricket { background-color: #27ae60; }
+        .football { background-color: #2980b9; }
+        .hockey { background-color: #f39c12; }
+        .kabaddi { background-color: #e74c3c; }
+        .golf { background-color: #16a085; }
+        .tennis { background-color: #9b59b6; }
+
+        .story-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .read-more {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">SportVerse</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="learn.html">Learn</a></li>
+                <li><a href="sports.html">Sports</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="tournaments.html">Major Tournaments</a></li>
+                <li><a href="stories.html" class="active">Athlete Stories</a></li>
+            </ul>
+        </nav>
+        <div class="search-logout">
+            <input type="text" class="search-bar" placeholder="Search...">
+            <button class="logout-btn">Logout</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Inspiring Athlete Stories</h1>
+        <p>Discover the journeys, struggles, and triumphs of athletes who changed their sports forever</p>
+    </section>
+
+    <section class="stories-container">
+        <div class="sport-filter">
+            <button class="filter-btn active">All Sports</button>
+            <button class="filter-btn">Cricket</button>
+            <button class="filter-btn">Football</button>
+            <button class="filter-btn">Hockey</button>
+            <button class="filter-btn">Kabaddi</button>
+            <button class="filter-btn">Golf</button>
+            <button class="filter-btn">Tennis</button>
+        </div>
+
+        <div class="stories-grid">
+            <!-- Cricket Story 1 -->
+            <div class="story-card" data-sport="cricket">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Virat Kohli">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag cricket">Cricket</span>
+                    <h3>Virat Kohli: From Delhi Streets to Cricket Legend</h3>
+                    <p>How a young boy from Delhi overcame personal tragedies to become one of cricket's greatest batsmen and most influential captains...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Football Story 1 -->
+            <div class="story-card" data-sport="football">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1543357481-c60ae400cc25?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Lionel Messi">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag football">Football</span>
+                    <h3>Lionel Messi's Journey: Overcoming Growth Hormone Deficiency</h3>
+                    <p>The incredible story of how the smallest kid on the pitch became the greatest footballer of all time through sheer determination...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Hockey Story -->
+            <div class="story-card" data-sport="hockey">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Dhyan Chand">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag hockey">Hockey</span>
+                    <h3>Major Dhyan Chand: The Wizard Who Made India Proud</h3>
+                    <p>The legendary hockey player whose stickwork was so magical that officials once checked his stick for glue during the 1936 Olympics...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Kabaddi Story -->
+            <div class="story-card" data-sport="kabaddi">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Anup Kumar">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag kabaddi">Kabaddi</span>
+                    <h3>Anup Kumar: The 'Captain Cool' of Kabaddi</h3>
+                    <p>From playing kabaddi in Haryana's mud pits to leading India to gold at the Asian Games - the story of India's most successful kabaddi captain...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Golf Story -->
+            <div class="story-card" data-sport="golf">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Tiger Woods">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag golf">Golf</span>
+                    <h3>Tiger Woods: The Greatest Comeback in Sports History</h3>
+                    <p>From dominating golf to career-threatening injuries and personal struggles, to the miraculous 2019 Masters victory - the complete Tiger Woods story...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Tennis Story -->
+            <div class="story-card" data-sport="tennis">
+                <div class="story-img">
+                    <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sania Mirza">
+                </div>
+                <div class="story-content">
+                    <span class="sport-tag tennis">Tennis</span>
+                    <h3>Sania Mirza: Breaking Barriers for Indian Women in Sports</h3>
+                    <p>How a Muslim girl from Hyderabad smashed stereotypes to become India's most successful female tennis player and a global icon...</p>
+                    <a href="#" class="read-more">Read Full Story <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SportVerse. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const storyCards = document.querySelectorAll('.story-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filterValue = button.textContent.toLowerCase();
+                
+                storyCards.forEach(card => {
+                    if (filterValue === 'all sports') {
+                        card.style.display = 'block';
+                    } else {
+                        if (card.dataset.sport === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Add Font Awesome icons
+        const faScript = document.createElement('script');
+        faScript.src = 'https://kit.fontawesome.com/a076d05399.js';
+        document.head.appendChild(faScript);
+    </script>
+</body>
+</html>

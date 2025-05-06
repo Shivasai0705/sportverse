@@ -4,8 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Swimming - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
+<style>
+  .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+   .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
 <body>
   <header>
     <h1>Swimming</h1>
@@ -74,7 +206,7 @@
     <section class="section court-layout">
       <h2>Swimming Pool Layout</h2>
       <div class="court-image">
-        <img src="/assets/swimming-pool.png" alt="Swimming Pool Layout">
+        <img src="/assets/swim1.png" alt="Swimming Pool Layout">
       </div>
       <div class="court-info">
         <p><strong>Dimensions:</strong> Olympic pools are <strong>50 meters long</strong> and <strong>25 meters wide</strong>, with 10 lanes (each 2.5 meters wide).</p>
@@ -110,12 +242,284 @@
       </p>
       <p>For full rules, visit <a href="https://www.fina.org" target="_blank">FINA Official Website</a>.</p>
     </section>
-
+    <div class="visualization-box">
+      <h3>Interactive Swimming Pool Demo</h3>
+      <div id="swimming-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+    
+    <div class="legends-card" onclick="window.location.href='swimlegends.html'">
+      <img src="https://media.istockphoto.com/id/2157993813/photo/pool-and-cabana.webp?a=1&b=1&s=612x612&w=0&k=20&c=vJqh--3rLYHq8C1ic7___DtQW0hESuYDpdQfMIILx0g=" 
+           alt="Basketball Legends" 
+           class="legends-photo">
+      
+      <div class="legends-overlay">
+        <h3>Meet The Legends</h3>
+        <p>Explore basketball's greatest players</p>
+        <div class="click-hint">Click anywhere to enter</div>
+      </div>
+    </div>
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.fina.org" target="_blank">FINA</a></p>
     </footer>
-
+    <script>
+      function initSwimmingDemo() {
+        const container = document.getElementById('swimming-demo');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+      
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+        
+        // Pool dimensions (Olympic standard)
+        const poolLength = 50; // meters
+        const poolWidth = 25; // meters
+        const poolDepth = 2; // meters
+        const laneWidth = 2.5; // meters
+        const startingBlockHeight = 0.5; // meters
+        
+        // Pool water (semi-transparent blue)
+        const waterGeometry = new THREE.BoxGeometry(poolWidth, poolDepth, poolLength);
+        const waterMaterial = new THREE.MeshPhongMaterial({
+          color: 0x1E90FF,
+          transparent: true,
+          opacity: 0.7,
+          shininess: 100
+        });
+        const water = new THREE.Mesh(waterGeometry, waterMaterial);
+        water.position.set(0, poolDepth/2, 0);
+        scene.add(water);
+      
+        // Pool structure (white tiles)
+        const poolStructureGeometry = new THREE.BoxGeometry(poolWidth + 1, 0.2, poolLength + 1);
+        const poolStructureMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0xFFFFFF,
+          shininess: 30
+        });
+        const poolStructure = new THREE.Mesh(poolStructureGeometry, poolStructureMaterial);
+        poolStructure.position.set(0, -0.1, 0);
+        scene.add(poolStructure);
+      
+        // Lane markers
+        function addLaneMarker(zPos) {
+          const markerGeometry = new THREE.BoxGeometry(laneWidth - 0.2, 0.05, 0.3);
+          const markerMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+          
+          for (let i = 0; i < Math.floor(poolLength/5); i++) {
+            const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+            marker.position.set(0, -0.05, zPos - i*5 + poolLength/2 - 2.5);
+            scene.add(marker);
+          }
+        }
+      
+        // Lane ropes (wave dampeners)
+        function addLaneRope(xPos) {
+          const ropeGeometry = new THREE.CylinderGeometry(0.05, 0.05, poolLength, 16);
+          const ropeMaterial = new THREE.MeshPhongMaterial({ 
+            color: 0xFFD700, // Gold color
+            shininess: 100
+          });
+          const rope = new THREE.Mesh(ropeGeometry, ropeMaterial);
+          rope.position.set(xPos, poolDepth - 0.1, 0);
+          rope.rotation.z = Math.PI/2;
+          scene.add(rope);
+          
+          // Add floats to the rope
+          const floatGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+          const floatMaterial = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+          
+          for (let i = 0; i < 10; i++) {
+            const float = new THREE.Mesh(floatGeometry, floatMaterial);
+            float.position.set(xPos, poolDepth - 0.1, -poolLength/2 + i*(poolLength/9));
+            scene.add(float);
+          }
+        }
+      
+        // Create lanes (10 lanes total)
+        for (let i = 0; i < 10; i++) {
+          const laneX = -poolWidth/2 + laneWidth/2 + i*laneWidth;
+          addLaneMarker(laneX);
+          if (i > 0 && i < 9) { // Don't add ropes on outer edges
+            addLaneRope(laneX + laneWidth/2);
+          }
+        }
+      
+        // Starting blocks
+        function addStartingBlock(xPos, zPos) {
+          // Block structure
+          const blockGeometry = new THREE.BoxGeometry(0.5, startingBlockHeight, 0.5);
+          const blockMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+          const block = new THREE.Mesh(blockGeometry, blockMaterial);
+          block.position.set(xPos, startingBlockHeight/2, zPos);
+          scene.add(block);
+          
+          // Platform
+          const platformGeometry = new THREE.BoxGeometry(0.7, 0.05, 0.7);
+          const platform = new THREE.Mesh(platformGeometry, blockMaterial);
+          platform.position.set(xPos, startingBlockHeight, zPos);
+          scene.add(platform);
+          
+          // Back support
+          const supportGeometry = new THREE.BoxGeometry(0.1, 0.3, 0.5);
+          const support = new THREE.Mesh(supportGeometry, blockMaterial);
+          support.position.set(xPos, startingBlockHeight + 0.15, zPos - 0.1);
+          scene.add(support);
+        }
+      
+        // Add starting blocks for each lane
+        for (let i = 0; i < 8; i++) { // 8 competition lanes
+          const laneX = -poolWidth/2 + laneWidth + i*laneWidth;
+          addStartingBlock(laneX, -poolLength/2 + 1);
+        }
+      
+        // Swimmers
+        function addSwimmer(xPos, zPos, color, isSwimming = false) {
+          // Body
+          const bodyGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.8, 16);
+          const bodyMaterial = new THREE.MeshPhongMaterial({ color });
+          const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+          body.position.set(xPos, poolDepth - 0.4, zPos);
+          body.rotation.x = Math.PI/2;
+          scene.add(body);
+          
+          // Head
+          const headGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+          const head = new THREE.Mesh(headGeometry, bodyMaterial);
+          head.position.set(xPos, poolDepth - 0.4, zPos + 0.5);
+          scene.add(head);
+          
+          if (isSwimming) {
+            // Arm stroke animation
+            const leftArmGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.6, 8);
+            const leftArm = new THREE.Mesh(leftArmGeometry, bodyMaterial);
+            leftArm.position.set(xPos - 0.3, poolDepth - 0.4, zPos);
+            leftArm.rotation.z = Math.PI/4;
+            leftArm.rotation.x = Math.PI/2;
+            scene.add(leftArm);
+            
+            const rightArmGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.6, 8);
+            const rightArm = new THREE.Mesh(rightArmGeometry, bodyMaterial);
+            rightArm.position.set(xPos + 0.3, poolDepth - 0.4, zPos - 0.2);
+            rightArm.rotation.z = -Math.PI/4;
+            rightArm.rotation.x = Math.PI/2;
+            scene.add(rightArm);
+          } else {
+            // Standing on starting block
+            const armGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.4, 8);
+            
+            const leftArm = new THREE.Mesh(armGeometry, bodyMaterial);
+            leftArm.position.set(xPos - 0.2, poolDepth - 0.2, zPos);
+            leftArm.rotation.x = Math.PI/2;
+            scene.add(leftArm);
+            
+            const rightArm = new THREE.Mesh(armGeometry, bodyMaterial);
+            rightArm.position.set(xPos + 0.2, poolDepth - 0.2, zPos);
+            rightArm.rotation.x = Math.PI/2;
+            scene.add(rightArm);
+          }
+          
+          // Legs
+          const legGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.7, 8);
+          
+          const leftLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+          leftLeg.position.set(xPos - 0.1, poolDepth - 0.7, zPos - 0.3);
+          scene.add(leftLeg);
+          
+          const rightLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+          rightLeg.position.set(xPos + 0.1, poolDepth - 0.7, zPos - 0.3);
+          scene.add(rightLeg);
+        }
+      
+        // Add swimmers
+        for (let i = 0; i < 8; i++) {
+          const laneX = -poolWidth/2 + laneWidth + i*laneWidth;
+          const swimmerColor = i % 2 === 0 ? 0xFF0000 : 0x0000FF;
+          addSwimmer(laneX, -poolLength/2 + 2, swimmerColor, false); // On starting blocks
+          
+          // Add some swimmers in the water
+          if (i < 4) {
+            addSwimmer(laneX, -poolLength/2 + 10 + i*3, swimmerColor, true);
+          }
+        }
+      
+        // Turn markers (flags for backstroke)
+        const turnMarkerGeometry = new THREE.ConeGeometry(0.3, 0.5, 4);
+        const turnMarkerMaterial = new THREE.MeshPhongMaterial({ color: 0xFF0000 });
+        
+        for (let i = 0; i < 8; i++) {
+          const laneX = -poolWidth/2 + laneWidth + i*laneWidth;
+          const turnMarker = new THREE.Mesh(turnMarkerGeometry, turnMarkerMaterial);
+          turnMarker.position.set(laneX, poolDepth + 0.3, poolLength/2 - 1);
+          turnMarker.rotation.x = Math.PI;
+          scene.add(turnMarker);
+        }
+      
+        // Water surface effect
+        const waterSurfaceGeometry = new THREE.PlaneGeometry(poolWidth, poolLength, 50, 50);
+        const waterSurfaceMaterial = new THREE.MeshPhongMaterial({
+          color: 0x1E90FF,
+          transparent: true,
+          opacity: 0.3,
+          side: THREE.DoubleSide
+        });
+        const waterSurface = new THREE.Mesh(waterSurfaceGeometry, waterSurfaceMaterial);
+        waterSurface.position.set(0, poolDepth, 0);
+        waterSurface.rotation.x = -Math.PI/2;
+        scene.add(waterSurface);
+      
+        // Add some lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+      
+        // Camera position
+        camera.position.set(30, 20, 30);
+        controls.update();
+      
+        // Animation loop
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update(); 
+          
+          // Simple water surface animation
+          waterSurface.position.y = poolDepth + Math.sin(Date.now() * 0.001) * 0.05;
+          
+          renderer.render(scene, camera);
+        }
+        animate();
+      
+        window.resetCamera = () => {
+          camera.position.set(30, 20, 30);
+          controls.target.set(0, 0, 0);
+          controls.update();
+        };
+      
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      }
+      
+      // Initialize when page loads
+      window.onload = function() {
+        if(document.getElementById('swimming-demo')) {
+          initSwimmingDemo();
+        }
+      };
+      </script>
   </main>
 </body>
 </html>

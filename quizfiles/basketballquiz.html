@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basketball Quiz | Sports Hub</title>
+  <link rel="stylesheet" href="../cssfiles/quiz.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Basketball Quiz</h1>
+    <p>Show off your basketball knowledge — from NBA legends to Olympic moments!</p>
+  </header>
+
+  <div class="main-content">
+    <div class="quiz-header">
+      <p class="quiz-description">
+        Bounce your way through this fun basketball quiz! Whether you're a hardcore NBA fan or just love the game, choose a level and shoot your shot!
+      </p>
+
+      <div class="difficulty-selector">
+        <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+        <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+      </div>
+
+      <button id="start-quiz" class="restart-btn">Start Quiz</button>
+    </div>
+
+    <div id="quiz-section" style="display: none;">
+      <div class="quiz-container">
+        <div class="quiz-progress">
+          <span id="question-count">Question 1 of 15</span>
+          <span id="score">Score: 0</span>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+          </div>
+        </div>
+
+        <div class="question-container">
+          <p class="question-text" id="question-text"></p>
+          <div class="options-container" id="options-container"></div>
+          <div class="explanation-container" id="explanation-container">
+            <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+            <p id="explanation-text"></p>
+          </div>
+        </div>
+
+        <div class="quiz-navigation">
+          <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+          <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-container" id="results-container">
+      <div class="results-icon"><i class="fas fa-trophy"></i></div>
+      <h2>Quiz Completed!</h2>
+      <div class="results-score">
+        <span id="final-score">0</span>
+        <span>out of</span>
+        <span id="total-questions">0</span>
+      </div>
+      <p class="results-feedback" id="results-feedback">Slam dunk! You really know your basketball!</p>
+      <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+    </div>
+
+    <div class="scoreboard" id="scoreboard" style="display: none;">
+      <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+      <div class="scoreboard-grid">
+        <div class="score-card">
+          <div class="score-category">Correct Answers</div>
+          <div class="score-value" id="score-correct">0</div>
+          <div class="score-description">Excellent!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Wrong Answers</div>
+          <div class="score-value" id="score-wrong">0</div>
+          <div class="score-description">Room to improve!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Percentage</div>
+          <div class="score-value" id="score-percentage">0%</div>
+          <div class="score-description">Basketball brainpower!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Difficulty</div>
+          <div class="score-value" id="score-difficulty">Easy</div>
+          <div class="score-description" id="difficulty-description">Challenge yourself further!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2023 Sports Hub. All rights reserved.</p>
+    <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+  </footer>
+
+  <script>
+    const quizData = {
+      easy: [
+        { question: "How many players are on the court for one basketball team?", options: ["4", "5", "6", "7"], answer: 1, explanation: "Each team has 5 players on the court." },
+        { question: "What is the shape of a basketball?", options: ["Oval", "Round", "Square", "Rectangle"], answer: 1, explanation: "A basketball is round." },
+        { question: "What is the term for putting the ball in the basket?", options: ["Kick", "Smash", "Goal", "Shot"], answer: 3, explanation: "A successful attempt is called a shot." },
+        { question: "What color is an NBA basketball?", options: ["Red", "Orange", "Brown", "Black"], answer: 2, explanation: "NBA basketballs are traditionally brown." },
+        { question: "Which sport uses a backboard?", options: ["Tennis", "Volleyball", "Basketball", "Cricket"], answer: 2, explanation: "Basketball uses a backboard behind the hoop." },
+        { question: "What is it called when a player bounces the ball?", options: ["Dribble", "Pass", "Kick", "Tap"], answer: 0, explanation: "Bouncing the ball while moving is called dribbling." },
+        { question: "How many points is a free throw worth?", options: ["1", "2", "3", "0"], answer: 0, explanation: "Each free throw is worth 1 point." },
+        { question: "What is a 3-pointer?", options: ["A pass", "A foul", "A shot from outside the arc", "A dunk"], answer: 2, explanation: "A 3-pointer is a shot made from beyond the 3-point arc." },
+        { question: "What is the maximum number of quarters in a regular NBA game?", options: ["2", "3", "4", "5"], answer: 2, explanation: "NBA games consist of 4 quarters." },
+        { question: "Which league is considered the top basketball league?", options: ["IPL", "NFL", "NBA", "MLS"], answer: 2, explanation: "The NBA is the premier professional basketball league." }
+      ],
+      medium: [
+        { question: "Which NBA team is based in Los Angeles?", options: ["Knicks", "Lakers", "Bulls", "Heat"], answer: 1, explanation: "The Los Angeles Lakers are based in LA." },
+        { question: "Which position usually brings the ball up the court?", options: ["Center", "Forward", "Point Guard", "Shooting Guard"], answer: 2, explanation: "The point guard is responsible for ball handling." },
+        { question: "What is a triple-double?", options: ["3 dunks", "3 wins", "10+ in 3 stats", "3 fouls"], answer: 2, explanation: "A triple-double means 10 or more in three different stats." },
+        { question: "What is the shot clock limit in the NBA?", options: ["24 seconds", "30 seconds", "35 seconds", "40 seconds"], answer: 0, explanation: "Teams have 24 seconds to attempt a shot." },
+        { question: "Which player is known as 'King James'?", options: ["Stephen Curry", "Kevin Durant", "LeBron James", "James Harden"], answer: 2, explanation: "LeBron James is famously called King James." },
+        { question: "What is the name of the NBA trophy?", options: ["Wimbledon Cup", "Larry O'Brien Trophy", "Stanley Cup", "Gold Ball"], answer: 1, explanation: "The NBA champion gets the Larry O'Brien Trophy." },
+        { question: "Which team won the NBA title in 2020?", options: ["Lakers", "Celtics", "Heat", "Warriors"], answer: 0, explanation: "The Lakers won the NBA championship in 2020." },
+        { question: "What does NBA stand for?", options: ["National Basketball Association", "New Ballers Academy", "National Board of Athletes", "None of these"], answer: 0, explanation: "NBA stands for National Basketball Association." },
+        { question: "Who is the NBA’s all-time leading scorer (as of 2023)?", options: ["Michael Jordan", "LeBron James", "Kobe Bryant", "Kareem Abdul-Jabbar"], answer: 1, explanation: "LeBron James became the all-time scoring leader in 2023." },
+        { question: "What is a dunk?", options: ["Pass", "Jump shot", "Layup", "Forceful shot into the hoop"], answer: 3, explanation: "A dunk is a high-jump shot into the basket with force." }
+      ],
+      hard: [
+        { question: "Which player had the nickname 'The Mailman'?", options: ["Karl Malone", "Shaquille O'Neal", "Dennis Rodman", "Tim Duncan"], answer: 0, explanation: "Karl Malone was called 'The Mailman'." },
+        { question: "Who holds the record for most 3-pointers in NBA history?", options: ["Ray Allen", "Klay Thompson", "Stephen Curry", "James Harden"], answer: 2, explanation: "Stephen Curry holds the all-time 3-point record." },
+        { question: "What is the height of a regulation basketball hoop?", options: ["8 feet", "9 feet", "10 feet", "12 feet"], answer: 2, explanation: "The hoop is 10 feet (3.05 meters) high." },
+        { question: "Which country won the first Olympic gold in basketball?", options: ["Spain", "Argentina", "USA", "Russia"], answer: 2, explanation: "USA won the first Olympic gold in basketball in 1936." },
+        { question: "What is the maximum number of fouls before a player is out in the NBA?", options: ["4", "5", "6", "7"], answer: 2, explanation: "A player fouls out after 6 personal fouls in the NBA." },
+        { question: "Who is the shortest player to ever play in the NBA?", options: ["Nate Robinson", "Muggsy Bogues", "Spud Webb", "Isaiah Thomas"], answer: 1, explanation: "Muggsy Bogues was only 5'3'' tall." },
+        { question: "Which NBA team has the most championships?", options: ["Bulls", "Lakers", "Celtics", "Warriors"], answer: 2, explanation: "The Boston Celtics and LA Lakers both have 17 championships (as of 2023)." },
+        { question: "What is the width of an NBA court?", options: ["40 feet", "50 feet", "60 feet", "70 feet"], answer: 1, explanation: "An NBA court is 50 feet wide." },
+        { question: "Which player is known as 'The Big Fundamental'?", options: ["Shaq", "Tim Duncan", "Dirk Nowitzki", "Kobe Bryant"], answer: 1, explanation: "Tim Duncan earned this nickname for his simple, effective play." },
+        { question: "Which coach has the most NBA wins?", options: ["Phil Jackson", "Gregg Popovich", "Pat Riley", "Red Auerbach"], answer: 1, explanation: "Gregg Popovich became the NBA's all-time winningest coach." }
+      ]
+    };
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            
+            if (percentage >= 90) {
+    feedback = "Outstanding! You're a basketball expert! Try the hardest questions next!";
+    difficultySuggestion = "You're on fire! Try hard difficulty to challenge yourself!";
+} else if (percentage >= 75) {
+    feedback = "Great job! You know your basketball really well!";
+    difficultySuggestion = "Excellent work! Try medium or hard difficulty to improve even more!";
+} else if (percentage >= 50) {
+    feedback = "Good job! You're getting the hang of basketball, but there’s still room for growth!";
+    difficultySuggestion = "Nice effort! Try practicing more or move to medium difficulty!";
+} else {
+    feedback = "Keep practicing! Watching more games will help you improve your basketball knowledge!";
+    difficultySuggestion = "Keep it up! Stick with this level until you're ready for the next challenge!";
+}
+            
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

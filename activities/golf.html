@@ -4,8 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Golf - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
+<style>
+  .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+   .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
 <body>
   <header>
     <h1>Golf</h1>
@@ -75,7 +207,7 @@
     <section class="section court-layout">
       <h2>Golf Course Layout</h2>
       <div class="court-image">
-        <img src="/assets/golf-course.png" alt="Golf Course Layout">
+        <img src="/assets/gol.png" alt="Golf Course Layout">
       </div>
       <div class="court-info">
         <p><strong>Course Overview:</strong> A full-size golf course typically has <strong>18 holes</strong> and spans over <strong>100–200 acres</strong>.</p>
@@ -114,12 +246,267 @@
       </p>
       <p>For full rules, visit <a href="https://www.randa.org" target="_blank">The R&A Official Website</a> or <a href="https://www.usga.org" target="_blank">USGA</a>.</p>
     </section>
-
+    <div class="visualization-box">
+      <h3>Interactive Golf Course Demo</h3>
+      <div id="golf-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+           <!-- Basketball Legends Card -->
+<div class="legends-card" onclick="window.location.href='golflegends.html'">
+  <img src="https://media.istockphoto.com/id/543591310/photo/golf-course-in-the-countryside.webp?a=1&b=1&s=612x612&w=0&k=20&c=r1RJCUMzINg4sL64vUoV2xcLXJUHUGcuE5b5RwVKui8=" 
+       alt="Basketball Legends" 
+       class="legends-photo">
+  
+  <div class="legends-overlay">
+    <h3>Meet The Legends</h3>
+    <p>Explore Golf's greatest players</p>
+    <div class="click-hint">Click anywhere to enter</div>
+  </div>
+</div>
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.randa.org" target="_blank">The R&A</a> & <a href="https://www.usga.org" target="_blank">USGA</a></p>
     </footer>
-
+    <script>
+      function initGolfDemo() {
+        const container = document.getElementById('golf-demo');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+      
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+        
+        // Course elements
+        const fairwayLength = 300; // meters (~328 yards)
+        const fairwayWidth = 50; // meters
+        const greenRadius = 15; // meters
+        const holeRadius = 0.108; // meters (standard 4.25 inches)
+        
+        // Sky background
+        scene.background = new THREE.Color(0x87CEEB); // Sky blue
+        
+        // Terrain - fairway (light green)
+        const fairwayGeometry = new THREE.PlaneGeometry(fairwayWidth, fairwayLength, 50, 50);
+        const fairwayMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x7CFC00, // Light green
+          side: THREE.DoubleSide
+        });
+        const fairway = new THREE.Mesh(fairwayGeometry, fairwayMaterial);
+        fairway.rotation.x = Math.PI / 2;
+        fairway.position.y = -0.1;
+        scene.add(fairway);
+      
+        // Add terrain undulation
+        const vertices = fairway.geometry.attributes.position;
+        for (let i = 0; i < vertices.count; i++) {
+          const x = vertices.getX(i);
+          const z = vertices.getZ(i);
+          // Add gentle hills
+          vertices.setY(i, Math.sin(x * 0.05) * 2 + Math.cos(z * 0.03) * 3);
+        }
+        fairway.geometry.attributes.position.needsUpdate = true;
+        fairway.geometry.computeVertexNormals();
+      
+        // Rough (darker green)
+        const roughGeometry = new THREE.PlaneGeometry(fairwayWidth * 2, fairwayLength * 1.2, 50, 50);
+        const roughMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x228B22, // Forest green
+          side: THREE.DoubleSide
+        });
+        const rough = new THREE.Mesh(roughGeometry, roughMaterial);
+        rough.rotation.x = Math.PI / 2;
+        scene.add(rough);
+      
+        // Green (very light green)
+        const greenGeometry = new THREE.CircleGeometry(greenRadius, 32);
+        const greenMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x90EE90, // Light green
+          side: THREE.DoubleSide
+        });
+        const green = new THREE.Mesh(greenGeometry, greenMaterial);
+        green.rotation.x = Math.PI / 2;
+        green.position.set(0, 0.01, fairwayLength/2 - 30);
+        scene.add(green);
+      
+        // Hole (black)
+        const holeGeometry = new THREE.CylinderGeometry(holeRadius, holeRadius, 0.2, 16);
+        const holeMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+        const hole = new THREE.Mesh(holeGeometry, holeMaterial);
+        hole.position.set(0, 0.02, fairwayLength/2 - 30);
+        scene.add(hole);
+      
+        // Flag (pole + flag)
+        const flagPoleGeometry = new THREE.CylinderGeometry(0.02, 0.02, 2, 16);
+        const flagPoleMaterial = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
+        const flagPole = new THREE.Mesh(flagPoleGeometry, flagPoleMaterial);
+        flagPole.position.set(0, 1, fairwayLength/2 - 30);
+        scene.add(flagPole);
+        
+        const flagGeometry = new THREE.PlaneGeometry(0.5, 0.3);
+        const flagMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0xFF0000,
+          side: THREE.DoubleSide
+        });
+        const flag = new THREE.Mesh(flagGeometry, flagMaterial);
+        flag.position.set(0, 1.5, fairwayLength/2 - 30.2);
+        scene.add(flag);
+      
+        // Bunker (sand trap)
+        const bunkerGeometry = new THREE.CircleGeometry(8, 32);
+        const bunkerMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0xF5DEB3, // Sand color
+          side: THREE.DoubleSide
+        });
+        const bunker = new THREE.Mesh(bunkerGeometry, bunkerMaterial);
+        bunker.rotation.x = Math.PI / 2;
+        bunker.position.set(-15, 0.02, fairwayLength/2 - 100);
+        scene.add(bunker);
+      
+        // Water hazard
+        const waterGeometry = new THREE.CircleGeometry(10, 32);
+        const waterMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x1E90FF,
+          transparent: true,
+          opacity: 0.7,
+          side: THREE.DoubleSide
+        });
+        const water = new THREE.Mesh(waterGeometry, waterMaterial);
+        water.rotation.x = Math.PI / 2;
+        water.position.set(20, 0.01, fairwayLength/2 - 150);
+        scene.add(water);
+      
+        // Trees
+        function addTree(x, z) {
+          // Trunk
+          const trunkGeometry = new THREE.CylinderGeometry(0.3, 0.3, 3, 8);
+          const trunkMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 });
+          const trunk = new THREE.Mesh(trunkGeometry, trunkMaterial);
+          trunk.position.set(x, 1.5, z);
+          scene.add(trunk);
+          
+          // Leaves (cone shape)
+          const leavesGeometry = new THREE.ConeGeometry(2, 5, 16);
+          const leavesMaterial = new THREE.MeshPhongMaterial({ color: 0x228B22 });
+          const leaves = new THREE.Mesh(leavesGeometry, leavesMaterial);
+          leaves.position.set(x, 4, z);
+          scene.add(leaves);
+        }
+      
+        // Add some trees along the course
+        addTree(-20, -50);
+        addTree(15, -30);
+        addTree(-10, 50);
+        addTree(25, 80);
+      
+        // Golf ball
+        const ballGeometry = new THREE.SphereGeometry(0.0427, 32, 32); // 4.27cm diameter
+        const ballMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0xFFFFFF,
+          shininess: 100,
+          specular: 0x111111
+        });
+        const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+        ball.position.set(0, 0.0427, -fairwayLength/2 + 20);
+        scene.add(ball);
+      
+        // Golf club (driver)
+        const clubGeometry = new THREE.CylinderGeometry(0.02, 0.05, 1, 8);
+        const clubMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+        const club = new THREE.Mesh(clubGeometry, clubMaterial);
+        club.position.set(0.5, 0.5, -fairwayLength/2 + 18);
+        club.rotation.z = Math.PI/4;
+        scene.add(club);
+        
+        const clubHeadGeometry = new THREE.BoxGeometry(0.1, 0.05, 0.15);
+        const clubHead = new THREE.Mesh(clubHeadGeometry, clubMaterial);
+        clubHead.position.set(0.9, 0.2, -fairwayLength/2 + 18.2);
+        scene.add(clubHead);
+      
+        // Golfer
+        const golferGeometry = new THREE.ConeGeometry(0.4, 1.8, 8);
+        const golferMaterial = new THREE.MeshPhongMaterial({ color: 0xFFA500 }); // Orange shirt
+        const golfer = new THREE.Mesh(golferGeometry, golferMaterial);
+        golfer.position.set(0, 0.9, -fairwayLength/2 + 18);
+        golfer.rotation.x = Math.PI;
+        scene.add(golfer);
+      
+        // Add legs
+        const legGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.8, 8);
+        const legMaterial = new THREE.MeshPhongMaterial({ color: 0x0000FF }); // Blue pants
+        
+        const leftLeg = new THREE.Mesh(legGeometry, legMaterial);
+        leftLeg.position.set(-0.1, 0.4, -fairwayLength/2 + 18.1);
+        scene.add(leftLeg);
+        
+        const rightLeg = new THREE.Mesh(legGeometry, legMaterial);
+        rightLeg.position.set(0.1, 0.4, -fairwayLength/2 + 18.1);
+        scene.add(rightLeg);
+      
+        // Ball trajectory
+        const trajectoryPoints = [];
+        trajectoryPoints.push(new THREE.Vector3(0, 0.0427, -fairwayLength/2 + 20));
+        trajectoryPoints.push(new THREE.Vector3(0, 50, 0));
+        trajectoryPoints.push(new THREE.Vector3(0, 0.0427, fairwayLength/2 - 30));
+        
+        const trajectoryGeometry = new THREE.BufferGeometry().setFromPoints(trajectoryPoints);
+        const trajectoryMaterial = new THREE.LineDashedMaterial({
+          color: 0xFFFF00,
+          dashSize: 0.5,
+          gapSize: 0.3
+        });
+        const trajectoryLine = new THREE.Line(trajectoryGeometry, trajectoryMaterial);
+        trajectoryLine.computeLineDistances();
+        scene.add(trajectoryLine);
+      
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xFFFFFF, 1);
+        directionalLight.position.set(1, 1, 0.5);
+        scene.add(directionalLight);
+      
+        // Camera position
+        camera.position.set(50, 50, 50);
+        controls.update();
+      
+        // Animation loop
+        function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // <-- Add this line (required for damping)
+    renderer.render(scene, camera);
+} 
+        animate();
+      
+        window.resetCamera = () => {
+          camera.position.set(50, 50, 50);
+          controls.target.set(0, 0, 0);
+          controls.update();
+        };
+      
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      }
+      
+      // Initialize when page loads
+      window.onload = function() {
+        if(document.getElementById('golf-demo')) {
+          initGolfDemo();
+        }
+      };
+      </script>
+      
   </main>
 </body>
 </html>

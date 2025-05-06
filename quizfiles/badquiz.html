@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badminton Quiz | Sports Hub</title>
+    <link rel="stylesheet" href="../cssfiles/quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>Badminton Quiz</h1>
+        <p>Test your knowledge of the shuttle sport!</p>
+    </header>
+
+    <div class="main-content">
+        <div class="quiz-header">
+           
+            <p class="quiz-description">
+                Challenge yourself with this comprehensive badminton quiz covering rules, history, legendary players, 
+                and iconic moments. Select your difficulty level and see how much you really know about the game!
+            </p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <button id="start-quiz" class="restart-btn">Start Quiz</button>
+        </div>
+
+        <div id="quiz-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <span id="question-count">Question 1 of 10</span>
+                    <span id="score">Score: 0</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <p class="question-text" id="question-text">Question appears here</p>
+                    
+                    <div class="options-container" id="options-container">
+                        <!-- Option buttons will be generated dynamically -->
+                    </div>
+                    
+                    <div class="explanation-container" id="explanation-container">
+                        <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+                        <p id="explanation-text"></p>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+                    <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-container" id="results-container">
+            <div class="results-icon"><i class="fas fa-trophy"></i></div>
+            <h2>Quiz Completed!</h2>
+            <div class="results-score">
+                <span id="final-score">0</span>
+                <span>out of</span>
+                <span id="total-questions">0</span>
+            </div>
+            <p class="results-feedback" id="results-feedback">Great job! You're a badminton champ!</p>
+            <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+        </div>
+
+        <div class="scoreboard" id="scoreboard" style="display: none;">
+            <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+            <div class="scoreboard-grid">
+                <div class="score-card">
+                    <div class="score-category">Correct Answers</div>
+                    <div class="score-value" id="score-correct">0</div>
+                    <div class="score-description">Well done!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Wrong Answers</div>
+                    <div class="score-value" id="score-wrong">0</div>
+                    <div class="score-description">Keep learning!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Percentage</div>
+                    <div class="score-value" id="score-percentage">0%</div>
+                    <div class="score-description">Great effort!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Difficulty</div>
+                    <div class="score-value" id="score-difficulty">Easy</div>
+                    <div class="score-description" id="difficulty-description">Try a harder level next!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Sports Hub. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+    
+
+    <script>
+        // Comprehensive quiz data for football
+        const quizData = {
+    easy: [
+        {
+            question: "How many players are there in a badminton singles match?",
+            options: ["1", "2", "3", "4"],
+            answer: 1,
+            explanation: "A singles badminton match is played between two players, one on each side."
+        },
+        {
+            question: "What is the object hit back and forth in badminton called?",
+            options: ["Ball", "Puck", "Shuttlecock", "Disc"],
+            answer: 2,
+            explanation: "The object used in badminton is called a shuttlecock, also known as a birdie."
+        },
+        {
+            question: "What is the maximum number of points in a standard badminton game?",
+            options: ["15", "21", "25", "30"],
+            answer: 1,
+            explanation: "A standard badminton game is played to 21 points, with a 2-point lead required to win."
+        },
+        {
+            question: "Which country is traditionally strong in badminton?",
+            options: ["Brazil", "China", "Germany", "USA"],
+            answer: 1,
+            explanation: "China has been dominant in badminton, winning many international titles."
+        },
+        {
+            question: "What is the official term for the badminton playing area?",
+            options: ["Pitch", "Field", "Court", "Ground"],
+            answer: 2,
+            explanation: "Badminton is played on a court, which is marked for singles and doubles matches."
+        },
+        {
+            question: "How many games are needed to win a badminton match?",
+            options: ["1", "2", "3", "5"],
+            answer: 1,
+            explanation: "A match is best of 3 games, so winning 2 games wins the match."
+        },
+        {
+            question: "What is the height of a badminton net at the center?",
+            options: ["4 ft", "5 ft", "6 ft", "7 ft"],
+            answer: 1,
+            explanation: "The net is 5 feet (1.524 meters) high at the center of the badminton court."
+        },
+        {
+            question: "Which stroke is used to start a rally in badminton?",
+            options: ["Drop", "Smash", "Serve", "Clear"],
+            answer: 2,
+            explanation: "Each rally in badminton starts with a serve from one player to the other."
+        },
+        {
+            question: "What surface is most common for badminton courts?",
+            options: ["Grass", "Clay", "Wooden", "Synthetic"],
+            answer: 3,
+            explanation: "Synthetic courts are commonly used in professional badminton for better grip and performance."
+        },
+        {
+            question: "Which of these is not a badminton shot?",
+            options: ["Smash", "Drive", "Volley", "Drop"],
+            answer: 2,
+            explanation: "'Volley' is more common in tennis; in badminton, shots include smash, drop, clear, and drive."
+        }
+    ],
+    medium: [
+        {
+            question: "Who is the first Indian to win an Olympic medal in badminton?",
+            options: ["PV Sindhu", "Saina Nehwal", "Pullela Gopichand", "Kidambi Srikanth"],
+            answer: 1,
+            explanation: "Saina Nehwal won bronze at the 2012 London Olympics, India's first badminton Olympic medal."
+        },
+        {
+            question: "What is the maximum allowed weight of a badminton racket?",
+            options: ["90g", "100g", "120g", "150g"],
+            answer: 0,
+            explanation: "Badminton rackets generally weigh between 80g and 100g, with 100g being the upper limit."
+        },
+        {
+            question: "Which player is known for having the fastest recorded smash in badminton?",
+            options: ["Lee Chong Wei", "Viktor Axelsen", "Fu Haifeng", "Kento Momota"],
+            answer: 2,
+            explanation: "Fu Haifeng holds the record with a smash of 332 km/h in doubles."
+        },
+        {
+            question: "Which country has won the most Thomas Cup titles?",
+            options: ["Indonesia", "China", "Denmark", "Malaysia"],
+            answer: 0,
+            explanation: "Indonesia has been the most successful country in Thomas Cup history."
+        },
+        {
+            question: "What is the term used when the shuttle lands outside the court?",
+            options: ["Out", "Fault", "Dead", "Let"],
+            answer: 0,
+            explanation: "'Out' is called when the shuttle lands outside the designated court boundaries."
+        },
+        {
+            question: "In doubles, which side serves first in a new game?",
+            options: ["Left side", "Right side", "Random side", "Loser of the toss"],
+            answer: 1,
+            explanation: "The right service court is always used at the start of a game and whenever the score is even."
+        },
+        {
+            question: "Which of the following is a mixed team badminton championship?",
+            options: ["Thomas Cup", "Uber Cup", "Sudirman Cup", "All England"],
+            answer: 2,
+            explanation: "The Sudirman Cup is a mixed team championship involving men's and women's players."
+        },
+        {
+            question: "How often is the BWF World Championship held?",
+            options: ["Annually", "Every 2 years", "Every 4 years", "Every 3 years"],
+            answer: 0,
+            explanation: "The BWF World Championship is held every year except in Olympic years."
+        },
+        {
+            question: "Which of the following is not a badminton fault?",
+            options: ["Shuttle hits net", "Server steps forward", "Smash winner", "Wrong service court"],
+            answer: 2,
+            explanation: "A smash winner is a legal and effective shot, not a fault."
+        },
+        {
+            question: "How many points must a player lead by to win a game if both reach 20?",
+            options: ["1", "2", "3", "4"],
+            answer: 1,
+            explanation: "A player must win by 2 points if the score reaches 20-all, up to a maximum of 30."
+        }
+    ],
+    hard: [
+        {
+            question: "Which Indian player became World Champion in badminton in 2019?",
+            options: ["Saina Nehwal", "PV Sindhu", "Ashwini Ponnappa", "Jwala Gutta"],
+            answer: 1,
+            explanation: "PV Sindhu became World Champion in 2019, the first Indian to win gold at the BWF World Championships."
+        },
+        {
+            question: "Who is the only male player to win Olympic gold in badminton twice?",
+            options: ["Lin Dan", "Lee Chong Wei", "Taufik Hidayat", "Chen Long"],
+            answer: 0,
+            explanation: "Lin Dan of China won Olympic gold in 2008 and 2012."
+        },
+        {
+            question: "What is the minimum ceiling height recommended for indoor badminton courts?",
+            options: ["6m", "7m", "8m", "9m"],
+            answer: 3,
+            explanation: "A ceiling height of at least 9 meters is recommended to avoid shuttle interference."
+        },
+        {
+            question: "Which shuttlecock material is used in professional tournaments?",
+            options: ["Plastic", "Rubber", "Feather", "Synthetic"],
+            answer: 2,
+            explanation: "Feather shuttlecocks, typically made from goose feathers, are used in professional matches."
+        },
+        {
+            question: "Who holds the record for most All England titles in men's singles?",
+            options: ["Rudy Hartono", "Lin Dan", "Peter Gade", "Lee Chong Wei"],
+            answer: 0,
+            explanation: "Rudy Hartono won 8 All England titles, a record in men's singles."
+        },
+        {
+            question: "Which player won the BWF Male Player of the Year in 2022?",
+            options: ["Viktor Axelsen", "Kento Momota", "Lee Zii Jia", "Anders Antonsen"],
+            answer: 0,
+            explanation: "Viktor Axelsen was named the BWF Male Player of the Year in 2022."
+        },
+        {
+            question: "What is the fastest recorded badminton smash speed in competition?",
+            options: ["300 km/h", "332 km/h", "349 km/h", "493 km/h"],
+            answer: 3,
+            explanation: "Malaysia's Tan Boon Heong recorded a smash at 493 km/h, the fastest ever recorded (non-match)."
+        },
+        {
+            question: "How long can a professional shuttlecock last in match play?",
+            options: ["1–2 rallies", "5 rallies", "1 game", "Entire match"],
+            answer: 0,
+            explanation: "Feather shuttles can wear out quickly and often last just 1–2 rallies in high-level play."
+        },
+        {
+            question: "Who was the first non-Asian player to become World No. 1 in men’s singles?",
+            options: ["Peter Gade", "Viktor Axelsen", "Kevin Cordon", "Kenneth Jonassen"],
+            answer: 0,
+            explanation: "Denmark’s Peter Gade became the first non-Asian to reach World No. 1 in the late 1990s."
+        },
+        {
+            question: "Which two countries have contested the most Uber Cup finals?",
+            options: ["China and Japan", "China and Indonesia", "China and Korea", "Japan and Thailand"],
+            answer: 0,
+            explanation: "China and Japan have contested the most Uber Cup finals in women's team badminton."
+        }
+    ]
+};
+
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            
+            if (percentage >= 90) {
+    feedback = "Perfect score! You're a badminton pro! Try hard questions next!";
+    difficultySuggestion = "Awesome! Move on to hard difficulty for a tougher challenge!";
+} else if (percentage >= 75) {
+    feedback = "Great work! You’re becoming a badminton expert!";
+    difficultySuggestion = "Well done! Try medium or hard difficulty for more challenges!";
+} else if (percentage >= 50) {
+    feedback = "Good effort! You're learning more about badminton!";
+    difficultySuggestion = "Nice try! Try practicing more or moving to medium difficulty!";
+} else {
+    feedback = "Keep practicing! Learn more about badminton to improve!";
+    difficultySuggestion = "Stick with this level to improve your badminton knowledge!";
+}
+
+            
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

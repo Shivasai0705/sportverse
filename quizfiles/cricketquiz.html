@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Quiz | Sports Hub</title>
+    <link rel="stylesheet" href="../cssfiles/quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+        <h1>Cricket Quiz</h1>
+        <p>Test your knowledge of the gentleman's game</p>
+    </header>
+    
+    <div class="main-content">
+        <div class="quiz-header">
+          
+            <p class="quiz-description">
+                Challenge yourself with this comprehensive cricket quiz covering rules, history, legendary players,
+                and unforgettable moments. Select your difficulty level and see how much you really know about this iconic sport!
+            </p>
+            
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+            
+            <button id="start-quiz" class="restart-btn">Start Quiz</button>
+        </div>
+    
+        <div id="quiz-section" style="display: none;">
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <span id="question-count">Question 1 of 15</span>
+                    <span id="score">Score: 0</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <div class="question-container">
+                    <p class="question-text" id="question-text">How many players are there in a standard cricket team?</p>
+                    
+                    <div class="options-container" id="options-container">
+                        <button class="option-btn"><span class="option-letter">A</span> 9</button>
+                        <button class="option-btn"><span class="option-letter">B</span> 10</button>
+                        <button class="option-btn"><span class="option-letter">C</span> 11</button>
+                        <button class="option-btn"><span class="option-letter">D</span> 12</button>
+                    </div>
+                    
+                    <div class="explanation-container" id="explanation-container">
+                        <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+                        <p id="explanation-text">A standard cricket team consists of 11 players.</p>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+                    <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="results-container" id="results-container">
+            <div class="results-icon"><i class="fas fa-trophy"></i></div>
+            <h2>Quiz Completed!</h2>
+            <div class="results-score">
+                <span id="final-score">0</span>
+                <span>out of</span>
+                <span id="total-questions">0</span>
+            </div>
+            <p class="results-feedback" id="results-feedback">Excellent innings! You're a cricket whiz!</p>
+            <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+        </div>
+    
+        <div class="scoreboard" id="scoreboard" style="display: none;">
+            <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+            <div class="scoreboard-grid">
+                <div class="score-card">
+                    <div class="score-category">Correct Answers</div>
+                    <div class="score-value" id="score-correct">0</div>
+                    <div class="score-description">Top performance!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Wrong Answers</div>
+                    <div class="score-value" id="score-wrong">0</div>
+                    <div class="score-description">Practice makes perfect!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Percentage</div>
+                    <div class="score-value" id="score-percentage">0%</div>
+                    <div class="score-description">Solid effort!</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-category">Difficulty</div>
+                    <div class="score-value" id="score-difficulty">Easy</div>
+                    <div class="score-description" id="difficulty-description">Challenge yourself more next time!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 Sports Hub. All rights reserved.</p>
+        <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+    </footer>
+    
+
+    <script>
+        // Comprehensive quiz data for football
+        const quizData = {
+    easy: [
+        {
+            question: "How many players are in a cricket team?",
+            options: ["9", "10", "11", "12"],
+            answer: 2,
+            explanation: "A cricket team consists of 11 players on the field at any time."
+        },
+        {
+            question: "What is the maximum number of overs in a standard One Day International (ODI)?",
+            options: ["40", "50", "60", "Unlimited"],
+            answer: 1,
+            explanation: "ODIs are limited to 50 overs per side, though this was reduced to 40-45 overs in early tournaments."
+        },
+        {
+            question: "Which of these is NOT a way to be out in cricket?",
+            options: ["Bowled", "Run out", "Home run", "LBW"],
+            answer: 2,
+            explanation: "'Home run' is a baseball term. In cricket, common dismissals include bowled, caught, LBW (Leg Before Wicket), run out, etc."
+        },
+        {
+            question: "What is the name of cricket's most famous international rivalry?",
+            options: ["India vs Pakistan", "England vs Australia", "South Africa vs New Zealand", "West Indies vs Sri Lanka"],
+            answer: 1,
+            explanation: "The England vs Australia Test series is called 'The Ashes', cricket's most famous rivalry dating back to 1882."
+        },
+        {
+            question: "How many balls are there in a standard over?",
+            options: ["4", "5", "6", "7"],
+            answer: 2,
+            explanation: "An over consists of 6 legal deliveries (balls) bowled by the same bowler."
+        },
+        {
+            question: "Which country won the first Cricket World Cup in 1975?",
+            options: ["Australia", "England", "West Indies", "India"],
+            answer: 2,
+            explanation: "The West Indies won the inaugural Cricket World Cup in 1975, defeating Australia in the final."
+        },
+        {
+            question: "What is the name of cricket's highest individual batting award?",
+            options: ["Man of the Match", "Purple Cap", "Sir Garfield Sobers Trophy", "Orange Cap"],
+            answer: 2,
+            explanation: "The Sir Garfield Sobers Trophy is awarded to the ICC Cricketer of the Year."
+        },
+        {
+            question: "Which player is known as 'King Kohli' in international cricket?",
+            options: ["Virat Kohli", "Rohit Sharma", "Kane Williamson", "Steve Smith"],
+            answer: 0,
+            explanation: "Virat Kohli, the former Indian captain, is nicknamed 'King Kohli' for his batting dominance."
+        },
+        {
+            question: "What is the length of a cricket pitch in yards?",
+            options: ["18", "20", "22", "24"],
+            answer: 2,
+            explanation: "The cricket pitch is 22 yards (20.12 meters) long between the two wickets."
+        },
+        {
+            question: "Which of these is NOT a format of international cricket?",
+            options: ["Test", "ODI", "T20", "T50"],
+            answer: 3,
+            explanation: "International cricket is played in Test matches, One Day Internationals (ODIs), and Twenty20 (T20) format."
+        }
+    ],
+    medium: [
+        {
+            question: "Which country has won the most Cricket World Cups?",
+            options: ["Australia", "West Indies", "India", "England"],
+            answer: 0,
+            explanation: "Australia has won the Cricket World Cup 5 times (1987, 1999, 2003, 2007, 2015)."
+        },
+        {
+            question: "Who holds the record for highest individual score in Test cricket?",
+            options: ["Brian Lara (400*)", "Matthew Hayden (380)", "Virender Sehwag (319)", "Mahela Jayawardene (374)"],
+            answer: 0,
+            explanation: "Brian Lara scored 400 not out against England in 2004, the highest individual Test score."
+        },
+        {
+            question: "What is the nickname of the Australian cricket team?",
+            options: ["The Kangaroos", "The Baggy Greens", "The Southern Stars", "The Aussies"],
+            answer: 1,
+            explanation: "The Australian team is nicknamed 'The Baggy Greens' after their distinctive green caps."
+        },
+        {
+            question: "Which bowler has taken the most wickets in Test cricket?",
+            options: ["Shane Warne", "Muttiah Muralitharan", "James Anderson", "Anil Kumble"],
+            answer: 1,
+            explanation: "Sri Lanka's Muttiah Muralitharan holds the record with 800 Test wickets."
+        },
+        {
+            question: "What is the minimum number of overs required to constitute a match in Test cricket?",
+            options: ["50", "75", "90", "No minimum"],
+            answer: 2,
+            explanation: "A minimum of 90 overs must be bowled in a day's play in Test cricket, weather permitting."
+        },
+        {
+            question: "Which player has scored the fastest century in ODI cricket?",
+            options: ["AB de Villiers (31 balls)", "Corey Anderson (36 balls)", "Shahid Afridi (37 balls)", "Glenn Maxwell (40 balls)"],
+            answer: 0,
+            explanation: "AB de Villiers holds the record for the fastest ODI century (31 balls) against West Indies in 2015."
+        },
+        {
+            question: "What is the name of the trophy awarded for the Test series between India and Australia?",
+            options: ["Border-Gavaskar Trophy", "Pataudi Trophy", "Warne-Muralitharan Trophy", "Chappell-Hadlee Trophy"],
+            answer: 0,
+            explanation: "The Border-Gavaskar Trophy is awarded to the winner of the Test series between India and Australia."
+        },
+        {
+            question: "Which country hosted the first T20 World Cup in 2007?",
+            options: ["England", "South Africa", "West Indies", "India"],
+            answer: 1,
+            explanation: "South Africa hosted the inaugural ICC World Twenty20 in 2007, which was won by India."
+        },
+        {
+            question: "What is the highest team total in ODI cricket?",
+            options: ["398", "418", "444", "481"],
+            answer: 3,
+            explanation: "England holds the record with 481/6 against Australia in 2018."
+        },
+        {
+            question: "Which player has won the most 'Player of the Tournament' awards in World Cups?",
+            options: ["Sachin Tendulkar", "Glenn McGrath", "Virat Kohli", "Shane Warne"],
+            answer: 0,
+            explanation: "Sachin Tendulkar won the award in 2003, the only player to win it multiple times until 2019."
+        }
+    ],
+    hard: [
+        {
+            question: "Who is the only batsman to score 100 international centuries?",
+            options: ["Ricky Ponting", "Jacques Kallis", "Sachin Tendulkar", "Kumar Sangakkara"],
+            answer: 2,
+            explanation: "Sachin Tendulkar scored 100 international centuries (51 in Tests, 49 in ODIs)."
+        },
+        {
+            question: "Which team holds the record for lowest team total in Test cricket?",
+            options: ["New Zealand (26)", "South Africa (30)", "Zimbabwe (35)", "Australia (36)"],
+            answer: 0,
+            explanation: "New Zealand was bowled out for 26 by England in 1955, the lowest Test total."
+        },
+        {
+            question: "Who is the only bowler to take 10 wickets in a Test innings?",
+            options: ["Jim Laker", "Anil Kumble", "Shane Warne", "Muttiah Muralitharan"],
+            answer: 0,
+            explanation: "England's Jim Laker took 10/53 against Australia in 1956, the only perfect innings."
+        },
+        {
+            question: "Which player has the highest individual score in ODI cricket?",
+            options: ["Rohit Sharma (264)", "Martin Guptill (237*)", "Virender Sehwag (219)", "Chris Gayle (215)"],
+            answer: 0,
+            explanation: "Rohit Sharma scored 264 against Sri Lanka in 2014, the highest individual ODI score."
+        },
+        {
+            question: "What is the record partnership for any wicket in Test cricket?",
+            options: ["451", "576", "624", "702"],
+            answer: 2,
+            explanation: "Sri Lanka's Kumar Sangakkara and Mahela Jayawardene put on 624 for the 3rd wicket against South Africa in 2006."
+        },
+        {
+            question: "Which country has the most Test match wins without ever being the top-ranked team?",
+            options: ["South Africa", "Pakistan", "Sri Lanka", "New Zealand"],
+            answer: 1,
+            explanation: "Pakistan has won over 140 Tests but has never been ranked #1 in the ICC Test rankings."
+        },
+        {
+            question: "Who is the fastest bowler to reach 100 Test wickets?",
+            options: ["George Lohmann (16 Tests)", "Sydney Barnes (17 Tests)", "Ravichandran Ashwin (18 Tests)", "Yasir Shah (19 Tests)"],
+            answer: 0,
+            explanation: "England's George Lohmann reached 100 wickets in just 16 Tests in the 19th century."
+        },
+        {
+            question: "Which player has the most dismissals as wicketkeeper in Test cricket?",
+            options: ["Mark Boucher", "Adam Gilchrist", "MS Dhoni", "Ian Healy"],
+            answer: 0,
+            explanation: "South Africa's Mark Boucher holds the record with 555 dismissals (532 catches, 23 stumpings)."
+        },
+        {
+            question: "What is the highest successful run chase in Test cricket?",
+            options: ["387", "418", "443", "500"],
+            answer: 1,
+            explanation: "West Indies chased 418 against Australia in 2003, the highest successful Test run chase."
+        },
+        {
+            question: "Which bowler has the best bowling figures in a T20 International?",
+            options: ["Ajantha Mendis (6/8)", "Deepak Chahar (6/7)", "Rangana Herath (5/3)", "Umar Gul (5/6)"],
+            answer: 1,
+            explanation: "India's Deepak Chahar holds the record with 6/7 against Bangladesh in 2019."
+        }
+    ]
+};
+
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            if (percentage >= 90) {
+    feedback = "Perfect score! You're a cricket master! Try challenging yourself with hard questions!";
+    difficultySuggestion = "Great job! Try the hard difficulty next!";
+} else if (percentage >= 75) {
+    feedback = "Excellent! You're a cricket pro in the making!";
+    difficultySuggestion = "Great work! Try medium or hard difficulty for more challenges!";
+} else if (percentage >= 50) {
+    feedback = "Good effort! You know your cricket but there's room for improvement!";
+    difficultySuggestion = "Nice try! Consider practicing more or trying medium difficulty!";
+} else {
+    feedback = "Keep practicing! Watch more matches to improve your cricket knowledge!";
+    difficultySuggestion = "Stick with this level and practice to get better!";
+}
+
+            
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

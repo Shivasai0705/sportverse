@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kabaddi Quiz | Sports Hub</title>
+  <link rel="stylesheet" href="../cssfiles/quiz.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <a href="../index.html" class="back-button"><i class="fas fa-arrow-left"></i> Back</a>
+    <h1>Kabaddi Quiz</h1>
+    <p>Raid, defend, and score — test your kabaddi knowledge!</p>
+  </header>
+
+  <div class="main-content">
+    <div class="quiz-header">
+      <p class="quiz-description">
+        Enter the thrilling world of kabaddi! Test your understanding of rules, players, and iconic moments across different difficulty levels.
+      </p>
+
+      <div class="difficulty-selector">
+        <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+        <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+        <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+      </div>
+
+      <button id="start-quiz" class="restart-btn">Start Quiz</button>
+    </div>
+
+    <div id="quiz-section" style="display: none;">
+      <div class="quiz-container">
+        <div class="quiz-progress">
+          <span id="question-count">Question 1 of 15</span>
+          <span id="score">Score: 0</span>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+          </div>
+        </div>
+
+        <div class="question-container">
+          <p class="question-text" id="question-text"></p>
+          <div class="options-container" id="options-container"></div>
+          <div class="explanation-container" id="explanation-container">
+            <p class="explanation-title"><i class="fas fa-info-circle"></i> Explanation:</p>
+            <p id="explanation-text"></p>
+          </div>
+        </div>
+
+        <div class="quiz-navigation">
+          <button class="nav-btn next-btn" id="next-btn">Next Question</button>
+          <button class="nav-btn finish-btn" id="finish-btn" style="display: none;">Finish Quiz</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="results-container" id="results-container">
+      <div class="results-icon"><i class="fas fa-trophy"></i></div>
+      <h2>Quiz Completed!</h2>
+      <div class="results-score">
+        <span id="final-score">0</span>
+        <span>out of</span>
+        <span id="total-questions">0</span>
+      </div>
+      <p class="results-feedback" id="results-feedback">You're a kabaddi champ!</p>
+      <button class="restart-btn" id="restart-btn">Take Quiz Again</button>
+    </div>
+
+    <div class="scoreboard" id="scoreboard" style="display: none;">
+      <h2><i class="fas fa-chart-line trophy-icon"></i> Your Performance</h2>
+      <div class="scoreboard-grid">
+        <div class="score-card">
+          <div class="score-category">Correct Answers</div>
+          <div class="score-value" id="score-correct">0</div>
+          <div class="score-description">Great raid!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Wrong Answers</div>
+          <div class="score-value" id="score-wrong">0</div>
+          <div class="score-description">Try again!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Percentage</div>
+          <div class="score-value" id="score-percentage">0%</div>
+          <div class="score-description">Tactical genius!</div>
+        </div>
+        <div class="score-card">
+          <div class="score-category">Difficulty</div>
+          <div class="score-value" id="score-difficulty">Easy</div>
+          <div class="score-description" id="difficulty-description">Keep going!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2023 Sports Hub. All rights reserved.</p>
+    <p>Disclaimer: This platform is for educational and entertainment purposes only.</p>
+  </footer>
+
+  <script>
+    const quizData = {
+      easy: [
+        { question: "How many players are on each kabaddi team?", options: ["5", "6", "7", "8"], answer: 2, explanation: "Each kabaddi team has 7 players on the field." },
+        { question: "Which country invented kabaddi?", options: ["India", "Pakistan", "Iran", "Nepal"], answer: 0, explanation: "Kabaddi originated in India." },
+        { question: "What is the term for the player who attacks?", options: ["Defender", "Raider", "Chaser", "Runner"], answer: 1, explanation: "The player who crosses into the opponent's side is called a raider." },
+        { question: "Which league promotes kabaddi in India?", options: ["ISL", "IPL", "PKL", "IHL"], answer: 2, explanation: "PKL stands for Pro Kabaddi League." },
+        { question: "What must the raider do during a raid?", options: ["Clap", "Run silently", "Chant kabaddi", "Jump"], answer: 2, explanation: "The raider must chant 'kabaddi' without stopping." },
+        { question: "How long does a kabaddi match last?", options: ["20 mins", "40 mins", "30 mins", "45 mins"], answer: 1, explanation: "A full match is 40 minutes long." },
+        { question: "What is awarded when all opponents are out?", options: ["Double score", "Extra life", "All-Out", "Timeout"], answer: 2, explanation: "An 'All-Out' gives 2 bonus points." },
+        { question: "What happens if a raider is caught?", options: ["He scores a point", "He is out", "He changes sides", "He wins"], answer: 1, explanation: "A caught raider is declared out." },
+        { question: "Who is known as the 'Dubki King'?", options: ["Manjeet Chhillar", "Pawan Sehrawat", "Naveen Kumar", "Pardeep Narwal"], answer: 3, explanation: "Pardeep Narwal is known for his signature dubki move." },
+        { question: "What is the boundary line called?", options: ["Mid line", "Out line", "Bonus line", "End line"], answer: 3, explanation: "The outermost boundary is the end line." }
+      ],
+      medium: [
+        { question: "Which year did kabaddi debut in the Asian Games?", options: ["1990", "1982", "1994", "2000"], answer: 0, explanation: "Kabaddi became an official Asian Games sport in 1990." },
+        { question: "How many points is a successful raid worth?", options: ["1", "2", "3", "4"], answer: 0, explanation: "Each touch or successful raid gives 1 point." },
+        { question: "What is the name of the Pro Kabaddi team from Patna?", options: ["Patna Kings", "Bihar Bulls", "Patna Pirates", "Gaya Warriors"], answer: 2, explanation: "Patna Pirates are one of the most successful PKL teams." },
+        { question: "Who holds the record for most raid points in PKL history?", options: ["Naveen Kumar", "Rahul Chaudhari", "Ajay Thakur", "Pardeep Narwal"], answer: 3, explanation: "Pardeep Narwal has the most raid points in PKL." },
+        { question: "How many players can be substituted in a match?", options: ["3", "4", "5", "7"], answer: 1, explanation: "Each team can make up to 5 substitutions." },
+        { question: "Which team won the first PKL title?", options: ["U Mumba", "Jaipur Pink Panthers", "Bengal Warriors", "Telugu Titans"], answer: 1, explanation: "Jaipur Pink Panthers won the inaugural PKL in 2014." },
+        { question: "What is the bonus line used for?", options: ["Extra time", "Extra raid", "Bonus point", "No use"], answer: 2, explanation: "Crossing the bonus line with a foot gives 1 bonus point if 6+ defenders are present." },
+        { question: "What is a 'Super Raid'?", options: ["Scoring 3+ points in one raid", "Catching the raider", "Winning match", "Chanting faster"], answer: 0, explanation: "A Super Raid means scoring 3 or more points in one raid." },
+        { question: "Which Indian state is most associated with kabaddi?", options: ["Punjab", "Kerala", "Haryana", "Odisha"], answer: 2, explanation: "Haryana has produced many top kabaddi players." },
+        { question: "Who is known as the 'One Man Army' in kabaddi?", options: ["Rahul Chaudhari", "Pawan Sehrawat", "Deepak Hooda", "Ajay Thakur"], answer: 1, explanation: "Pawan Sehrawat is known for carrying his team with powerful raids." }
+      ],
+      hard: [
+        { question: "Which move involves jumping between defenders?", options: ["Dubki", "Toe Touch", "Jump", "Scorpion Kick"], answer: 2, explanation: "Jump is used to leap over or between defenders." },
+        { question: "Who is the youngest player to debut in PKL?", options: ["Pardeep Narwal", "Naveen Kumar", "Aslam Inamdar", "Sumit"], answer: 1, explanation: "Naveen Kumar made his debut at 18 years old." },
+        { question: "Which kabaddi player holds the record for most Super 10s in one season?", options: ["Pardeep Narwal", "Rahul Chaudhari", "Naveen Kumar", "Pawan Sehrawat"], answer: 2, explanation: "Naveen Kumar has the most Super 10s in one season." },
+        { question: "Which country defeated India in 2018 Asian Games kabaddi final?", options: ["Iran", "Pakistan", "Bangladesh", "Sri Lanka"], answer: 0, explanation: "Iran defeated India in 2018, ending India’s dominance." },
+        { question: "How many officials supervise a kabaddi match?", options: ["4", "5", "6", "7"], answer: 2, explanation: "There are 6 officials in total: 2 referees, 2 umpires, a scorer, and an assistant scorer." },
+        { question: "Which PKL season introduced the Super Tackle rule?", options: ["Season 1", "Season 2", "Season 3", "Season 4"], answer: 2, explanation: "Super Tackle was introduced in PKL Season 3." },
+        { question: "What is the maximum number of points a raider can score in one raid?", options: ["3", "4", "5", "7"], answer: 3, explanation: "Theoretically, a raider can score all 7 points by getting all defenders out." },
+        { question: "What technique involves ducking under defenders’ arms?", options: ["Dubki", "Hand touch", "Back kick", "Jump"], answer: 0, explanation: "Dubki involves going low under defenders." },
+        { question: "Which team has never won a PKL title?", options: ["Bengaluru Bulls", "U Mumba", "Tamil Thalaivas", "Dabang Delhi"], answer: 2, explanation: "Tamil Thalaivas have not won a PKL title yet." },
+        { question: "Who won MVP in PKL Season 6?", options: ["Pardeep Narwal", "Pawan Sehrawat", "Fazel Atrachali", "Ajay Thakur"], answer: 1, explanation: "Pawan Sehrawat was MVP of PKL Season 6." }
+      ]
+    };
+        // Quiz state variables
+        let currentDifficulty = 'easy';
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizStarted = false;
+        let userAnswers = [];
+        let quizSessionId = generateSessionId();
+
+        // DOM elements
+        const startQuizBtn = document.getElementById('start-quiz');
+        const quizSection = document.getElementById('quiz-section');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreboard = document.getElementById('scoreboard');
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationContainer = document.getElementById('explanation-container');
+        const explanationText = document.getElementById('explanation-text');
+        const nextBtn = document.getElementById('next-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const questionCount = document.getElementById('question-count');
+        const scoreDisplay = document.getElementById('score');
+        const progressBar = document.getElementById('progress-bar');
+        const finalScore = document.getElementById('final-score');
+        const totalQuestions = document.getElementById('total-questions');
+        const resultsFeedback = document.getElementById('results-feedback');
+        const restartBtn = document.getElementById('restart-btn');
+        const scoreCorrect = document.getElementById('score-correct');
+        const scoreWrong = document.getElementById('score-wrong');
+        const scorePercentage = document.getElementById('score-percentage');
+        const scoreDifficulty = document.getElementById('score-difficulty');
+        const difficultyDescription = document.getElementById('difficulty-description');
+
+        // Event listeners
+        startQuizBtn.addEventListener('click', startQuiz);
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDifficulty = btn.dataset.difficulty;
+            });
+        });
+        nextBtn.addEventListener('click', nextQuestion);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', restartQuiz);
+
+        // Generate a unique session ID for backend tracking
+        function generateSessionId() {
+            return 'quiz-' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+        }
+
+        // Start the quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestions = [...quizData[currentDifficulty]];
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Shuffle questions but keep the first few to ensure variety
+            currentQuestions = shuffleArray(currentQuestions);
+            
+            // Limit to 10 questions for better user experience
+            if (currentQuestions.length > 10) {
+                currentQuestions = currentQuestions.slice(0, 10);
+            }
+            
+            startQuizBtn.style.display = 'none';
+            quizSection.style.display = 'block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            
+            updateScore();
+            showQuestion();
+        }
+
+        // Show current question
+        function showQuestion() {
+            const question = currentQuestions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Add new options with animation delay
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}`;
+                btn.addEventListener('click', () => selectAnswer(index));
+                btn.style.animationDelay = `${index * 0.1}s`;
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            explanationContainer.style.display = 'none';
+            
+            // Update progress
+            questionCount.textContent = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+            progressBar.style.width = `${((currentQuestionIndex + 1) / currentQuestions.length) * 100}%`;
+            
+            // Show/hide next/finish buttons
+            nextBtn.style.display = 'block';
+            finishBtn.style.display = 'none';
+            
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                finishBtn.style.display = 'block';
+            }
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            // Disable all options
+            optionBtns.forEach(btn => {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+            });
+            
+            // Mark correct and wrong answers
+            optionBtns[question.answer].classList.add('correct');
+            if (selectedIndex !== question.answer) {
+                optionBtns[selectedIndex].classList.add('wrong');
+            }
+            
+            // Store user answer for analytics
+            userAnswers.push({
+                question: question.question,
+                userAnswer: question.options[selectedIndex],
+                correctAnswer: question.options[question.answer],
+                isCorrect: selectedIndex === question.answer
+            });
+            
+            // Update score if correct
+            if (selectedIndex === question.answer) {
+                score++;
+                updateScore();
+            }
+            
+            // Show explanation
+            explanationText.textContent = question.explanation;
+            explanationContainer.style.display = 'block';
+        }
+
+        // Move to next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            quizSection.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            scoreboard.style.display = 'block';
+            
+            finalScore.textContent = score;
+            totalQuestions.textContent = currentQuestions.length;
+            
+            // Update scoreboard
+            scoreCorrect.textContent = score;
+            scoreWrong.textContent = currentQuestions.length - score;
+            const percentage = Math.round((score / currentQuestions.length) * 100);
+            scorePercentage.textContent = `${percentage}%`;
+            
+            // Set difficulty display
+            scoreDifficulty.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            
+            // Provide feedback based on percentage
+            let feedback = "";
+            let difficultySuggestion = "";
+            
+            if (percentage >= 90) {
+    feedback = "Incredible! You're a Kabaddi expert! Challenge yourself with hard questions!";
+    difficultySuggestion = "Perfect! Move on to hard difficulty for even more challenging questions!";
+} else if (percentage >= 75) {
+    feedback = "Great job! You’re getting really good at Kabaddi!";
+    difficultySuggestion = "Well done! Try medium or hard difficulty for more of a challenge!";
+} else if (percentage >= 50) {
+    feedback = "Nice effort! You’re familiar with Kabaddi but can improve more!";
+    difficultySuggestion = "Good try! Keep practicing or try medium difficulty!";
+} else {
+    feedback = "Keep learning! Watch more Kabaddi games to improve your knowledge!";
+    difficultySuggestion = "Stick to this level for now and improve before trying harder questions!";
+}
+
+            
+            resultsFeedback.textContent = feedback;
+            difficultyDescription.textContent = difficultySuggestion;
+            
+            // Prepare data for backend (to be implemented later)
+            const quizResults = {
+                sessionId: quizSessionId,
+                difficulty: currentDifficulty,
+                score: score,
+                totalQuestions: currentQuestions.length,
+                percentage: percentage,
+                answers: userAnswers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // For now, just log to console - will be sent to backend later
+            console.log("Quiz results:", quizResults);
+            localStorage.setItem('latestQuizResults', JSON.stringify(quizResults));
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            quizSessionId = generateSessionId();
+            startQuizBtn.style.display = 'inline-block';
+            resultsContainer.style.display = 'none';
+            scoreboard.style.display = 'none';
+            quizStarted = false;
+        }
+
+        // Update score display
+        function updateScore() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        // Helper function to shuffle array
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

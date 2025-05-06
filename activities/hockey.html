@@ -4,8 +4,140 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hockey - Sports Gamified Platform</title>
-  <link rel="stylesheet" href="/b.css">
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
+<style>
+  .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+   .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#offside-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
 <body>
   <header>
     <h1>Hockey</h1>
@@ -68,7 +200,7 @@
     <section class="section court-layout">
       <h2>Hockey Field Layout</h2>
       <div class="court-image">
-        <img src="/assets/hockey-field.png" alt="Hockey Field Layout">
+        <img src="/assets/hoc (2).png" alt="Hockey Field Layout">
       </div>
       <div class="court-info">
         <p><strong>Dimensions:</strong> Field hockey: <strong>91.4m x 55m</strong>. Ice hockey rink: <strong>60m x 30m</strong>.</p>
@@ -96,11 +228,265 @@
       </ul>
       <p>Visit <a href="https://www.fih.hockey" target="_blank">FIH Official Website</a> for full details.</p>
     </section>
+    <div class="visualization-box">
+      <h3>Interactive Hockey Field Demo</h3>
+      <div id="hockey-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+       <!-- Basketball Legends Card -->
+<div class="legends-card" onclick="window.location.href='hoclegends.html'">
+  <img src="https://images.unsplash.com/photo-1617176194857-cdb81c7d9235?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGhvY2tleSUyMGNvdXJ0JTIwYmFja2dyb3VuZHxlbnwwfHwwfHx8MA%3D%3D" 
+       alt="Basketball Legends" 
+       class="legends-photo">
+  
+  <div class="legends-overlay">
+    <h3>Meet The Legends</h3>
+    <p>Explore Hockey's greatest players</p>
+    <div class="click-hint">Click anywhere to enter</div>
+  </div>
+</div>
 
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.fih.hockey" target="_blank">FIH</a></p>
     </footer>
+    <script>
+      function initHockeyDemo() {
+        const container = document.getElementById('hockey-demo');
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth/container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+      
+        // Controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;  // Enable smooth inertia
+controls.dampingFactor = 0.05;  // Adjust friction (0.01-0.1)
+        
+        // Field dimensions (FIH standard)
+        const fieldLength = 91.4; // meters (100 yards)
+        const fieldWidth = 55; // meters (60 yards)
+        const circleRadius = 14.63; // meters (16 yards)
+        const shootingCircleRadius = 6.4; // meters (7 yards)
+        const goalWidth = 3.66; // meters (4 yards)
+        const goalDepth = 1.2; // meters
+        
+        // Field surface (blue turf)
+        const fieldGeometry = new THREE.PlaneGeometry(fieldWidth, fieldLength);
+        const fieldMaterial = new THREE.MeshPhongMaterial({ 
+          color: 0x4169E1, // Blue turf
+          side: THREE.DoubleSide,
+          shininess: 20
+        });
+        const field = new THREE.Mesh(fieldGeometry, fieldMaterial);
+        field.rotation.x = Math.PI / 2;
+        scene.add(field);
+      
+        // Field markings (white lines)
+        function addLine(x1, z1, x2, z2, linewidth = 0.1, color = 0xffffff) {
+          const points = [
+            new THREE.Vector3(x1, 0.01, z1),
+            new THREE.Vector3(x2, 0.01, z2)
+          ];
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          const material = new THREE.LineBasicMaterial({ color, linewidth });
+          const line = new THREE.Line(geometry, material);
+          scene.add(line);
+        }
+      
+        // Outer boundary
+        addLine(-fieldWidth/2, -fieldLength/2, fieldWidth/2, -fieldLength/2);
+        addLine(fieldWidth/2, -fieldLength/2, fieldWidth/2, fieldLength/2);
+        addLine(fieldWidth/2, fieldLength/2, -fieldWidth/2, fieldLength/2);
+        addLine(-fieldWidth/2, fieldLength/2, -fieldWidth/2, -fieldLength/2);
+      
+        // Center line
+        addLine(0, -fieldLength/2, 0, fieldLength/2);
+      
+        // Center circle
+        const centerCircleGeometry = new THREE.RingGeometry(circleRadius - 0.1, circleRadius, 64);
+        const centerCircleMaterial = new THREE.MeshBasicMaterial({ 
+          color: 0xffffff, 
+          side: THREE.DoubleSide 
+        });
+        const centerCircle = new THREE.Mesh(centerCircleGeometry, centerCircleMaterial);
+        centerCircle.rotation.x = Math.PI / 2;
+        centerCircle.position.y = 0.02;
+        scene.add(centerCircle);
+      
+        // Shooting circles (D)
+        function createShootingCircle(zPos) {
+          const circle = new THREE.Mesh(
+            new THREE.RingGeometry(shootingCircleRadius - 0.1, shootingCircleRadius, 64),
+            centerCircleMaterial
+          );
+          circle.rotation.x = Math.PI / 2;
+          circle.position.set(0, 0.02, zPos);
+          scene.add(circle);
+          
+          // 5m dashed lines
+          const dashLength = 0.5;
+          for (let x = -fieldWidth/2; x <= fieldWidth/2; x += dashLength * 2) {
+            addLine(x, zPos, x + dashLength, zPos);
+          }
+        }
+      
+        createShootingCircle(-fieldLength/2 + 14.63);
+        createShootingCircle(fieldLength/2 - 14.63);
+      
+        // Goals
+        function createGoal(zPos) {
+          // Goal posts (white)
+          const postMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
+          const postGeometry = new THREE.CylinderGeometry(0.05, 0.05, 2.14); // 2.14m (7ft) height
+          
+          // Left post
+          const leftPost = new THREE.Mesh(postGeometry, postMaterial);
+          leftPost.position.set(-goalWidth/2, 2.14/2, zPos);
+          scene.add(leftPost);
+          
+          // Right post
+          const rightPost = new THREE.Mesh(postGeometry, postMaterial);
+          rightPost.position.set(goalWidth/2, 2.14/2, zPos);
+          scene.add(rightPost);
+          
+          // Crossbar
+          const crossbar = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.05, 0.05, goalWidth),
+            postMaterial
+          );
+          crossbar.position.set(0, 2.14, zPos);
+          crossbar.rotation.z = Math.PI / 2;
+          scene.add(crossbar);
+          
+          // Backboard
+          const backboard = new THREE.Mesh(
+            new THREE.PlaneGeometry(goalWidth, 0.46), // 0.46m (18in) height
+            new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+          );
+          backboard.position.set(0, 0.23, zPos + (zPos > 0 ? -goalDepth/2 : goalDepth/2));
+          backboard.rotation.y = zPos > 0 ? 0 : Math.PI;
+          scene.add(backboard);
+          
+          // Sideboards
+          const sideboard = new THREE.Mesh(
+            new THREE.PlaneGeometry(goalDepth, 0.46),
+            new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+          );
+          const leftSideboard = sideboard.clone();
+          leftSideboard.position.set(-goalWidth/2, 0.23, zPos);
+          leftSideboard.rotation.y = Math.PI/2;
+          scene.add(leftSideboard);
+          
+          const rightSideboard = sideboard.clone();
+          rightSideboard.position.set(goalWidth/2, 0.23, zPos);
+          rightSideboard.rotation.y = -Math.PI/2;
+          scene.add(rightSideboard);
+        }
+      
+        createGoal(-fieldLength/2); // Left goal
+        createGoal(fieldLength/2); // Right goal
+      
+        // Players
+        function addPlayer(x, z, color, isGoalkeeper = false) {
+          const height = isGoalkeeper ? 1.9 : 1.7;
+          const geometry = new THREE.ConeGeometry(0.4, height, 8);
+          const material = new THREE.MeshPhongMaterial({ color });
+          const player = new THREE.Mesh(geometry, material);
+          player.position.set(x, height/2, z);
+          player.rotation.x = Math.PI;
+          scene.add(player);
+          
+          // Add stick if not goalkeeper
+          if (!isGoalkeeper) {
+            const stickGeometry = new THREE.CylinderGeometry(0.03, 0.03, 1.2);
+            const stickMaterial = new THREE.MeshPhongMaterial({ color: 0x8B4513 }); // Brown stick
+            const stick = new THREE.Mesh(stickGeometry, stickMaterial);
+            stick.position.set(x + 0.3, height * 0.4, z);
+            stick.rotation.z = Math.PI/4;
+            scene.add(stick);
+          } else {
+            // Goalkeeper pads
+            const padGeometry = new THREE.BoxGeometry(0.3, 0.6, 0.1);
+            const padMaterial = new THREE.MeshPhongMaterial({ color: 0x000000 });
+            
+            const leftPad = new THREE.Mesh(padGeometry, padMaterial);
+            leftPad.position.set(x - 0.2, height * 0.3, z);
+            scene.add(leftPad);
+            
+            const rightPad = new THREE.Mesh(padGeometry, padMaterial);
+            rightPad.position.set(x + 0.2, height * 0.3, z);
+            scene.add(rightPad);
+          }
+          
+          return player;
+        }
+      
+        // Example hockey scenario
+        const attacker1 = addPlayer(5, -10, 0xff0000); // Red attacker
+        const attacker2 = addPlayer(-3, -15, 0xff0000); // Red attacker
+        const midfielder = addPlayer(0, 0, 0xff0000); // Red midfielder
+        
+        const defender1 = addPlayer(4, 10, 0x0000ff); // Blue defender
+        const defender2 = addPlayer(-2, 15, 0x0000ff); // Blue defender
+        const goalkeeper = addPlayer(0, fieldLength/2 - 2, 0x0000ff, true); // Blue goalkeeper
+      
+        // Ball
+        const ball = new THREE.Mesh(
+          new THREE.SphereGeometry(0.07), // 7cm diameter
+          new THREE.MeshPhongMaterial({ 
+            color: 0xffffff,
+            shininess: 100
+          })
+        );
+        ball.position.set(2, 0.07, -5); // Ball in play
+        scene.add(ball);
+      
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+      
+        // Camera position
+        camera.position.set(30, 40, 30);
+        controls.update();
+      
+        // Animation loop
+        function animate() {
+    requestAnimationFrame(animate);
+    controls.update(); // <-- Add this line (required for damping)
+    renderer.render(scene, camera);
+}
+        animate();
+      
+        window.resetCamera = () => {
+          camera.position.set(30, 40, 30);
+          controls.target.set(0, 0, 0);
+          controls.update();
+        };
+      
+        // Handle window resize
+        window.addEventListener('resize', () => {
+          camera.aspect = container.clientWidth / container.clientHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+      }
+      
+      // Initialize when page loads
+      window.onload = function() {
+        if(document.getElementById('hockey-demo')) {
+          initHockeyDemo();
+        }
+      };
+      </script>
+      
   </main>
 </body>
 </html>

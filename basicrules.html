@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportVerse | Game Rules</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sport-red: #e63946;
+            --sport-blue: #1d3557;
+            --sport-light: #f1faee;
+            --sport-gold: #ffd166;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .rules-hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            height: 60vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+        }
+        
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 3px;
+            color: var(--sport-gold);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .sport-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 1.5rem;
+            background: var(--sport-blue);
+        }
+        
+        .sport-tab {
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--sport-gold);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .sport-tab:hover, .sport-tab.active {
+            background: var(--sport-gold);
+            color: var(--sport-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .rules-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .sport-rules {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .sport-rules.active {
+            display: block;
+        }
+        
+        .rules-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .sport-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--sport-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2rem;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .rules-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .rule-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 5px solid var(--sport-red);
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .rule-card h3 {
+            background: var(--sport-blue);
+            color: white;
+            padding: 1rem;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .rule-card .rule-body {
+            padding: 1.5rem;
+        }
+        
+        .rule-card .rule-body ul {
+            padding-left: 1.5rem;
+        }
+        
+        .rule-card .rule-body li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .rules-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .sport-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="rules-hero">
+        <div class="hero-content">
+            <h1>GAME RULES DECODED</h1>
+            <p>Master the fundamentals of your favorite sports with our comprehensive rule guides</p>
+        </div>
+    </div>
+    
+    <div class="sport-selector">
+        <div class="sport-tab active" onclick="showRules('football')">Football</div>
+        <div class="sport-tab" onclick="showRules('basketball')">Basketball</div>
+        <div class="sport-tab" onclick="showRules('cricket')">Cricket</div>
+        <div class="sport-tab" onclick="showRules('tennis')">Tennis</div>
+        <div class="sport-tab" onclick="showRules('hockey')">Hockey</div>
+        <div class="sport-tab" onclick="showRules('swimming')">swimmimg</div>
+        <div class="sport-tab" onclick="showRules('badminton')">badminton</div>
+        <div class="sport-tab" onclick="showRules('golf')">golf</div>
+        <div class="sport-tab" onclick="showRules('volleyball')">volleyball</div>
+        <div class="sport-tab" onclick="showRules('kabaddi')">kabbadi</div>
+    </div>
+    
+    <div class="rules-container">
+        <!-- Football Rules -->
+        <div id="football-rules" class="sport-rules active">
+            <div class="rules-header">
+                <div class="sport-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div>
+                    <h2>Football Rules</h2>
+                    <p>The beautiful game's essential regulations</p>
+                </div>
+            </div>
+            
+            <div class="rules-content">
+                <div class="rule-card">
+                    <h3>Basic Gameplay</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>11 players per team on the field</li>
+                            <li>90 minutes total (2 halves of 45 minutes)</li>
+                            <li>Only goalkeepers can handle the ball</li>
+                            <li>Offside rule applies when attacking</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>Scoring</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>Goal = 1 point (entire ball must cross line)</li>
+                            <li>No points for near misses</li>
+                            <li>Own goals count for opposing team</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>Fouls & Penalties</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>Yellow card = warning</li>
+                            <li>Red card = immediate ejection</li>
+                            <li>Penalty kick for fouls in the box</li>
+                            <li>Free kicks for other fouls</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Basketball Rules -->
+        <div id="basketball-rules" class="sport-rules">
+            <div class="rules-header">
+                <div class="sport-icon">
+                    <i class="fas fa-basketball-ball"></i>
+                </div>
+                <div>
+                    <h2>Basketball Rules</h2>
+                    <p>Fast-paced court action fundamentals</p>
+                </div>
+            </div>
+            
+            <div class="rules-content">
+                <div class="rule-card">
+                    <h3>Basic Gameplay</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>5 players per team on court</li>
+                            <li>4 quarters of 12 minutes (NBA)</li>
+                            <li>Shot clock: 24 seconds to attempt shot</li>
+                            <li>Dribble required to move with ball</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>Scoring</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>3 points for shots beyond arc</li>
+                            <li>2 points for regular field goals</li>
+                            <li>1 point for free throws</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="rule-card">
+                    <h3>Violations</h3>
+                    <div class="rule-body">
+                        <ul>
+                            <li>Traveling (illegal movement)</li>
+                            <li>Double dribble</li>
+                            <li>3-second lane violation</li>
+                            <li>Backcourt violation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+       <!-- Cricket Rules -->
+<div id="cricket-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-baseball-ball"></i>
+        </div>
+        <div>
+            <h2>Cricket Rules</h2>
+            <p>The gentleman's game simplified</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Two teams of 11 players</li>
+                    <li>Batting and bowling sides alternate</li>
+                    <li>Runs scored by running between wickets or hitting boundaries</li>
+                    <li>Overs limit varies by format (Test, ODI, T20)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>4 runs for boundary, 6 runs for over boundary</li>
+                    <li>Runs added for successful running</li>
+                    <li>Extras: wides, no-balls, byes, leg byes</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Dismissals</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Bowled, Caught, LBW, Run-out, Stumped</li>
+                    <li>10 wickets ends the batting innings</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tennis Rules -->
+<div id="tennis-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-table-tennis"></i>
+        </div>
+        <div>
+            <h2>Tennis Rules</h2>
+            <p>Serve, rally, and score with precision</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Singles (1v1) or Doubles (2v2)</li>
+                    <li>Alternate serving each game</li>
+                    <li>Ball must land inside designated court area</li>
+                    <li>First to win 6 games (with 2-game margin) wins a set</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Points: 15, 30, 40, Game</li>
+                    <li>Deuce at 40-40, then advantage needed to win</li>
+                    <li>Matches typically best of 3 or 5 sets</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Violations</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Double fault (lose point on serve)</li>
+                    <li>Foot faults (stepping on line during serve)</li>
+                    <li>Ball out of bounds = point to opponent</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hockey Rules -->
+<div id="hockey-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-hockey-puck"></i>
+        </div>
+        <div>
+            <h2>Hockey Rules</h2>
+            <p>Fast and fierce field battles</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>11 players per team on the field</li>
+                    <li>Match consists of 4 quarters (15 minutes each)</li>
+                    <li>Ball moved with stick; only flat side allowed</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Goal scored when ball crosses line inside goalposts</li>
+                    <li>Only inside shooting circle goals are valid</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Fouls</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>High stick (dangerous play)</li>
+                    <li>Obstruction or body contact is penalized</li>
+                    <li>Green card = warning, Yellow = temporary suspension, Red = expulsion</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Swimming Rules -->
+<div id="swimming-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-swimmer"></i>
+        </div>
+        <div>
+            <h2>Swimming Rules</h2>
+            <p>Stroke your way to the finish</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Freestyle, Breaststroke, Backstroke, Butterfly races</li>
+                    <li>Start from blocks; underwater phase varies by stroke</li>
+                    <li>No false starts allowed</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>First swimmer to touch wall wins</li>
+                    <li>Relay events combine times of all swimmers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Violations</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Early start disqualifies swimmer</li>
+                    <li>Incorrect stroke technique may lead to disqualification</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Badminton Rules -->
+<div id="badminton-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-table-tennis-paddle-ball"></i>
+        </div>
+        <div>
+            <h2>Badminton Rules</h2>
+            <p>Fast-paced shuttle action</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Singles or Doubles matches</li>
+                    <li>Best of 3 games to 21 points</li>
+                    <li>Serve must be below waist height</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Rally scoring system (point scored every rally)</li>
+                    <li>Win by 2 points margin if tied at 20-20</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Violations</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Shuttle landing outside court = point to opponent</li>
+                    <li>Touching net = fault</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Golf Rules -->
+<div id="golf-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-golf-ball"></i>
+        </div>
+        <div>
+            <h2>Golf Rules</h2>
+            <p>Precision, patience, and strategy</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>18 holes standard course</li>
+                    <li>Lowest strokes total wins</li>
+                    <li>Play ball as it lies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Par: standard strokes for hole</li>
+                    <li>Birdie: 1 under par, Bogey: 1 over par</li>
+                    <li>Hole-in-one: completing hole in single shot</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Penalties</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Stroke penalties for rule violations</li>
+                    <li>Out-of-bounds: stroke and distance penalty</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Kabaddi Rules -->
+<div id="kabaddi-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-running"></i>
+        </div>
+        <div>
+            <h2>Kabaddi Rules</h2>
+            <p>Skillful raids and tackles</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>7 players on court per team</li>
+                    <li>Raiders must touch opponents and return</li>
+                    <li>Chant "Kabaddi" without inhaling during raid</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Each touch-out earns 1 point</li>
+                    <li>All-out bonus for getting entire team out</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Violations</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Breaking chant = raid ends</li>
+                    <li>Illegal holds = points to opponent</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Volleyball Rules -->
+<div id="volleyball-rules" class="sport-rules">
+    <div class="rules-header">
+        <div class="sport-icon">
+            <i class="fas fa-volleyball-ball"></i>
+        </div>
+        <div>
+            <h2>Volleyball Rules</h2>
+            <p>Spikes, blocks, and teamwork</p>
+        </div>
+    </div>
+
+    <div class="rules-content">
+        <div class="rule-card">
+            <h3>Basic Gameplay</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>6 players per team on court</li>
+                    <li>Three touches per side before sending ball over</li>
+                    <li>Rotate positions clockwise after winning serve</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Scoring</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Rally scoring (point every rally)</li>
+                    <li>First to 25 points wins set (lead by 2)</li>
+                    <li>Best of 5 sets to win match</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="rule-card">
+            <h3>Violations</h3>
+            <div class="rule-body">
+                <ul>
+                    <li>Touching net is a fault</li>
+                    <li>Double hits or lifts not allowed</li>
+                    <li>Ball landing outside court = point to opponent</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+        
+    </div>
+    
+    <script>
+        function showRules(sport) {
+            // Hide all rules sections
+            document.querySelectorAll('.sport-rules').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected rules section
+            document.getElementById(`${sport}-rules`).classList.add('active');
+            
+            // Update active tab
+            document.querySelectorAll('.sport-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            document.querySelector('.rules-container').scrollIntoView({ behavior: 'smooth' });
+        
+        }
+    </script>
+</body>
+</html>

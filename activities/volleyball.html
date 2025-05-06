@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Volleyball - Sports Gamified Platform</title>
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+<style>
+     .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+ .visualization-box {
+  background: rgba(30, 30, 30, 0.9);
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#volleyball-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+.section:target {
+  animation: highlight 1.5s ease;
+}
+
+@keyframes highlight {
+  from { background-color: rgba(255, 255, 255, 0.1); }
+  to { background-color: transparent; }
+}
+</style>
+<body>
+  <header>
+    <h1>Volleyball</h1>
+    <a href="../index.html" class="back-btn">← Back to Main Page</a>
+  </header>
+
+  <main class="container">
+
+    <!-- Importance of the Game -->
+    <section class="section">
+      <h2>Importance of the Game</h2>
+      <p>
+        Volleyball is a dynamic team sport that combines athleticism, strategy, and teamwork. Played by over 800 million people worldwide, it improves hand-eye coordination, reflexes, and cardiovascular health. Volleyball can be played indoors, on the beach, or even recreationally in backyards.
+      </p>
+      <p>
+        The sport teaches valuable skills like communication, quick decision-making, and spatial awareness. With major international competitions like the FIVB World Championships and Olympic events, volleyball has become one of the most popular global sports.
+      </p>
+    </section>
+
+    <!-- Materials of the Game -->
+    <section class="section">
+      <h2>Materials Required</h2>
+      <ul>
+        <li><strong>Volleyball:</strong> Circumference of 65-67 cm, weight of 260-280g</li>
+        <li><strong>Net System:</strong> 2.43m high for men, 2.24m for women (9.5m × 1m)</li>
+        <li><strong>Court:</strong> 18m × 9m with clear boundary markings</li>
+        <li><strong>Knee Pads:</strong> For protection during dives</li>
+        <li><strong>Proper Footwear:</strong> Volleyball shoes with gum rubber soles</li>
+        <li><strong>Antennas:</strong> Flexible rods mounted on the net</li>
+      </ul>
+    </section>
+
+    <!-- Physical Benefits -->
+    <section class="section">
+      <h2>Physical Benefits</h2>
+      <p>
+        Volleyball provides a full-body workout with numerous health advantages:
+      </p>
+      <ul>
+        <li><strong>Improves Cardiovascular Health:</strong> Constant movement boosts heart rate</li>
+        <li><strong>Enhances Hand-Eye Coordination:</strong> Precise ball control develops motor skills</li>
+        <li><strong>Builds Upper Body Strength:</strong> Spiking and serving strengthen arms/shoulders</li>
+        <li><strong>Increases Reaction Time:</strong> Quick responses to fast-moving ball</li>
+        <li><strong>Burns Calories:</strong> High-energy gameplay promotes weight management</li>
+      </ul>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="section grid-3">
+      <div class="card">
+        <h3>Calories Burned</h3>
+        <p>Volleyball burns <strong>300-600 calories</strong> per hour depending on intensity.</p>
+      </div>
+      <div class="card">
+        <h3>Recommended Age</h3>
+        <p>Can be played from <strong>age 8</strong> through senior years in adapted forms.</p>
+      </div>
+      <div class="card">
+        <h3>Team Composition</h3>
+        <p>6 players per side (indoor), 2 players per side (beach).</p>
+      </div>
+    </section>
+
+    <!-- Court Layout -->
+    <section class="section court-layout">
+      <h2>Volleyball Court Layout</h2>
+      <div class="court-image">
+        <img src="/assets/vol.png" alt="Volleyball Court Layout">
+      </div>
+      <div class="court-info">
+        <p><strong>Dimensions:</strong> 18m × 9m (59' × 29.5') divided into two 9m × 9m squares.</p>
+        <p><strong>Key Zones:</strong>
+          <ul>
+            <li>Front Zone (3m from net)</li>
+            <li>Back Zone</li>
+            <li>Attack Line (3m line)</li>
+            <li>Service Zone (9m deep)</li>
+            <li>Free Zone (3m minimum around court)</li>
+          </ul>
+        </p>
+        <p>All lines are 5cm wide. The net height varies by competition level and gender.</p>
+      </div>
+    </section>
+
+    <!-- Rules of the Game -->
+    <section class="section">
+      <h2>Rules of the Game</h2>
+      <p>
+        Governed by the FIVB (Fédération Internationale de Volleyball), the main rules include:
+      </p>
+      <ul>
+        <li>Matches are best-of-5 sets (first to 25 points, 15 in deciding set)</li>
+        <li>Each team gets <strong>3 touches</strong> before returning the ball</li>
+        <li><strong>Scoring:</strong> Rally scoring - point on every serve</li>
+        <li><strong>Rotation:</strong> Players must rotate clockwise after winning serve</li>
+        <li><strong>Net Violations:</strong> No touching net during play</li>
+        <li><strong>Boundaries:</strong> Ball is in if any part touches the line</li>
+        <li><strong>Libero:</strong> Defensive specialist with different substitution rules</li>
+        <li><strong>Timeouts:</strong> 2 per set (30 seconds each) plus technical timeouts</li>
+      </ul>
+      <p>For official rules, visit <a href="https://www.fivb.com" target="_blank">FIVB's official website</a>.</p>
+    </section>
+    
+    <div class="visualization-box">
+      <h3>Interactive 3D Volleyball Play Demo</h3>
+      <div id="volleyball-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()" data-scroll-to-demo>Reset View</button>
+    </div>
+    <div class="legends-card" onclick="window.location.href='vollegends.html'">
+        <img src="https://media.istockphoto.com/id/1371823675/photo/bad-shot.webp?a=1&b=1&s=612x612&w=0&k=20&c=kATqMj0p3sGw6ccEQItAsTWYFOnCaBltlgPi47j_KpI=" 
+             alt="Volleyball Legends" 
+             class="legends-photo">
+        
+        <div class="legends-overlay">
+          <h3>Meet The Legends</h3>
+          <p>Explore volleyball's greatest players</p>
+          <div class="click-hint">Click anywhere to enter</div>
+        </div>
+      </div>
+      
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.fivb.com" target="_blank">FIVB Official Site</a></p>
+    </footer>
+  </main>
+
+  <script>
+    // Volleyball 3D Visualization - Official Specifications
+    let scene, camera, renderer, controls;
+    let court, net, ball;
+
+    function initVolleyballDemo() {
+        // 1. Create scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x333333);
+        
+        // 2. Set camera (top-down angled view)
+        camera = new THREE.PerspectiveCamera(75, document.getElementById('volleyball-demo').clientWidth / 400, 0.1, 1000);
+        camera.position.set(0, 18, 30); // Elevated view
+        
+        // 3. Initialize renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(document.getElementById('volleyball-demo').clientWidth, 400);
+        document.getElementById('volleyball-demo').appendChild(renderer.domElement);
+        
+        // 4. Add orbit controls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // 5. Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(10, 20, 10);
+        scene.add(directionalLight);
+        
+        // 6. Create official volleyball court
+        createCourt();
+        
+        // 7. Create net with exact specifications
+        createNet();
+        
+        // 8. Add ball
+        createBall();
+        
+        // 9. Handle responsiveness
+        window.addEventListener('resize', onWindowResize);
+        
+        // 10. Start animation
+        animate();
+    }
+
+    // OFFICIAL VOLLEYBALL COURT (18m × 9m)
+    function createCourt() {
+        // Playing surface (indoor blue)
+        const courtGeometry = new THREE.PlaneGeometry(18, 9);
+        const courtMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x1E90FF, // Official indoor blue
+            side: THREE.DoubleSide
+        });
+        court = new THREE.Mesh(courtGeometry, courtMaterial);
+        court.rotation.x = -Math.PI / 2;
+        scene.add(court);
+
+        // LINE MARKINGS (5cm wide, white)
+        const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        
+        // Boundary lines
+        createLine(18, 0.05, 0, 0.01, 4.5); // Side line (top)
+        createLine(18, 0.05, 0, 0.01, -4.5); // Side line (bottom)
+        createLine(0.05, 9, 9, 0.01, 0); // End line (right)
+        createLine(0.05, 9, -9, 0.01, 0); // End line (left)
+        
+        // Center line (under net)
+        createLine(0.05, 9, 0, 0.01, 0);
+        
+        // Attack lines (3m from center)
+        createLine(9, 0.05, 3, 0.01, 0); // Right court
+        createLine(9, 0.05, -3, 0.01, 0); // Left court
+        
+        function createLine(width, height, x, y, z) {
+            const geometry = new THREE.PlaneGeometry(width, height);
+            const line = new THREE.Mesh(geometry, lineMaterial);
+            line.rotation.x = -Math.PI / 2;
+            if (width < height) line.rotation.z = Math.PI / 2; // Rotate vertical lines
+            line.position.set(x, y, z);
+            scene.add(line);
+        }
+    }
+
+    // OFFICIAL NET SPECIFICATIONS
+    function createNet() {
+        // Net height: 2.43m (men) / 2.24m (women)
+        const netHeight = 2.43; // Using men's height
+        
+        // Posts (white, 2.55m tall)
+        const postGeometry = new THREE.CylinderGeometry(0.075, 0.075, 2.55, 16);
+        const postMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        
+        const post1 = new THREE.Mesh(postGeometry, postMaterial);
+        post1.position.set(0, 1.275, 4.5); // Right side
+        scene.add(post1);
+        
+        const post2 = new THREE.Mesh(postGeometry, postMaterial);
+        post2.position.set(0, 1.275, -4.5); // Left side
+        scene.add(post2);
+        
+        // Net (black, 1m deep, 9.5m wide)
+        const netGeometry = new THREE.PlaneGeometry(9.5, 1);
+        const netMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x000000,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.7
+        });
+        
+        const net = new THREE.Mesh(netGeometry, netMaterial);
+        net.position.set(0, netHeight/2, 0);
+        net.rotation.y = Math.PI / 2;
+        scene.add(net);
+        
+        // Antennas (red/white, 1.8m tall)
+        const antennaGeometry = new THREE.CylinderGeometry(0.01, 0.01, 1.8, 8);
+        const antennaMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        
+        const antenna1 = new THREE.Mesh(antennaGeometry, antennaMaterial);
+        antenna1.position.set(0, netHeight + 0.9, 4.5);
+        scene.add(antenna1);
+        
+        const antenna2 = new THREE.Mesh(antennaGeometry, antennaMaterial);
+        antenna2.position.set(0, netHeight + 0.9, -4.5);
+        scene.add(antenna2);
+    }
+
+    function createBall() {
+        // Official volleyball size (65-67cm circumference)
+        const ballGeometry = new THREE.SphereGeometry(0.21, 32, 32);
+        const ballTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg');
+        const ballMaterial = new THREE.MeshStandardMaterial({ 
+            map: ballTexture,
+            color: 0xF8F8FF // Off-white base
+        });
+        
+        ball = new THREE.Mesh(ballGeometry, ballMaterial);
+        ball.position.set(0, 3, 0); // Start above net
+        scene.add(ball);
+    }
+
+    function onWindowResize() {
+        camera.aspect = document.getElementById('volleyball-demo').clientWidth / 400;
+        camera.updateProjectionMatrix();
+        renderer.setSize(document.getElementById('volleyball-demo').clientWidth, 400);
+    }
+
+    function resetCamera() {
+        camera.position.set(0, 18, 30);
+        camera.lookAt(0, 0, 0);
+        controls.reset();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        // Ball animation - simulate rally
+        ball.position.y = 3 + Math.sin(Date.now() * 0.002) * 2;
+        ball.position.x = Math.cos(Date.now() * 0.0015) * 4;
+        ball.rotation.x += 0.01;
+        ball.rotation.z += 0.02;
+        
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', initVolleyballDemo);
+</script>
+</body>
+</html>

@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Equipment Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-card: #0f3460;
+            --text-primary: #e6e6e6;
+            --text-secondary: #b8b8b8;
+            --accent-color: #00b4d8;
+            --sport-neon: #00ff9d;
+            --cricket-green: #2ecc71;
+            --football-blue: #3a86ff;
+            --basketball-pink: #ff006e;
+            --tennis-yellow: #ffbe0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center fixed;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: inherit;
+        filter: blur(10px) brightness(0.6);
+        z-index: -1;
+    }
+
+        /* Master Card Styles */
+        .master-card {
+            width: 100%;
+            max-width: 900px;
+            height: 650px;
+            perspective: 2000px;
+            margin: 0 auto;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .master-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background-color: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background-color: var(--bg-secondary);
+        }
+
+        /* Card Header */
+        .card-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .card-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--accent-color), var(--sport-neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-header p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Equipment Categories */
+        .equipment-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .category-item {
+            background-color: rgba(30, 30, 50, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .category-name {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .price-tag {
+            background-color: rgba(0, 180, 216, 0.2);
+            color: var(--accent-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Card Back Styles */
+        .back-content {
+        height: calc(100% - 60px); /* Account for header height */
+        overflow-y: auto;
+        padding-right: 0.5rem;
+    }
+        .back-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-title {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .equipment-details {
+            display: none;
+            height: 100%;
+            padding-bottom: 2rem;
+        }
+         /* Custom scrollbar styling */
+    .back-content::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .back-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .back-content::-webkit-scrollbar-thumb {
+        background: var(--accent-color);
+        border-radius: 3px;
+    }
+
+        .equipment-details.active {
+            display: block;
+        }
+
+        .equipment-details::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .equipment-details::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .equipment-details::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--accent-color);
+        }
+
+        .detail-name {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+        }
+
+        .detail-content {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-specs {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .spec-item {
+            margin-bottom: 1rem;
+        }
+
+        .spec-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .spec-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .price-section {
+            background-color: rgba(30, 30, 50, 0.5);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--sport-neon);
+        }
+
+        .buy-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .buy-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .buy-link.flipkart {
+            background-color: #2874f0;
+            color: white;
+        }
+
+        .buy-link.amazon {
+            background-color: #ff9900;
+            color: black;
+        }
+
+        .buy-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tech-features {
+            background-color: rgba(30, 30, 50, 0.5);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .tech-features h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .tech-features ul {
+            list-style-type: none;
+        }
+
+        .tech-features li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .tech-features li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+
+        /* Carousel Styles */
+        .sports-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .sports-carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .master-card {
+            min-width: 100%;
+            transition: all 0.3s;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .carousel-arrow {
+            background: rgba(30,30,50,0.7);
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .carousel-arrow:hover {
+            background: var(--sport-neon);
+            transform: scale(1.1);
+        }
+
+        /* Sport-specific color themes */
+        .cricket-card .detail-name,
+        .cricket-card .category-name,
+        .cricket-card .back-title,
+        .cricket-card .category-icon {
+            color: var(--cricket-green) !important;
+        }
+
+        .cricket-card .category-item:hover {
+            border-color: var(--cricket-green);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.2);
+        }
+
+        .football-card .detail-name,
+        .football-card .category-name,
+        .football-card .back-title,
+        .football-card .category-icon {
+            color: var(--football-blue) !important;
+        }
+
+        .football-card .category-item:hover {
+            border-color: var(--football-blue);
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .equipment-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .detail-content {
+                flex-direction: column;
+            }
+
+            .detail-image {
+                margin-bottom: 1rem;
+            }
+
+            .master-card {
+                height: auto;
+                min-height: 650px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .equipment-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card-header p {
+                font-size: 0.8rem;
+            }
+
+            .category-item {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sports-container">
+        <div class="sports-carousel">
+            <!-- Cricket Card -->
+            <div class="master-card cricket-card">
+                <div class="card-inner">
+                    <!-- Front of Card -->
+                    <div class="card-front">
+                        <div class="card-header">
+                            <h1>CRICKET EQUIPMENT GUIDE</h1>
+                            <p>Complete professional cricket gear with real market prices</p>
+                        </div>
+                        
+                        <div class="equipment-categories">
+                            <!-- Bat -->
+                            <div class="category-item" onclick="showDetail('bat')" data-equipment="bat">
+                                <div class="category-icon"><i class="fa-solid fa-baseball-bat-ball"></i></div>
+                                <h3 class="category-name">Cricket Bats</h3>
+                                <p class="category-desc">Premium English willow bats for maximum performance</p>
+                                <div class="price-tag">₹3,000 - ₹45,000</div>
+                            </div>
+                            
+                            <!-- Ball -->
+                            <div class="category-item" onclick="showDetail('ball')" data-equipment="ball">
+                                <div class="category-icon"><i class="fas fa-baseball-ball"></i></div>
+                                <h3 class="category-name">Cricket Balls</h3>
+                                <p class="category-desc">Tournament grade leather balls</p>
+                                <div class="price-tag">₹300 - ₹3,000</div>
+                            </div>
+                            
+                            <!-- Gloves -->
+                            <div class="category-item" onclick="showDetail('gloves')" data-equipment="gloves">
+                                <div class="category-icon"><i class="fas fa-hand-paper"></i></div>
+                                <h3 class="category-name">Batting Gloves</h3>
+                                <p class="category-desc">Advanced protection with breathability</p>
+                                <div class="price-tag">₹800 - ₹6,000</div>
+                            </div>
+                            
+                            <!-- Pads -->
+                            <div class="category-item" onclick="showDetail('pads')" data-equipment="pads">
+                                <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="category-name">Leg Guards</h3>
+                                <p class="category-desc">Lightweight yet protective leg pads</p>
+                                <div class="price-tag">₹1,500 - ₹8,000</div>
+                            </div>
+                            
+                            <!-- Helmet -->
+                            <div class="category-item" onclick="showDetail('helmet')" data-equipment="helmet">
+                                <div class="category-icon"><i class="fas fa-hard-hat"></i></div>
+                                <h3 class="category-name">Helmets</h3>
+                                <p class="category-desc">Safety certified head protection</p>
+                                <div class="price-tag">₹1,200 - ₹12,000</div>
+                            </div>
+                            
+                            <!-- Kit Bag -->
+                            <div class="category-item" onclick="showDetail('kit')" data-equipment="kit">
+                                <div class="category-icon"><i class="fas fa-shopping-bag"></i></div>
+                                <h3 class="category-name">Kit Bags</h3>
+                                <p class="category-desc">Durable equipment carriers</p>
+                                <div class="price-tag">₹1,000 - ₹15,000</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: auto; text-align: center; padding-top: 1.5rem;">
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Hover to flip for detailed specifications</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Back of Card -->
+                    <div class="card-back">
+                        <div class="back-content">
+                            <div class="back-header">
+                                <h2 class="back-title">EQUIPMENT DETAILS</h2>
+                                <div class="close-btn" onclick="hideDetails()"><i class="fas fa-times"></i></div>
+                            </div>
+                            
+                            <!-- Bat Details -->
+                            <div id="bat-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-baseball-bat"></i></div>
+                                    <h3 class="detail-name">Professional Cricket Bat</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/bat/z/w/e/0-5-mrf-size-1-junior-new-m-101-series-cricket-bat-1-101-grade-1-original-imaggvzyrhnh8d9x.jpeg?q=70" alt="Cricket Bat">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">MRF, SS Ton, Kookaburra, SG</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹3,000 - ₹45,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">MRF Genius Grand Edition (₹18,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Weight Range</span>
+                                            <span class="spec-value">1.1kg - 1.3kg</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹15,999</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=professional+cricket+bat" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=professional+cricket+bat" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>TECHNOLOGY FEATURES</h3>
+                                    <ul>
+                                        <li>Premium English willow (Grade 1-4 available)</li>
+                                        <li>Carbon fiber reinforced handle</li>
+                                        <li>Precision milled sweet spot</li>
+                                        <li>Moisture-resistant protective coating</li>
+                                        <li>Ergonomic grip with sweat-wicking</li>
+                                        <li>Dual-density willow core for power</li>
+                                        <li>Vibration dampening technology</li>
+                                        <li>Thick edges (38-42mm) for better contact</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Ball Details -->
+                            <div id="ball-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-baseball-ball"></i></div>
+                                    <h3 class="detail-name">Tournament Cricket Balls</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/ball/a/0/f/155-red-white-cricket-ball-club-leather-ball-standard-7-5-2-original-imah45njwdxgrtfk.jpeg?q=70" alt="Cricket Ball">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Kookaburra, SG, Dukes, Cosco</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹300 - ₹3,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Kookaburra Regulation (₹1,799)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Weight</span>
+                                            <span class="spec-value">156-163 grams</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹1,499</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=tournament+cricket+ball" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=tournament+cricket+ball" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>PERFORMANCE FEATURES</h3>
+                                    <ul>
+                                        <li>Premium Australian leather casing</li>
+                                        <li>Dual-core construction for consistent bounce</li>
+                                        <li>UV-resistant dye for color retention</li>
+                                        <li>Precision balanced for true flight</li>
+                                        <li>Hand-stitched seam with waxed thread</li>
+                                        <li>Cork and rubber layered core</li>
+                                        <li>Available in red, white, and pink</li>
+                                        <li>ICC approved for match play</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Gloves Details -->
+                            <div id="gloves-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-hand-paper"></i></div>
+                                    <h3 class="detail-name">Professional Batting Gloves</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/sport-glove/t/g/f/right-handed-batsman-men-platino-rh-cricket-mens-rh-0-2-10-original-imah9kfzfyndzyvd.jpeg?q=70" alt="Batting Gloves">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">SS, GM, Kookaburra, New Balance</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹800 - ₹6,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">SS Premium (₹2,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Sizes</span>
+                                            <span class="spec-value">XS to XXL</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹2,499</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=professional+batting+gloves" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=professional+batting+gloves" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>SAFETY FEATURES</h3>
+                                    <ul>
+                                        <li>Premium kangaroo leather palms</li>
+                                        <li>Carbon fiber finger protection</li>
+                                        <li>Shock-absorbing foam padding</li>
+                                        <li>Moisture-wicking inner lining</li>
+                                        <li>Pre-curved finger design</li>
+                                        <li>Reinforced thumb protection</li>
+                                        <li>Breathable mesh panels</li>
+                                        <li>Adjustable wrist strap</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Pads Details -->
+                            <div id="pads-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <h3 class="detail-name">Professional Leg Guards</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/pad/j/h/m/kahuna-players-mens-17-rh-men-s-39-43-cm-kb-kp-bp-2023-batting-original-imagzdundqgc8v26.jpeg?q=70" alt="Leg Guards">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">SG, MRF, Kookaburra, GM</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,500 - ₹8,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">SG Test (₹3,499)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Sizes</span>
+                                            <span class="spec-value">Youth to Extra Large</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹3,199</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=professional+leg+guards" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=professional+leg+guards" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>PROTECTION FEATURES</h3>
+                                    <ul>
+                                        <li>Lightweight PVC cane rolls for protection</li>
+                                        <li>High-density foam padding</li>
+                                        <li>Breathable inner lining</li>
+                                        <li>Reinforced knee rolls</li>
+                                        <li>Adjustable straps with velcro</li>
+                                        <li>Ergonomic curvature for comfort</li>
+                                        <li>Water-resistant outer shell</li>
+                                        <li>Anatomically shaped for perfect fit</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Helmet Details -->
+                            <div id="helmet-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-hard-hat"></i></div>
+                                    <h3 class="detail-name">Cricket Helmets</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/kl6wx3k0/helmet/y/0/u/pro-guard-air-stainless-steel-1-pro-guard-air-stainless-steel-61-original-imagyd3fffhhtrhn.jpeg?q=70" alt="Cricket Helmet">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Masuri, SS, Kookaburra, GM</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,200 - ₹12,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">SS Proton (₹3,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Safety Standard</span>
+                                            <span class="spec-value">British Standard BS7928:2013</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹3,599</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=cricket+helmet" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=cricket+helmet" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>SAFETY TECHNOLOGY</h3>
+                                    <ul>
+                                        <li>High-impact ABS plastic shell</li>
+                                        <li>Dual-density foam padding</li>
+                                        <li>Adjustable chin strap</li>
+                                        <li>Ventilation holes for airflow</li>
+                                        <li>Removable face guard</li>
+                                        <li>Lightweight construction (400-500g)</li>
+                                        <li>Anti-glare visor option</li>
+                                        <li>Moisture-wicking inner lining</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Kit Bag Details -->
+                            <div id="kit-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-bag"></i></div>
+                                    <h3 class="detail-name">Cricket Kit Bags</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://m.media-amazon.com/images/I/71c-MU4-SSL._AC_UL480_FMwebp_QL65_.jpg">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">SS, SG, Adidas, Spartan</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,000 - ₹15,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">SG Tournament (₹2,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Capacity</span>
+                                            <span class="spec-value">Full kit (bat + all gear)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹2,499</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=cricket+kit+bag" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=cricket+kit+bag" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>FEATURES</h3>
+                                    <ul>
+                                        <li>Durable 600D polyester construction</li>
+                                        <li>Multiple compartments for organization</li>
+                                        <li>Padded bat sleeve</li>
+                                        <li>Ventilated shoe compartment</li>
+                                        <li>Water-resistant base</li>
+                                        <li>Adjustable shoulder straps</li>
+                                        <li>External pockets for accessories</li>
+                                        <li>Wheeled options available</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Football Card -->
+            <div class="master-card football-card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-header">
+                            <h1>FOOTBALL EQUIPMENT GUIDE</h1>
+                            <p>Complete professional football gear with real market prices</p>
+                        </div>
+                        
+                        <div class="equipment-categories">
+                            <!-- Football -->
+                            <div class="category-item" onclick="showDetail('football-ball')">
+                                <div class="category-icon"><i class="fas fa-futbol"></i></div>
+                                <h3 class="category-name">Football</h3>
+                                <p class="category-desc">Professional match balls</p>
+                                <div class="price-tag">₹500 - ₹10,000</div>
+                            </div>
+                            
+                            <!-- Football Shoes -->
+                            <div class="category-item" onclick="showDetail('football-shoes')">
+                                <div class="category-icon"><i class="fas fa-shoe-prints"></i></div>
+                                <h3 class="category-name">Football Shoes</h3>
+                                <p class="category-desc">Cleats for optimal grip</p>
+                                <div class="price-tag">₹1,500 - ₹15,000</div>
+                            </div>
+                            
+                            <!-- Football Gloves -->
+                            <div class="category-item" onclick="showDetail('football-gloves')">
+                                <div class="category-icon"><i class="fas fa-hand-paper"></i></div>
+                                <h3 class="category-name">Goalkeeper Gloves</h3>
+                                <p class="category-desc">Professional grip and protection</p>
+                                <div class="price-tag">₹1,200 - ₹8,000</div>
+                            </div>
+                            
+                            <!-- Shin Guards -->
+                            <div class="category-item" onclick="showDetail('football-shin')">
+                                <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                                <h3 class="category-name">Shin Guards</h3>
+                                <p class="category-desc">Impact protection</p>
+                                <div class="price-tag">₹800 - ₹5,000</div>
+                            </div>
+                            
+                            <!-- Jersey -->
+                            <div class="category-item" onclick="showDetail('football-jersey')">
+                                <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+                                <h3 class="category-name">Jerseys</h3>
+                                <p class="category-desc">Team and player jerseys</p>
+                                <div class="price-tag">₹1,000 - ₹8,000</div>
+                            </div>
+                            
+                            <!-- Kit Bag -->
+                            <div class="category-item" onclick="showDetail('football-kit')">
+                                <div class="category-icon"><i class="fas fa-shopping-bag"></i></div>
+                                <h3 class="category-name">Kit Bags</h3>
+                                <p class="category-desc">Durable equipment carriers</p>
+                                <div class="price-tag">₹1,000 - ₹15,000</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: auto; text-align: center; padding-top: 1.5rem;">
+                            <p style="font-size: 0.9rem; opacity: 0.7;">Hover to flip for detailed specifications</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-back">
+                        <div class="back-content">
+                            <div class="back-header">
+                                <h2 class="back-title">EQUIPMENT DETAILS</h2>
+                                <div class="close-btn" onclick="hideDetails()"><i class="fas fa-times"></i></div>
+                            </div>
+                            
+                            <!-- Football Ball Details -->
+                            <div id="football-ball-details" class="equipment-details active">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-futbol"></i></div>
+                                    <h3 class="detail-name">Professional Football</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/ball/h/v/3/50-maestro-4-22-1-fj5547-110-football-nike-original-imahamxhgeupvg5q.jpeg?q=70" alt="Football">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Nike, Adidas, Puma, Select</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹500 - ₹10,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Adidas Champions League (₹4,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Size</span>
+                                            <span class="spec-value">Size 5 (Standard for adults)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹4,299</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=professional+football" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=professional+football" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>PERFORMANCE FEATURES</h3>
+                                    <ul>
+                                        <li>Thermally bonded panels for perfect roundness</li>
+                                        <li>Butyl bladder for consistent air retention</li>
+                                        <li>Machine-stitched for durability</li>
+                                        <li>Textured surface for better grip</li>
+                                        <li>FIFA approved for match play</li>
+                                        <li>All-weather performance</li>
+                                        <li>Available in multiple designs</li>
+                                        <li>Weight: 410-450g (size 5)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Football Shoes Details -->
+                            <div id="football-shoes-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-shoe-prints"></i></div>
+                                    <h3 class="detail-name">Football Cleats</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/shoe/q/v/t/6-ie0611-6-adidas-ftwwht-solred-lucblu-original-imah77drj6d7fdp4.jpeg?q=70" alt="Football Shoes">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Nike, Adidas, Puma, Mizuno</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,500 - ₹15,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Nike Mercurial Vapor (₹12,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Stud Types</span>
+                                            <span class="spec-value">FG (Firm Ground), SG (Soft Ground)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹10,999</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=football+cleats" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=football+cleats" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>TECHNOLOGY FEATURES</h3>
+                                    <ul>
+                                        <li>Lightweight synthetic or kangaroo leather upper</li>
+                                        <li>Bladed or conical stud configuration</li>
+                                        <li>Ankle support technology</li>
+                                        <li>Shock-absorbing insole</li>
+                                        <li>Anti-clog soleplate for wet conditions</li>
+                                        <li>Breathable mesh lining</li>
+                                        <li>Enhanced ball control texture</li>
+                                        <li>Durable rubber outsole</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Football Gloves Details -->
+                            <div id="football-gloves-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-hand-paper"></i></div>
+                                    <h3 class="detail-name">Goalkeeper Gloves</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/sport-glove/y/1/l/left-right-football-goalkeeper-gloves-gkg-09-size-9-5-xl-gkg-09-original-imagzyh63hgfsxcx.jpeg?q=70" alt="Goalkeeper Gloves">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Adidas, Nike, Uhlsport, Reusch</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,200 - ₹8,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Adidas Predator Pro (₹5,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Sizes</span>
+                                            <span class="spec-value">6 to 11 (EU sizing)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹4,999</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=goalkeeper+gloves" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=goalkeeper+gloves" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>PERFORMANCE FEATURES</h3>
+                                    <ul>
+                                        <li>Latex palm for superior grip</li>
+                                        <li>Finger protection spines</li>
+                                        <li>Adjustable wrist strap</li>
+                                        <li>Breathable backhand material</li>
+                                        <li>Weather-resistant for all conditions</li>
+                                        <li>Shock-absorbing foam padding</li>
+                                        <li>Negative or hybrid cut for snug fit</li>
+                                        <li>Washable for extended durability</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Shin Guards Details -->
+                            <div id="football-shin-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <h3 class="detail-name">Shin Guards</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/guard/o/n/i/right-left-ultra-light-strap-s-1-03087507-football-shin-guard-original-imagvup3ughtajgg.jpeg?q=70" alt="Shin Guards">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Nike, Adidas, Puma, Uhlsport</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹800 - ₹5,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Nike Mercurial Lite (₹2,499)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Sizes</span>
+                                            <span class="spec-value">XS to XL (Youth to Adult)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹1,999</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=football+shin+guards" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=football+shin+guards" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>PROTECTION FEATURES</h3>
+                                    <ul>
+                                        <li>Lightweight polypropylene shell</li>
+                                        <li>Dual-density foam padding</li>
+                                        <li>Anatomically shaped for perfect fit</li>
+                                        <li>Breathable fabric backing</li>
+                                        <li>Adjustable ankle straps</li>
+                                        <li>Slim profile design</li>
+                                        <li>Shock-absorbing technology</li>
+                                        <li>Compression sleeve compatible</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Jersey Details -->
+                            <div id="football-jersey-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-tshirt"></i></div>
+                                    <h3 class="detail-name">Football Jerseys</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/t-shirt/c/s/s/s-77044902-puma-original-imagscydkghufwvm.jpeg?q=70" alt="Football Jersey">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Nike, Adidas, Puma, New Balance</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,000 - ₹8,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Argentina Home Jersey 2022 (₹4,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Sizes</span>
+                                            <span class="spec-value">XS to XXL (Youth to Adult)</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹3,999</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=football+jersey" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=football+jersey" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>MATERIAL TECHNOLOGY</h3>
+                                    <ul>
+                                        <li>100% polyester moisture-wicking fabric</li>
+                                        <li>Ventilation zones for airflow</li>
+                                        <li>Seamless construction</li>
+                                        <li>UV protection</li>
+                                        <li>Stretch panels for mobility</li>
+                                        <li>Durable screen printing</li>
+                                        <li>Lightweight (120-150g)</li>
+                                        <li>Machine washable</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Kit Bag Details -->
+                            <div id="football-kit-details" class="equipment-details">
+                                <div class="detail-header">
+                                    <div class="detail-icon"><i class="fas fa-shopping-bag"></i></div>
+                                    <h3 class="detail-name">Football Kit Bags</h3>
+                                </div>
+                                
+                                <div class="detail-content">
+                                    <div class="detail-image">
+                                        <img src="./assets/kitbag football.webp" alt="Football Kit Bag">
+                                    </div>
+                                    
+                                    <div class="detail-specs">
+                                        <div class="spec-item">
+                                            <span class="spec-label">Top Brands</span>
+                                            <span class="spec-value">Nike, Adidas, Puma, Kipsta</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Price Range</span>
+                                            <span class="spec-value">₹1,000 - ₹15,000</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Popular Model</span>
+                                            <span class="spec-value">Nike Team Training (₹3,999)</span>
+                                        </div>
+                                        
+                                        <div class="spec-item">
+                                            <span class="spec-label">Capacity</span>
+                                            <span class="spec-value">35L to 75L</span>
+                                        </div>
+                                        
+                                        <div class="price-section">
+                                            <div>
+                                                <span class="spec-label">Best Deal</span>
+                                                <span class="price">₹3,499</span>
+                                            </div>
+                                            <div class="buy-links">
+                                                <a href="https://www.flipkart.com/search?q=football+kit+bag" class="buy-link flipkart" target="_blank">
+                                                    <i class="fab fa-flipkart"></i> Flipkart
+                                                </a>
+                                                <a href="https://www.amazon.in/s?k=football+kit+bag" class="buy-link amazon" target="_blank">
+                                                    <i class="fab fa-amazon"></i> Amazon
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="tech-features">
+                                    <h3>FEATURES</h3>
+                                    <ul>
+                                        <li>Durable polyester or nylon construction</li>
+                                        <li>Multiple compartments for organization</li>
+                                        <li>Ventilated shoe compartment</li>
+                                        <li>Padded shoulder straps</li>
+                                        <li>Water-resistant base</li>
+                                        <li>External pockets for accessories</li>
+                                        <li>Wheeled options available</li>
+                                        <li>Team logo printing available</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Basketball Card -->
+<div class="master-card basketball-card">
+    <div class="card-inner">
+        <div class="card-front">
+            <div class="card-header">
+                <h1>BASKETBALL EQUIPMENT GUIDE</h1>
+                <p>Complete professional basketball gear with real market prices</p>
+            </div>
+            
+            <div class="equipment-categories">
+                <!-- Basketball -->
+                <div class="category-item" onclick="showDetail('basketball-ball')">
+                    <div class="category-icon"><i class="fas fa-basketball-ball"></i></div>
+                    <h3 class="category-name">Basketball</h3>
+                    <p class="category-desc">Official game balls</p>
+                    <div class="price-tag">₹800 - ₹12,000</div>
+                </div>
+                
+                <!-- Basketball Shoes -->
+                <div class="category-item" onclick="showDetail('basketball-shoes')">
+                    <div class="category-icon"><i class="fas fa-shoe-prints"></i></div>
+                    <h3 class="category-name">Basketball Shoes</h3>
+                    <p class="category-desc">High-performance footwear</p>
+                    <div class="price-tag">₹2,500 - ₹25,000</div>
+                </div>
+                
+                <!-- Knee Pads -->
+                <div class="category-item" onclick="showDetail('basketball-knee')">
+                    <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="category-name">Knee Pads</h3>
+                    <p class="category-desc">Impact protection</p>
+                    <div class="price-tag">₹600 - ₹5,000</div>
+                </div>
+                
+                <!-- Jersey -->
+                <div class="category-item" onclick="showDetail('basketball-jersey')">
+                    <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+                    <h3 class="category-name">Jerseys</h3>
+                    <p class="category-desc">Team and player jerseys</p>
+                    <div class="price-tag">₹1,200 - ₹9,000</div>
+                </div>
+                
+                <!-- Backboard -->
+                <div class="category-item" onclick="showDetail('basketball-backboard')">
+                    <div class="category-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3 class="category-name">Backboard Systems</h3>
+                    <p class="category-desc">Home practice setups</p>
+                    <div class="price-tag">₹5,000 - ₹50,000</div>
+                </div>
+                
+                <!-- Gym Bag -->
+                <div class="category-item" onclick="showDetail('basketball-bag')">
+                    <div class="category-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3 class="category-name">Gym Bags</h3>
+                    <p class="category-desc">Equipment carriers</p>
+                    <div class="price-tag">₹1,500 - ₹12,000</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: auto; text-align: center; padding-top: 1.5rem;">
+                <p style="font-size: 0.9rem; opacity: 0.7;">Hover to flip for detailed specifications</p>
+            </div>
+        </div>
+        
+        <div class="card-back">
+            <div class="back-content">
+                <div class="back-header">
+                    <h2 class="back-title">EQUIPMENT DETAILS</h2>
+                    <div class="close-btn" onclick="hideDetails()"><i class="fas fa-times"></i></div>
+                </div>
+                
+                <!-- Basketball Ball Details -->
+                <div id="basketball-ball-details" class="equipment-details active">
+                    <div class="detail-header">
+                        <div class="detail-icon"><i class="fas fa-basketball-ball"></i></div>
+                        <h3 class="detail-name">Professional Basketball</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/kkimfm80/ball/4/r/2/100-7-engraver-nv-201-basketball-nivia-original-imafzungs7v2zkny.jpeg?q=70" alt="Basketball">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Wilson, Spalding, Nike, Molten</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹800 - ₹12,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">Wilson Evolution (₹6,499)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Size</span>
+                                <span class="spec-value">Size 7 (Official men's size)</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹5,999</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=professional+basketball" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=professional+basketball" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>PERFORMANCE FEATURES</h3>
+                        <ul>
+                            <li>Composite leather or genuine leather cover</li>
+                            <li>Deep channels for better grip</li>
+                            <li>Butyl bladder for consistent bounce</li>
+                            <li>Weight: 22 oz (size 7)</li>
+                            <li>Circumference: 29.5 inches</li>
+                            <li>NFHS/NBA approved for competition</li>
+                            <li>Pebbled texture for enhanced control</li>
+                            <li>Indoor/outdoor variants available</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Basketball Shoes Details -->
+                <div id="basketball-shoes-details" class="equipment-details">
+                    <div class="detail-header">
+                        <div class="detail-icon"><i class="fas fa-shoe-prints"></i></div>
+                        <h3 class="detail-name">Basketball Shoes</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/shoe/y/b/y/11-ocm-724-01-off-limits-off-white-original-imah7hkcerfeykjm.jpeg?q=70" alt="Basketball Shoes">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Nike, Adidas, Under Armour, Jordan</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹2,500 - ₹25,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">Nike LeBron 20 (₹15,999)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Ankle Support</span>
+                                <span class="spec-value">Low, Mid, High top options</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹14,499</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=basketball+shoes" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=basketball+shoes" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>TECHNOLOGY FEATURES</h3>
+                        <ul>
+                            <li>Responsive cushioning (Zoom Air, Boost, etc.)</li>
+                            <li>Ankle support systems</li>
+                            <li>Breathable mesh uppers</li>
+                            <li>Multi-directional traction patterns</li>
+                            <li>Impact-absorbing midsoles</li>
+                            <li>Lightweight synthetic materials</li>
+                            <li>Player-specific technologies (e.g., LeBron, Curry lines)</li>
+                            <li>Durable rubber outsoles</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Knee Pads Details -->
+                <div id="basketball-knee-details" class="equipment-details">
+                    <div class="detail-header">
+                        <div class="detail-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3 class="detail-name">Knee Pads</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/l44hyfk0/support/l/t/7/both-the-legs-knee-cap-for-pain-relief-guard-brace-band-gym-knee-original-imagf3gzmasmkyby.jpeg?q=70" alt="Knee Pads">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Nike, McDavid, Bauerfeind, Zamst</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹600 - ₹5,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">Nike Pro Knee Pad (₹1,799)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Sizes</span>
+                                <span class="spec-value">S to XL (based on thigh circumference)</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹1,499</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=basketball+knee+pads" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=basketball+knee+pads" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>PROTECTION FEATURES</h3>
+                        <ul>
+                            <li>Compression fit for muscle support</li>
+                            <li>Gel or foam padding for impact absorption</li>
+                            <li>Breathable fabric with moisture-wicking</li>
+                            <li>Anti-slip silicone grips</li>
+                            <li>Articulated design for full range of motion</li>
+                            <li>Lightweight construction</li>
+                            <li>Washable and durable</li>
+                            <li>Patella protection zone</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Jersey Details -->
+                <div id="basketball-jersey-details" class="equipment-details">
+                    <div class="detail-header">
+                        <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+                        <h3 class="detail-name">Basketball Jerseys</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/t-shirt/k/k/t/xxl-men-s-compression-top-full-sleeve-compression-shirt-1-or-3-original-imagycghwegytsm5.jpeg?q=70" alt="Basketball Jersey">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Nike, Adidas, Mitchell & Ness, Fanatics</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹1,200 - ₹9,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">NBA Swingman Jersey (₹5,999)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Sizes</span>
+                                <span class="spec-value">XS to 3XL (Youth to Adult)</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹4,499</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=nba+jersey" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=nba+jersey" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>MATERIAL TECHNOLOGY</h3>
+                        <ul>
+                            <li>100% polyester moisture-wicking fabric</li>
+                            <li>Breathable mesh side panels</li>
+                            <li>Durable screen-printed graphics</li>
+                            <li>Tagless collar for comfort</li>
+                            <li>Authentic team colors and logos</li>
+                            <li>Replica vs. authentic versions available</li>
+                            <li>Jock tag with size information</li>
+                            <li>Machine washable</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Backboard Details -->
+                <div id="basketball-backboard-details" class="equipment-details">
+                    <div class="detail-header">
+                        <div class="detail-icon"><i class="fas fa-bullseye"></i></div>
+                        <h3 class="detail-name">Backboard Systems</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/basketball-ring/b/x/m/30-basketball-ring-stand-kavyashine-original-imaha8b5hxeyxgcj.jpeg?q=70" alt="Basketball Backboard">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Spalding, Lifetime, Goalrilla, Silverback</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹5,000 - ₹50,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">Spalding NBA Portable (₹22,999)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Backboard Size</span>
+                                <span class="spec-value">44" to 72" (regulation is 72"x42")</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹19,999</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=basketball+hoop" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=basketball+hoop" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>SYSTEM FEATURES</h3>
+                        <ul>
+                            <li>Tempered glass or polycarbonate backboard</li>
+                            <li>Adjustable height (7.5' to 10')</li>
+                            <li>Steel rim with breakaway feature</li>
+                            <li>Heavy-duty base or in-ground installation</li>
+                            <li>Weather-resistant materials</li>
+                            <li>Padding for player protection</li>
+                            <li>Portable or permanent options</li>
+                            <li>NBA-approved specifications</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Gym Bag Details -->
+                <div id="basketball-bag-details" class="equipment-details">
+                    <div class="detail-header">
+                        <div class="detail-icon"><i class="fas fa-bag"></i></div>
+                        <h3 class="detail-name">Basketball Gym Bags</h3>
+                    </div>
+                    
+                    <div class="detail-content">
+                        <div class="detail-image">
+                            <img src="https://rukminim2.flixcart.com/image/612/612/xif0q/sport-bag/w/t/a/combo-of-protein-gym-shaker-with-stylish-gym-travel-bag-xl-ci-original-imahb99n7763c4rx.jpeg?q=70" alt="Basketball Gym Bag">
+                        </div>
+                        
+                        <div class="detail-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Top Brands</span>
+                                <span class="spec-value">Nike, Adidas, Under Armour, Eastpak</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Price Range</span>
+                                <span class="spec-value">₹1,500 - ₹12,000</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Popular Model</span>
+                                <span class="spec-value">Nike Brasilia (₹3,499)</span>
+                            </div>
+                            
+                            <div class="spec-item">
+                                <span class="spec-label">Capacity</span>
+                                <span class="spec-value">30L to 65L</span>
+                            </div>
+                            
+                            <div class="price-section">
+                                <div>
+                                    <span class="spec-label">Best Deal</span>
+                                    <span class="price">₹2,999</span>
+                                </div>
+                                <div class="buy-links">
+                                    <a href="https://www.flipkart.com/search?q=basketball+gym+bag" class="buy-link flipkart" target="_blank">
+                                        <i class="fab fa-flipkart"></i> Flipkart
+                                    </a>
+                                    <a href="https://www.amazon.in/s?k=basketball+gym+bag" class="buy-link amazon" target="_blank">
+                                        <i class="fab fa-amazon"></i> Amazon
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-features">
+                        <h3>FEATURES</h3>
+                        <ul>
+                            <li>Durable polyester or nylon construction</li>
+                            <li>Separate ventilated shoe compartment</li>
+                            <li>Multiple pockets for organization</li>
+                            <li>Padded shoulder straps</li>
+                            <li>Water-resistant base</li>
+                            <li>External mesh pockets for water bottles</li>
+                            <li>Team logo printing options</li>
+                            <li>TSA-approved locks for travel</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+        <div class="carousel-nav">
+            <button class="carousel-arrow left-arrow" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow right-arrow" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Carousel functionality
+        let currentSlide = 0;
+        const carousel = document.querySelector('.sports-carousel');
+        const cards = document.querySelectorAll('.master-card');
+        
+        function moveCarousel(direction) {
+            currentSlide = (currentSlide + direction + cards.length) % cards.length;
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        // Equipment detail functions
+        function showDetail(equipment) {
+            // Get the current card
+            const currentCard = cards[currentSlide];
+            currentCard.classList.add('flipped');
+            
+            // Hide all details first
+            currentCard.querySelectorAll('.equipment-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Show selected equipment details
+            currentCard.querySelector(`#${equipment}-details`).classList.add('active');
+        }
+        
+        function hideDetails() {
+            cards[currentSlide].classList.remove('flipped');
+            cards[currentSlide].querySelectorAll('.equipment-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+        }
+        
+        // Mobile fallback for card flip
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                document.querySelectorAll('.category-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const equipment = this.getAttribute('onclick').replace("showDetail('", "").replace("')", "");
+                        showDetail(equipment);
+                    });
+                });
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.querySelector('.sports-container').addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.querySelector('.sports-container').addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                moveCarousel(1);
+            } else if (touchEndX > touchStartX + 50) {
+                moveCarousel(-1);
+            }
+        }
+    </script>
+</body>
+</html>

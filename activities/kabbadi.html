@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kabaddi - Sports Gamified Platform</title>
+  <link rel="stylesheet" href="../cssfiles/b.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+<style>
+     .legends-card {
+    position: relative;
+    max-width: 600px;
+    margin: 30px auto;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .legends-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0,91,187,0.4);
+  }
+
+  .legends-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .legends-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,30,0,0.9));
+    color: white;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .legends-overlay h3 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: 'Bebas Neue', cursive;
+    letter-spacing: 2px;
+    color: #D4AF37;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .legends-overlay p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    margin-bottom: 15px;
+  }
+
+  .click-hint {
+    background: rgba(212,175,55,0.2);
+    border: 1px solid #D4AF37;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .legends-card:hover .click-hint {
+    background: rgba(212,175,55,0.4);
+    transform: scale(1.05);
+  }
+
+  /* Optional: Add cricket ball decoration */
+  .legends-card::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23D10000"/><path d="M50,5 A45,45 0 0,1 95,50 A45,45 0 0,1 50,95 A45,45 0 0,1 5,50 A45,45 0 0,1 50,5 Z" fill="none" stroke="white" stroke-width="2"/></svg>');
+    background-size: contain;
+    opacity: 0.8;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+ .visualization-box {
+  background: rgba(30, 30, 30, 0.9); /* Dark gray with slight transparency */
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1), 
+              0 8px 30px rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f0f0f0; /* Light text color */
+  transition: all 0.3s ease;
+}
+
+.visualization-box:hover {
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15), 
+              0 10px 40px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+#raid-demo {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.visualization-box button {
+  background: var(--secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.visualization-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.visualization-box h3 {
+  color: #ffffff;
+  margin-top: 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+</style>
+<body>
+  <header>
+    <h1>Kabaddi</h1>
+    <a href="../index.html" class="back-btn">← Back to Main Page</a>
+  </header>
+
+  <main class="container">
+
+    <!-- Importance of the Game -->
+    <section class="section">
+      <h2>Importance of the Game</h2>
+      <p>
+        Kabaddi is a traditional South Asian contact sport that combines elements of wrestling and tag. It's known as the "game of the masses" and requires both physical prowess and mental strategy. Kabaddi promotes agility, strength, breath control, and teamwork while being deeply rooted in cultural heritage.
+      </p>
+      <p>
+        The game develops lung capacity through its unique "cant" (holding breath while raiding) requirement. It enhances reflexes, strategic thinking, and physical endurance. Kabaddi has gained international recognition through events like the Pro Kabaddi League and Kabaddi World Cup.
+      </p>
+    </section>
+
+    <!-- Materials of the Game -->
+    <section class="section">
+      <h2>Materials Required</h2>
+      <ul>
+        <li><strong>Playing Area:</strong> Court measuring 13m × 10m for men, 12m × 8m for women</li>
+        <li><strong>Comfortable Clothing:</strong> Lightweight t-shirt and shorts (often cotton)</li>
+        <li><strong>Sports Shoes:</strong> Flexible shoes with good grip</li>
+        <li><strong>Knee/Elbow Pads:</strong> Optional protective gear</li>
+        <li><strong>Chalk/Paint:</strong> For marking court boundaries</li>
+        <li><strong>Scoreboard:</strong> To track points and time</li>
+      </ul>
+    </section>
+
+    <!-- Physical Benefits -->
+    <section class="section">
+      <h2>Physical Benefits</h2>
+      <p>
+        Kabaddi is an intense full-body workout with numerous health benefits:
+      </p>
+      <ul>
+        <li><strong>Improves Lung Capacity:</strong> The cant (holding breath) technique strengthens respiratory muscles.</li>
+        <li><strong>Enhances Reflexes:</strong> Quick dodging and tagging develop fast reactions.</li>
+        <li><strong>Builds Strength & Endurance:</strong> Engages all muscle groups through grappling and running.</li>
+        <li><strong>Boosts Flexibility:</strong> Stretching movements improve overall flexibility.</li>
+        <li><strong>Develops Mental Toughness:</strong> Requires focus, strategy, and quick decision-making under pressure.</li>
+      </ul>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="section grid-3">
+      <div class="card">
+        <h3>Calories Burned</h3>
+        <p>Kabaddi can burn <strong>500-800 calories</strong> per hour due to its high-intensity nature.</p>
+      </div>
+      <div class="card">
+        <h3>Recommended Age</h3>
+        <p>Can be played from <strong>age 10+</strong>. Professional players typically compete between 18-35 years.</p>
+      </div>
+      <div class="card">
+        <h3>Required Equipment</h3>
+        <p>Minimal equipment needed - just a marked court, comfortable clothing, and proper footwear.</p>
+      </div>
+    </section>
+
+    <!-- Court Layout -->
+    <section class="section court-layout">
+      <h2>Kabaddi Court Layout</h2>
+      <div class="court-image">
+        <img src="/assets/kab.png" alt="Kabaddi Court Layout">
+      </div>
+      <div class="court-info">
+        <p><strong>Dimensions:</strong> Standard men's court is <strong>13m × 10m</strong>, women's is <strong>12m × 8m</strong>.</p>
+        <p><strong>Important Zones:</strong>
+          <ul>
+            <li>Playing Area (main court)</li>
+            <li>Lobby Area (1m wide on both sides)</li>
+            <li>Mid Line (divides teams)</li>
+            <li>Baulk Line (3.75m from midline)</li>
+            <li>Bonus Line (1m from baulk line)</li>
+            <li>Sitting Block (for out players)</li>
+          </ul>
+        </p>
+        <p>All lines are 5cm wide and clearly marked. The surface should be soft (often mud or synthetic mat).</p>
+      </div>
+    </section>
+
+    <!-- Rules of the Game -->
+    <section class="section">
+      <h2>Rules of the Game</h2>
+      <p>
+        Governed by the International Kabaddi Federation, the rules ensure fair and exciting gameplay:
+      </p>
+      <ul>
+        <li>Matches consist of <strong>two halves of 20 minutes</strong> each with a 5-minute halftime.</li>
+        <li>Each team has <strong>7 players</strong> on court and 3-5 substitutes.</li>
+        <li>The <strong>raider</strong> must cross the baulk line to score points while chanting "kabaddi" without taking a breath.</li>
+        <li><strong>Defenders</strong> try to stop the raider by tackling or restraining them.</li>
+        <li><strong>Points are scored</strong> when:
+          <ul>
+            <li>Raider touches opponents and returns to their half (1 point per player touched)</li>
+            <li>Defenders stop the raider (1 point to defending team)</li>
+            <li>All opponents are out (2 bonus points)</li>
+          </ul>
+        </li>
+        <li><strong>Out Players</strong> must leave the court but can return when their team scores points.</li>
+        <li><strong>Super Tackle:</strong> When 3 or fewer defenders stop a raider (extra point).</li>
+        <li><strong>Do-or-Die Raid:</strong> After two empty raids, the third raid must score or the raider is out.</li>
+      </ul>
+      <p>For official details, visit <a href="https://www.worldkabaddi.org" target="_blank">International Kabaddi Federation</a>.</p>
+    </section>
+    
+    <div class="visualization-box">
+      <h3>Interactive 3D Raid Demo</h3>
+      <div id="raid-demo" style="width:100%; height:400px;"></div>
+      <button onclick="resetCamera()">Reset View</button>
+    </div>
+    <div class="legends-card" onclick="window.location.href='kablegends.html'">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRefYAHAgXYdj1ZmO3oE-Jl2pK_wiC4KPDfLQ&s" 
+             alt="Cricket Legends" 
+             class="legends-photo">
+        
+        <div class="legends-overlay">
+          <h3>Meet The Legends</h3>
+          <p>Explore kabaddi's greatest players</p>
+          <div class="click-hint">Click anywhere to enter</div>
+        </div>
+      </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2025 Sports Gamified Platform | Info Source: <a href="https://www.worldkabaddi.org" target="_blank">IKF Official Site</a></p>
+    </footer>
+  </main>
+
+  <script>
+    // Initialize Three.js scene for kabaddi raid visualization
+    let scene, camera, renderer, controls;
+    let court, players = [], raider;
+
+    function initRaidDemo() {
+        // Create scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x333333);
+        
+        // Create camera
+        camera = new THREE.PerspectiveCamera(75, document.getElementById('raid-demo').clientWidth / 400, 0.1, 1000);
+        camera.position.set(0, 10, 20);
+        
+        // Create renderer
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(document.getElementById('raid-demo').clientWidth, 400);
+        document.getElementById('raid-demo').appendChild(renderer.domElement);
+        
+        // Add controls
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        
+        // Add lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(0, 20, 10);
+        scene.add(directionalLight);
+        
+        // Create kabaddi court
+        createCourt();
+        
+        // Create players and raider
+        createKabaddiPlayers();
+        
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize);
+        
+        // Start animation loop
+        animate();
+    }
+
+    function createCourt() {
+        // Court (brown rectangle)
+        const courtGeometry = new THREE.PlaneGeometry(13, 10);
+        const courtMaterial = new THREE.MeshStandardMaterial({ 
+            color: 0x8B4513, // sandy brown
+            side: THREE.DoubleSide
+        });
+        court = new THREE.Mesh(courtGeometry, courtMaterial);
+        court.rotation.x = -Math.PI / 2;
+        scene.add(court);
+        
+        // Add court markings
+        addCourtMarkings();
+    }
+
+    function addCourtMarkings() {
+        // Mid line
+        const midLineGeometry = new THREE.PlaneGeometry(0.05, 10);
+        const midLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const midLine = new THREE.Mesh(midLineGeometry, midLineMaterial);
+        midLine.rotation.x = -Math.PI / 2;
+        midLine.position.set(0, 0.01, 0);
+        scene.add(midLine);
+        
+        // Baulk lines (3.75m from midline)
+        const baulkLineGeometry = new THREE.PlaneGeometry(0.05, 10);
+        const baulkLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        
+        const baulkLine1 = new THREE.Mesh(baulkLineGeometry, baulkLineMaterial);
+        baulkLine1.rotation.x = -Math.PI / 2;
+        baulkLine1.position.set(-3.75, 0.01, 0);
+        scene.add(baulkLine1);
+        
+        const baulkLine2 = new THREE.Mesh(baulkLineGeometry, baulkLineMaterial);
+        baulkLine2.rotation.x = -Math.PI / 2;
+        baulkLine2.position.set(3.75, 0.01, 0);
+        scene.add(baulkLine2);
+        
+        // Bonus lines (1m from baulk lines)
+        const bonusLineGeometry = new THREE.PlaneGeometry(0.05, 10);
+        const bonusLineMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        
+        const bonusLine1 = new THREE.Mesh(bonusLineGeometry, bonusLineMaterial);
+        bonusLine1.rotation.x = -Math.PI / 2;
+        bonusLine1.position.set(-2.75, 0.01, 0);
+        scene.add(bonusLine1);
+        
+        const bonusLine2 = new THREE.Mesh(bonusLineGeometry, bonusLineMaterial);
+        bonusLine2.rotation.x = -Math.PI / 2;
+        bonusLine2.position.set(2.75, 0.01, 0);
+        scene.add(bonusLine2);
+    }
+
+    function createKabaddiPlayers() {
+        // Create defenders (team 1 - red)
+        const defenderGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const defenderMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        
+        // Position defenders in their half
+        for (let i = 0; i < 7; i++) {
+            const defender = new THREE.Mesh(defenderGeometry, defenderMaterial);
+            defender.position.set(
+                Math.random() * 3 + 2, // x position (2-5m in their half)
+                0.5,
+                (Math.random() - 0.5) * 8 // z position (-4 to 4m)
+            );
+            scene.add(defender);
+            players.push(defender);
+        }
+        
+        // Create raider (team 2 - blue)
+        const raiderGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const raiderMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+        raider = new THREE.Mesh(raiderGeometry, raiderMaterial);
+        raider.position.set(-4, 0.5, 0);
+        scene.add(raider);
+        players.push(raider);
+    }
+
+    function onWindowResize() {
+        camera.aspect = document.getElementById('raid-demo').clientWidth / 400;
+        camera.updateProjectionMatrix();
+        renderer.setSize(document.getElementById('raid-demo').clientWidth, 400);
+    }
+
+    function resetCamera() {
+        camera.position.set(0, 10, 20);
+        camera.lookAt(0, 0, 0);
+        controls.reset();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+        
+        // Simple animation - raider moving toward defenders
+        if (raider.position.x < 3) {
+            raider.position.x += 0.02;
+        }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', initRaidDemo);
+  </script>
+</body>
+</html>

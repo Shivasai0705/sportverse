@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportVerse | Championship Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --sport-electric: #7209b7;
+            --sport-neon: #3a86ff;
+            --sport-cyber: #ff006e;
+            --sport-laser: #ffbe0b;
+            --sport-matrix: #38b000;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0a0a12;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .championship-hero {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(114,9,183,0.7) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(58,134,255,0.7) 0%, transparent 40%),
+                url('https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            height: 70vh;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero-content h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #ff006e, #ffbe0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 800;
+            text-shadow: 0 0 20px rgba(255,0,110,0.3);
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .tournament-logo {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        height: 40px;
+        width: auto;
+        background: rgba(0,0,0,0.7);
+        padding: 5px;
+        border-radius: 5px;
+    }
+    
+    .team-showcase {
+        margin: 1.5rem 0;
+    }
+    
+    .team-showcase h4 {
+        margin-bottom: 0.8rem;
+        color: var(--sport-laser);
+        font-size: 1rem;
+    }
+    
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+    
+    .team-badge {
+        background: rgba(30,30,50,0.7);
+        border-radius: 5px;
+        padding: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.8rem;
+        border: 1px solid rgba(58,134,255,0.2);
+    }
+    
+    .team-badge img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        margin-bottom: 0.3rem;
+    }
+    
+    .prize-pool {
+        background: rgba(255,190,11,0.1);
+        color: var(--sport-laser);
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        border-left: 3px solid var(--sport-laser);
+    }
+    
+    .prize-pool i {
+        margin-right: 5px;
+    }
+        .sport-carousel {
+    position: relative;
+    padding: 2rem 0;
+    background: rgba(10,10,20,0.9);
+    border-bottom: 1px solid rgba(58,134,255,0.2);
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+  
+  .carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 4rem;
+    transition: transform 0.5s ease;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .sport-card {
+    width: 150px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .sport-card.active {
+    transform: scale(1.05);
+  }
+  
+  .sport-card .card-front,
+  .sport-card .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    background: rgba(30,30,50,0.7);
+    border: 1px solid rgba(58,134,255,0.3);
+  }
+  
+  .sport-card .card-front {
+    transform: rotateY(0deg);
+  }
+  
+  .sport-card .card-back {
+    transform: rotateY(180deg);
+    color: white;
+    text-align: center;
+
+    font-size: 0.9rem;
+ 
+  }
+  
+  .sport-card:hover .card-front {
+    transform: rotateY(-180deg);
+  }
+  
+  .sport-card:hover .card-back {
+    transform: rotateY(0deg);
+  }
+  
+  .sport-card.active .card-front {
+    background: linear-gradient(45deg, var(--sport-electric), var(--sport-neon));
+    color: white;
+    border-color: transparent;
+  }
+  
+  .sport-card i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s;
+  }
+  
+  .sport-card:hover i {
+    transform: scale(1.1);
+  }
+  
+  .sport-card span {
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(30,30,50,0.8);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: all 0.3s;
+  }
+  
+  .carousel-nav:hover {
+    opacity: 1;
+    background: var(--sport-neon);
+    box-shadow: 0 0 15px rgba(58,134,255,0.5);
+  }
+  
+  .carousel-nav.prev {
+    left: 1rem;
+  }
+  
+  .carousel-nav.next {
+    right: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .sport-card {
+      width: 120px;
+      height: 160px;
+    }
+    
+    .sport-card i {
+      font-size: 2rem;
+    }
+    
+    .sport-card span {
+      font-size: 0.9rem;
+    }
+    
+    .carousel-track {
+      padding: 0 3rem;
+      gap: 1rem;
+    }
+    
+    .carousel-nav {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+  }
+        
+        .championship-container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .sport-championships {
+            display: none;
+            animation: fadeIn 0.7s ease;
+        }
+        
+        .sport-championships.active {
+            display: block;
+        }
+        
+        .sport-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(20,20,30,0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(58,134,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sport-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--sport-cyber), var(--sport-laser));
+        }
+        
+        .sport-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(10,10,20,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 2rem;
+            color: var(--sport-neon);
+            font-size: 2.5rem;
+            border: 2px solid var(--sport-neon);
+            flex-shrink: 0;
+        }
+        
+        .sport-title h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, var(--sport-neon), var(--sport-laser));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .sport-title p {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 600px;
+            margin-top: 0.5rem;
+        }
+        
+        .championship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+        
+        .championship-card {
+            background: rgba(20,20,30,0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(58,134,255,0.1);
+            position: relative;
+        }
+        
+        .championship-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(58,134,255,0.2);
+            border-color: rgba(58,134,255,0.3);
+        }
+        
+        .card-header {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+        
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10,10,20,0.9), transparent 50%);
+        }
+        
+        .championship-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10,10,20,0.8);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--sport-laser);
+            border: 1px solid var(--sport-laser);
+            font-size: 0.9rem;
+        }
+        
+        .championship-name {
+            position: relative;
+            padding: 1.5rem;
+            z-index: 2;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .championship-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        .meta-item i {
+            color: var(--sport-neon);
+        }
+        
+        .championship-desc {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: #ccc;
+        }
+        
+        .prize-pool {
+            background: rgba(255,190,11,0.1);
+            color: var(--sport-laser);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: 700;
+            display: inline-block;
+            border-left: 3px solid var(--sport-laser);
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-toggle {
+            background: transparent;
+            color: var(--sport-neon);
+            border: 1px solid var(--sport-neon);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .timeline-toggle:hover {
+            background: rgba(58,134,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .timeline-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .timeline-container.open {
+            max-height: 1000px;
+            margin-top: 1.5rem;
+        }
+        
+        .timeline {
+            border-left: 2px solid var(--sport-neon);
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.3rem;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--sport-cyber);
+            border: 2px solid var(--sport-neon);
+            box-shadow: 0 0 10px var(--sport-cyber);
+        }
+        
+        .timeline-year {
+            font-weight: 700;
+            color: var(--sport-laser);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .timeline-year::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(58,134,255,0.3);
+            margin-left: 10px;
+        }
+        
+        .timeline-event {
+            background: rgba(20,20,30,0.8);
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 3px solid var(--sport-cyber);
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .sport-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .sport-icon {
+                margin-right: 0;
+                margin-bottom: 1.5rem;
+            }
+            
+            .championship-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="championship-hero">
+        <div class="hero-content">
+            <h1>CHAMPIONSHIP HUB</h1>
+            <p>Explore the most prestigious tournaments across global sports with interactive timelines and detailed insights</p>
+        </div>
+    </div>
+    
+    <div class="sport-carousel">
+        <div class="carousel-track">
+            <div class="sport-card active" onclick="showChampionships('football')" data-sport="football">
+
+            <div class="card-front">
+              <i class="fas fa-futbol"></i>
+              <span>Football</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #7209b7, #3a86ff);">
+              <span>World Cup • UCL • EPL</span>
+            </div>
+          </div>
+          
+          <div class="sport-card" onclick="showChampionships('basketball')" data-sport="basketball">
+            <div class="card-front">
+              <i class="fas fa-basketball-ball"></i>
+              <span>Basketball</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #ff006e, #ff9e00);">
+              <span>NBA • FIBA • EuroLeague</span>
+            </div>
+          </div>
+          
+          <div class="sport-card" onclick="showChampionships('cricket')" data-sport="cricket">
+            <div class="card-front">
+              <i class="fas fa-cricket"></i>
+              <span>Cricket</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #38b000, #9ef01a);">
+              <span>World Cup • IPL • Ashes</span>
+            </div>
+          </div>
+          
+          <div class="sport-card" onclick="showChampionships('tennis')" data-sport="tennis">
+            <div class="card-front">
+              <i class="fas fa-table-tennis"></i>
+              <span>Tennis</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #4361ee, #4cc9f0);">
+              <span>Grand Slams • ATP • WTA</span>
+            </div>
+          </div>
+          
+          <div class="sport-card" onclick="showChampionships('hockey')" data-sport="hockey">
+            <div class="card-front">
+              <i class="fas fa-hockey-puck"></i>
+              <span>Hockey</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #f72585, #b5179e);">
+              <span>NHL • World Champs</span>
+            </div>
+          </div>
+          <div class="sport-card" onclick="showChampionships('badminton')" data-sport="badminton">
+            <div class="card-front">
+              <i class="fas fa-shuttlecock"></i> 
+              <span>Badminton</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #f72585, #b5179e);">
+              <span>BWF • Thomas & Uber Cup</span>
+            </div>
+          </div>
+          
+          <div class="sport-card" onclick="showChampionships('olympic')" data-sport="olympics">
+            <div class="card-front">
+              <i class="fas fa-medal"></i>
+              <span>Olympics</span>
+            </div>
+            <div class="card-back" style="background: linear-gradient(45deg, #ffbe0b, #fb5607);">
+              <span>Summer • Winter • Para</span>
+            </div>
+          </div>
+          
+        </div>
+        
+        <button class="carousel-nav prev" onclick="scrollCarousel(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-nav next" onclick="scrollCarousel(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    
+    <div class="championship-container">
+        <!-- Football Championships -->
+        <div id="football-championships" class="sport-championships active">
+            <div class="sport-header">
+                <div class="sport-icon">
+                    <i class="fas fa-futbol"></i>
+                </div>
+                <div class="sport-title">
+                    <h2>FOOTBALL DOMINION</h2>
+                    <p>The global stage where legends are made and nations unite through the beautiful game</p>
+                </div>
+            </div>
+            
+            <div class="championship-grid">
+                <!-- FIFA World Cup -->
+                <div class="championship-card">
+                    <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                        <span class="championship-badge">Crown Jewel</span>
+                        <h3 class="championship-name">FIFA World Cup</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="championship-meta">
+                            <span class="meta-item"><i class="fas fa-globe"></i> International</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                            <span class="meta-item"><i class="fas fa-trophy"></i> Since 1930</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> 32 Teams</span>
+                        </div>
+                        <p class="championship-desc">
+                            The ultimate football spectacle where nations compete for global supremacy. The month-long tournament captivates billions with its dramatic matches and national pride.
+                        </p>
+                        <div class="prize-pool">
+                            Total Prize Pool: $440 Million
+                        </div>
+                        
+                        <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                            <i class="fas fa-scroll"></i> Championship Chronicle
+                        </button>
+                        
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2022 Qatar</div>
+                                    <div class="timeline-event">
+                                        Argentina claimed their third title after an epic final against France (3-3, 4-2 on penalties), with Messi finally winning the missing piece in his legendary career.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2018 Russia</div>
+                                    <div class="timeline-event">
+                                        France's golden generation led by Mbappé and Griezmann dominated Croatia 4-2 in the final, showcasing a perfect blend of youth and experience.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2014 Brazil</div>
+                                    <div class="timeline-event">
+                                        Germany's 7-1 semifinal demolition of Brazil shocked the world before they defeated Argentina 1-0 in the final with Götze's extra-time winner.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- UEFA Champions League -->
+                <div class="championship-card">
+                    <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1552667466-07770ae110d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                        <span class="championship-badge">Elite Clubs</span>
+                        <h3 class="championship-name">UEFA Champions League</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="championship-meta">
+                            <span class="meta-item"><i class="fas fa-club"></i> Club Competition</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> Annual</span>
+                            <span class="meta-item"><i class="fas fa-trophy"></i> Since 1955</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> 32 Teams</span>
+                        </div>
+                        <p class="championship-desc">
+                            Europe's most prestigious club competition where football royalty is decided. The tournament features dramatic knockout rounds culminating in the iconic final known as "The Biggest Club Game in Football."
+                        </p>
+                        <div class="prize-pool">
+                            Total Prize Pool: $2.1 Billion
+                        </div>
+                        
+                        <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                            <i class="fas fa-scroll"></i> Championship Chronicle
+                        </button>
+                        
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2022-23</div>
+                                    <div class="timeline-event">
+                                        Manchester City won their first Champions League title, completing a historic treble under Pep Guardiola with a 1-0 victory over Inter Milan.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2021-22</div>
+                                    <div class="timeline-event">
+                                        Real Madrid's legendary comeback campaign saw them defeat PSG, Chelsea, Manchester City, and finally Liverpool 1-0 in the final for their 14th title.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2019-20</div>
+                                    <div class="timeline-event">
+                                        Bayern Munich won all 11 matches in the COVID-affected tournament, defeating PSG 1-0 in the final to complete a second treble.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add more football championships... -->
+            </div>
+        </div>
+        
+        <!-- Basketball Championships -->
+        <div id="basketball-championships" class="sport-championships">
+            <div class="sport-header">
+                <div class="sport-icon">
+                    <i class="fas fa-basketball-ball"></i>
+                </div>
+                <div class="sport-title">
+                    <h2>HOOPS LEGACY</h2>
+                    <p>Where gravity-defying athleticism meets strategic brilliance on the hardwood</p>
+                </div>
+            </div>
+            
+            <div class="championship-grid">
+                <!-- NBA -->
+                <div class="championship-card">
+                    <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1490&q=80');">
+                        <span class="championship-badge">Premier League</span>
+                        <h3 class="championship-name">NBA Championships</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="championship-meta">
+                            <span class="meta-item"><i class="fas fa-flag-usa"></i> North America</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> Oct-Jun</span>
+                            <span class="meta-item"><i class="fas fa-trophy"></i> Since 1947</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> 30 Teams</span>
+                        </div>
+                        <p class="championship-desc">
+                            The pinnacle of professional basketball where legends like Jordan, Kobe, and LeBron cemented their legacies. The NBA playoffs feature best-of-seven series culminating in the Finals.
+                        </p>
+                        <div class="prize-pool">
+                            Championship Prize: $20 Million
+                        </div>
+                        
+                        <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                            <i class="fas fa-scroll"></i> Championship Chronicle
+                        </button>
+                        
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2023</div>
+                                    <div class="timeline-event">
+                                        The Denver Nuggets won their first NBA title behind Nikola Jokić's historic playoff run, defeating the Miami Heat 4-1 in the Finals.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2022</div>
+                                    <div class="timeline-event">
+                                        Golden State Warriors returned to glory with their 4th title in 8 years, defeating the Celtics 4-2 as Steph Curry won Finals MVP.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2021</div>
+                                    <div class="timeline-event">
+                                        Giannis Antetokounmpo delivered one of the greatest Finals performances in history (50 pts in Game 6) to bring Milwaukee their first title in 50 years.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FIBA World Cup -->
+                <div class="championship-card">
+                    <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                        <span class="championship-badge">Global Stage</span>
+                        <h3 class="championship-name">FIBA Basketball World Cup</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="championship-meta">
+                            <span class="meta-item"><i class="fas fa-globe"></i> International</span>
+                            <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                            <span class="meta-item"><i class="fas fa-trophy"></i> Since 1950</span>
+                            <span class="meta-item"><i class="fas fa-users"></i> 32 Teams</span>
+                        </div>
+                        <p class="championship-desc">
+                            The premier international basketball tournament where national teams compete for global supremacy. The event has grown significantly with NBA stars now regularly participating for their countries.
+                        </p>
+                        <div class="prize-pool">
+                            Total Prize Pool: $10 Million
+                        </div>
+                        
+                        <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                            <i class="fas fa-scroll"></i> Championship Chronicle
+                        </button>
+                        
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2023</div>
+                                    <div class="timeline-event">
+                                        Germany won their first title by defeating Serbia 83-77 in the final, while Canada claimed their first medal (bronze) behind Shai Gilgeous-Alexander.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2019</div>
+                                    <div class="timeline-event">
+                                        Spain claimed their second title by defeating Argentina 95-75 in the final, with Ricky Rubio winning MVP honors.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-year">2014</div>
+                                    <div class="timeline-event">
+                                        The United States successfully defended their title with a dominant 129-92 victory over Serbia in the final, led by tournament MVP Kyrie Irving.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+     <!-- Cricket Championships -->
+<div id="cricket-championships" class="sport-championships active">
+    <div class="sport-header">
+        <div class="sport-icon">
+            <i class="fas fa-cricket"></i>
+        </div>
+        <div class="sport-title">
+            <h2>CRICKET DOMINION</h2>
+            <p>The timeless game with a rich history, featuring global battles for cricket supremacy</p>
+        </div>
+    </div>
+    
+    <div class="championship-grid">
+        <!-- ICC World Cup (Cricket) -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20231017/pngtree-icc-cricket-world-cup-image_13943088.jpg');">
+
+                <span class="championship-badge">Global Glory</span>
+                <h3 class="championship-name">ICC Cricket World Cup</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-globe"></i> International</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Every 4 Years</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1975</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 10 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The premier international competition in men's ODI cricket. Teams compete for the coveted ICC Cricket World Cup trophy over 6 weeks of intense matches.
+                </p>
+                
+                <div class="team-showcase">
+                    <h4>Recent Champions:</h4>
+                    <div class="team-grid">
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/England_Cricket_Board_logo.svg/1200px-England_Cricket_Board_logo.svg.png" alt="England">
+                            <span>England (2019)</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Cricket_Australia_logo.svg/1200px-Cricket_Australia_logo.svg.png" alt="Australia">
+                            <span>Australia (2015)</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Board_of_Control_for_Cricket_in_India_logo.svg/1200px-Board_of_Control_for_Cricket_in_India_logo.svg.png" alt="India">
+                            <span>India (2011)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prize-pool">
+                    <i class="fas fa-award"></i> Trophy: ICC World Cup Trophy
+                    <br>
+                    <i class="fas fa-money-bill-wave"></i> Prize Pool: $10 Million
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship History
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-event">
+                                England won on boundary count after tying both the match and super over against New Zealand at Lord's.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2011</div>
+                            <div class="timeline-event">
+                                India became the first host nation to win, defeating Sri Lanka in Mumbai with Dhoni's iconic winning six.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2007</div>
+                            <div class="timeline-event">
+                                Australia completed a hat-trick of titles, remaining undefeated through the tournament.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Indian Premier League -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://i.ytimg.com/vi/rtooXmBzhcM/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGDkgRyh_MA8=&rs=AOn4CLAMiaMpKYG3iHrqnQYmkdfjXY-wpg');">
+               
+                <span class="championship-badge">T20 Spectacle</span>
+                <h3 class="championship-name">Indian Premier League</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-map-marker-alt"></i> India</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> March-May</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 2008</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 10 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The world's most lucrative cricket league featuring international stars and young Indian talent in a high-octane T20 format.
+                </p>
+                
+                <div class="team-showcase">
+                    <h4>Most Successful Teams:</h4>
+                    <div class="team-grid">
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Mumbai_Indians_Logo.svg/1200px-Mumbai_Indians_Logo.svg.png" alt="Mumbai Indians">
+                            <span>5 Titles</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Chennai_Super_Kings_Logo.svg/1200px-Chennai_Super_Kings_Logo.svg.png" alt="CSK">
+                            <span>5 Titles</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6a/Kolkata_Knight_Riders_Logo.svg/1200px-Kolkata_Knight_Riders_Logo.svg.png" alt="KKR">
+                            <span>2 Titles</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prize-pool">
+                    <i class="fas fa-award"></i> Trophy: IPL Trophy
+                    <br>
+                    <i class="fas fa-money-bill-wave"></i> Prize Pool: $6 Million
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Tournament Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Chennai Super Kings won record-equaling 5th title against Gujarat Titans in a rain-affected final.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-event">
+                                Mumbai Indians dominated the UAE edition to win their 5th title.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2008</div>
+                            <div class="timeline-event">
+                                Rajasthan Royals won inaugural edition under Shane Warne's captaincy.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- T20 World Cup -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://kalingatv.com/wp-content/uploads/2021/10/T20-World-Cup-2.jpg ');">
+              
+                <span class="championship-badge">Global T20</span>
+                <h3 class="championship-name">ICC T20 World Cup</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-globe"></i> International</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Every 2 Years</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 2007</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 16 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The premier international T20 competition featuring explosive cricket action packed into 3-hour matches.
+                </p>
+                
+                <div class="team-showcase">
+                    <h4>Recent Winners:</h4>
+                    <div class="team-grid">
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/8d/Board_of_Control_for_Cricket_in_India_logo.svg/1200px-Board_of_Control_for_Cricket_in_India_logo.svg.png" alt="India">
+                            <span>2007</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/West_Indies_Cricket_Board_Logo.svg/1200px-West_Indies_Cricket_Board_Logo.svg.png" alt="WI">
+                            <span>2012, 2016</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/Cricket_Australia_logo_%282020%29.svg/1200px-Cricket_Australia_logo_%282020%29.svg.png" alt="Australia">
+                            <span>2021</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prize-pool">
+                    <i class="fas fa-award"></i> Trophy: ICC T20 WC Trophy
+                    <br>
+                    <i class="fas fa-money-bill-wave"></i> Prize Pool: $5.6 Million
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Tournament History
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                England became two-time champions by defeating Pakistan in Melbourne.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-event">
+                                West Indies won a thrilling final against England with Carlos Brathwaite's 4 sixes.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2007</div>
+                            <div class="timeline-event">
+                                India defeated Pakistan in the inaugural final with Joginder Sharma's last over.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Ashes -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://media.istockphoto.com/id/1323017815/photo/cricket-ball-on-green-grass-of-cricket-pitch-background.jpg?s=612x612&w=0&k=20&c=W4JJei3HiYOqSjtGZV88VbpQ0Zlaqdjp6gds8mNXBmk=');">
+                
+                <span class="championship-badge">Test Legacy</span>
+                <h3 class="championship-name">The Ashes</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag"></i> ENG vs AUS</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Biennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1882</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 5 Tests</span>
+                </div>
+                <p class="championship-desc">
+                    Cricket's oldest and most prestigious Test series played between England and Australia for the symbolic Ashes urn.
+                </p>
+                
+                <div class="team-showcase">
+                    <h4>Recent Series Results:</h4>
+                    <div class="team-grid">
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7a/England_and_Wales_Cricket_Board_Logo.svg/1200px-England_and_Wales_Cricket_Board_Logo.svg.png" alt="England">
+                            <span>2015</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Cricket_Australia_logo.svg/1200px-Cricket_Australia_logo.svg.png" alt="Australia">
+                            <span>2017-18 (5-0)</span>
+                        </div>
+                        <div class="team-badge">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Cricket_Australia_logo.svg/1200px-Cricket_Australia_logo.svg.png" alt="Australia">
+                            <span>2021-22 (4-0)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prize-pool">
+                    <i class="fas fa-award"></i> Trophy: Ashes Urn
+                    <br>
+                    <i class="fas fa-history"></i> Tests Played: 340+
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Series History
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                England's "Bazball" approach led to 2-2 draw in thrilling series.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2005</div>
+                            <div class="timeline-event">
+                                Iconic series won by England 2-1, regarded as greatest ever.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1981</div>
+                            <div class="timeline-event">
+                                "Botham's Ashes" - England won after following on at Headingley.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Tennis Championships -->
+<div id="tennis-championships" class="sport-championships">
+    <div class="sport-header">
+        <div class="sport-icon">
+            <i class="fas fa-table-tennis"></i>
+        </div>
+        <div class="sport-title">
+            <h2>GRAND SLAM GLORY</h2>
+            <p>Where precision meets power on the hallowed courts of tennis history</p>
+        </div>
+    </div>
+    
+    <div class="championship-grid">
+        <!-- Wimbledon -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2056&q=80');">
+                <span class="championship-badge">Grass Court</span>
+                <h3 class="championship-name">Wimbledon Championships</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag-uk"></i> London, UK</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> June-July</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1877</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 128 Singles</span>
+                </div>
+                <p class="championship-desc">
+                    The oldest and most prestigious tennis tournament, known for its strict all-white dress code, royal patronage, and tradition of strawberries and cream. The only Grand Slam still played on grass.
+                </p>
+                <div class="prize-pool">
+                    2023 Prize Money: £44.7M (Singles winners: £2.35M)
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Carlos Alcaraz claimed his first Wimbledon title by defeating Novak Djokovic in a thrilling 5-set final, ending Djokovic's 34-match winning streak at Wimbledon.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-event">
+                                Novak Djokovic saved two championship points against Roger Federer in what became the longest Wimbledon final (4h57m), winning 13-12 in the fifth set.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2008</div>
+                            <div class="timeline-event">
+                                The "Greatest Match Ever Played" saw Rafael Nadal dethrone 5-time champion Roger Federer 9-7 in the fifth set after 4h48m in near darkness.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- US Open -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                <span class="championship-badge">Hard Court</span>
+                <h3 class="championship-name">US Open</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag-usa"></i> New York, USA</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Aug-Sep</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1881</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 128 Singles</span>
+                </div>
+                <p class="championship-desc">
+                    Known for its electric night sessions, Arthur Ashe Stadium (largest tennis stadium in the world), and tiebreak in the final set. The final Grand Slam of the year features fast DecoTurf courts.
+                </p>
+                <div class="prize-pool">
+                    2023 Prize Money: $65M (Singles winners: $3M)
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Novak Djokovic equaled Margaret Court's record of 24 Grand Slam titles by defeating Daniil Medvedev in straight sets, while Coco Gauff won her first major at age 19.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-event">
+                                Dominic Thiem came back from two sets down to defeat Alexander Zverev in the first US Open final decided by a fifth-set tiebreak (and first Slam final with both players chasing their first major).
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2001</div>
+                            <div class="timeline-event">
+                                Venus and Serena Williams became the first sisters to meet in a Grand Slam final since 1884, with Venus winning in straight sets.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Australian Open -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80');">
+                <span class="championship-badge">Hard Court</span>
+                <h3 class="championship-name">Australian Open</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag"></i> Melbourne, Australia</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> January</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1905</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 128 Singles</span>
+                </div>
+                <p class="championship-desc">
+                    Known as the "Happy Slam" for its vibrant atmosphere, extreme heat policy, and pioneering use of retractable roofs. Features Plexicushion courts and is the first Grand Slam of the calendar year.
+                </p>
+                <div class="prize-pool">
+                    2023 Prize Money: AUD $76.5M (Singles winners: AUD $2.975M)
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Novak Djokovic won a record-extending 10th Australian Open title, returning after his 2022 deportation to defeat Stefanos Tsitsipas in straight sets.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2017</div>
+                            <div class="timeline-event">
+                                Roger Federer and Rafael Nadal renewed their rivalry in a classic final, with Federer winning in five sets for his 18th major after coming back from injury.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2005</div>
+                            <div class="timeline-event">
+                                Serena Williams saved three championship points against Lindsay Davenport to win her second Australian Open title in a dramatic 2-6, 6-3, 8-6 victory.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hockey Championships -->
+<div id="hockey-championships" class="sport-championships">
+    <div class="sport-header">
+        <div class="sport-icon">
+            <i class="fas fa-hockey-puck"></i>
+        </div>
+        <div class="sport-title">
+            <h2>ICE CROWN JEWELS</h2>
+            <p>Where speed, skill, and sacrifice collide on hockey's grandest stages</p>
+        </div>
+    </div>
+    
+    <div class="championship-grid">
+        <!-- NHL Stanley Cup -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://c4.wallpaperflare.com/wallpaper/186/557/92/colorado-avalanche-nhl-hockey-stanley-cup-hd-wallpaper-preview.jpg');">
+                <span class="championship-badge">Professional</span>
+                <h3 class="championship-name">NHL Stanley Cup</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag-usa"></i> North America</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Oct-Jun</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1893</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 32 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The oldest professional sports trophy in North America, awarded to the NHL playoff champion after a grueling best-of-seven tournament. Each player gets 24 hours with the Cup during summer.
+                </p>
+                <div class="prize-pool">
+                    2023 Champions Share: $5M+ (Team total)
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                The Vegas Golden Knights won their first Stanley Cup in franchise history, defeating the Florida Panthers 4-1 in the final series behind Conn Smythe winner Jonathan Marchessault.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-event">
+                                Tampa Bay Lightning won the "Bubble Cup" in the COVID-19 pandemic playoffs held entirely in Edmonton, defeating Dallas 4-2 in the unusual September final.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1994</div>
+                            <div class="timeline-event">
+                                The New York Rangers ended their 54-year championship drought when Mark Messier captained the team to victory over Vancouver, fulfilling his famous guarantee.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- IIHF World Championship -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://binaries.pirelli.com/2022/11/16/123049478-ce725175-5369-4ff9-b0f9-5fa982924b46.jpg');">
+                <span class="championship-badge">International</span>
+                <h3 class="championship-name">IIHF World Championship</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-globe"></i> Worldwide</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> May</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1920</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 16 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The premier annual international tournament featuring national teams, often overlapping with NHL playoffs. Features a unique relegation system and has been hosted in 12 different countries.
+                </p>
+                <div class="prize-pool">
+                    Total Federation Revenue: $30M+
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Canada defeated Germany 5-2 in the final to claim their 28th gold medal, with tournament MVP Lawson Crouse scoring twice in the championship game.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-event">
+                                Finland won their third title by defeating Canada 3-1 in the final, with Marko Anttila scoring twice in the gold medal game at Bratislava.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-event">
+                                The "Miracle on Ice" U.S. team that won Olympic gold also competed here, finishing 5th in a tournament won by the Soviet Union for their 6th consecutive title.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Winter Olympics -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://www.shutterstock.com/image-vector/vector-illustration-hockey-player-made-260nw-2096445589.jpg');">
+                <span class="championship-badge">Olympic Glory</span>
+                <h3 class="championship-name">Olympic Ice Hockey</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-rings"></i> Worldwide</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1920</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 12 Teams</span>
+                </div>
+                <p class="championship-desc">
+                    The pinnacle of international hockey where NHL players (when participating) represent their nations. Women's tournament was added in 1998. Known for iconic moments like the 1980 "Miracle on Ice."
+                </p>
+                <div class="prize-pool">
+                    IOC Contribution: $20M+ per tournament
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                Finland won their first ever Olympic gold by defeating ROC 2-1 in Beijing, while Canada dominated the women's tournament with a 3-2 win over USA.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2010</div>
+                            <div class="timeline-event">
+                                Sidney Crosby's "Golden Goal" in overtime gave Canada a 3-2 victory over the USA in Vancouver, considered one of the greatest moments in Canadian sports history.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-event">
+                                The U.S. "Miracle on Ice" team of college amateurs defeated the Soviet Union 4-3 in the semifinals before beating Finland for gold in Lake Placid.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Badminton Championships -->
+<div id="badminton-championships" class="sport-championships">
+    <div class="sport-header">
+        <div class="sport-icon">
+            <i class="fas fa-shuttlecock"></i>
+        </div>
+        <div class="sport-title">
+            <h2>SHUTTLE SMASH</h2>
+            <p>Where speed, strategy, and stamina collide in electrifying rallies</p>
+        </div>
+    </div>
+
+    <div class="championship-grid">
+        <!-- BWF World Championships -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://media.istockphoto.com/id/1399689172/photo/badminton-balls-and-badminton-rackets-shuttlecock-in-green.jpg?s=612x612&w=0&k=20&c=QHNakFh5BBd13QYqTyM8EHCQLwX0FplO_Fq8hMF8no4=');">
+                <span class="championship-badge">Elite Event</span>
+                <h3 class="championship-name">BWF World Championships</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-globe"></i> International</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Annual</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1977</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> Top 64 Players</span>
+                </div>
+                <p class="championship-desc">
+                    The most prestigious badminton tournament where the world's best players compete for glory and the title of world champion in singles and doubles categories.
+                </p>
+                <div class="prize-pool">
+                    Prize Pool: $1 Million
+                </div>
+
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Kunlavut Vitidsarn and An Se-young won the singles titles as Thailand and South Korea shined on the world stage.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                Viktor Axelsen dominated the tournament winning the men's singles, continuing his incredible form.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">
+                                Loh Kean Yew made history by becoming the first Singaporean to win a world championship title.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thomas Cup -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://corporate.bwfbadminton.com/wp-content/uploads/sites/4/2015/08/8_Thomas_Cup_May_2014-973x385.jpg');">
+                <span class="championship-badge">Men's Team</span>
+                <h3 class="championship-name">Thomas Cup</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-flag"></i> International</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Biennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1949</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 16 Nations</span>
+                </div>
+                <p class="championship-desc">
+                    The Thomas Cup is the world men's team badminton championship. Countries field their best players to battle for national pride and supremacy.
+                </p>
+                <div class="prize-pool">
+                    National Glory • No Prize Pool
+                </div>
+
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                India claimed their first-ever Thomas Cup title with a historic win over Indonesia in the final.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2020</div>
+                            <div class="timeline-event">
+                                Indonesia dominated the competition, defeating China and Denmark in thrilling matches.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2018</div>
+                            <div class="timeline-event">
+                                China reclaimed the trophy with strong performances across singles and doubles categories.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- All England Open -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://ichef.bbci.co.uk/images/ic/1200x675/p022n8wn.jpg');">
+                <span class="championship-badge">Historic Tournament</span>
+                <h3 class="championship-name">All England Open</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-map-marker-alt"></i> Birmingham, UK</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Annual</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1899</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 32 Singles / 32 Doubles Pairs</span>
+                </div>
+                <p class="championship-desc">
+                    The oldest and most prestigious open badminton tournament. A must-win for legends and rising stars alike, it's the Wimbledon of badminton.
+                </p>
+                <div class="prize-pool">
+                    Prize Pool: $1.25 Million
+                </div>
+
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Championship Chronicle
+                </button>
+
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2023</div>
+                            <div class="timeline-event">
+                                Li Shifeng and An Se-young triumphed in singles as China reclaimed dominance.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                Viktor Axelsen claimed another title with clinical precision in his gameplay.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">
+                                Lee Zii Jia stunned the world by winning his first major title for Malaysia.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Olympic Championships -->
+<div id="olympic-championships" class="sport-championships">
+    <div class="sport-header">
+        <div class="sport-icon">
+            <i class="fas fa-medal"></i>
+        </div>
+        <div class="sport-title">
+            <h2>OLYMPIC ODYSSEY</h2>
+            <p>Where the world's greatest athletes compete for eternal glory</p>
+        </div>
+    </div>
+    
+    <div class="championship-grid">
+        <!-- Summer Olympics -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                <span class="championship-badge">Global Event</span>
+                <h3 class="championship-name">Summer Olympics</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-globe"></i> Worldwide</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1896</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 206 Nations</span>
+                </div>
+                <p class="championship-desc">
+                    The world's foremost sports competition featuring 33 sports and nearly 11,000 athletes. Host cities spend years preparing for this 17-day spectacle that captures global attention.
+                </p>
+                <div class="prize-pool">
+                    Total Budget (2024 Paris): €8.8 Billion
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Olympic Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">
+                                Tokyo hosted the delayed 2020 Games without spectators due to COVID-19. USA topped the medal table with 113 total medals, including 39 golds.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2016</div>
+                            <div class="timeline-event">
+                                Rio de Janeiro became the first South American host. Michael Phelps won his 23rd gold medal, while Simone Biles dominated gymnastics with 4 golds.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2008</div>
+                            <div class="timeline-event">
+                                Beijing's "Bird's Nest" hosted what many consider the greatest opening ceremony. Usain Bolt set world records in 100m (9.69s) and 200m (19.30s).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Winter Olympics -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://st3.depositphotos.com/6211294/18278/v/450/depositphotos_182783102-stock-illustration-polygonal-colourful-figure-young-man.jpg');">
+                <span class="championship-badge">Snow & Ice</span>
+                <h3 class="championship-name">Winter Olympics</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-snowflake"></i> Worldwide</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1924</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 91 Nations</span>
+                </div>
+                <p class="championship-desc">
+                    The premier international winter sports event featuring 15 disciplines across 3 main categories: ice sports, alpine skiing/snowboarding, and Nordic events. Known for breathtaking alpine venues.
+                </p>
+                <div class="prize-pool">
+                    Total Budget (2026 Milano-Cortina): €1.58 Billion
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Olympic Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-event">
+                                Beijing became first city to host both Summer and Winter Games. Norway dominated with 37 medals, while Eileen Gu won 3 medals for China in freestyle skiing.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2014</div>
+                            <div class="timeline-event">
+                                Sochi's $51 billion Games were the most expensive Olympics ever. Russia topped the medal table with 33 medals, including 13 golds in their home Games.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-event">
+                                Lake Placid hosted the "Miracle on Ice" where the U.S. hockey team defeated the Soviet Union. Eric Heiden won 5 individual gold medals in speed skating.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Paralympics -->
+        <div class="championship-card">
+            <div class="card-header" style="background-image: url('https://images.unsplash.com/photo-1633613286991-611fe299c4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');">
+                <span class="championship-badge">Para Sports</span>
+                <h3 class="championship-name">Paralympic Games</h3>
+            </div>
+            <div class="card-body">
+                <div class="championship-meta">
+                    <span class="meta-item"><i class="fas fa-wheelchair"></i> Worldwide</span>
+                    <span class="meta-item"><i class="fas fa-calendar-alt"></i> Quadrennial</span>
+                    <span class="meta-item"><i class="fas fa-trophy"></i> Since 1960</span>
+                    <span class="meta-item"><i class="fas fa-users"></i> 184 Nations</span>
+                </div>
+                <p class="championship-desc">
+                    The pinnacle of disabled sports featuring 22 disciplines across Summer and Winter editions. Athletes compete in classification systems that group by disability type and severity.
+                </p>
+                <div class="prize-pool">
+                    Total Budget (2024 Paris): €1.4 Billion
+                </div>
+                
+                <button class="timeline-toggle" onclick="toggleTimeline(this)">
+                    <i class="fas fa-scroll"></i> Olympic Chronicle
+                </button>
+                
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-event">
+                                China dominated the Tokyo Paralympics with 207 total medals (96 gold). Wheelchair rugby saw Australia defeat USA 54-53 in a thrilling gold medal match.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2012</div>
+                            <div class="timeline-event">
+                                London set new standards for Paralympic inclusion with 2.7 million tickets sold. Oscar Pistorius made history by competing against able-bodied athletes in the 400m.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2008</div>
+                            <div class="timeline-event">
+                                Beijing's Paralympics featured over 4,200 athletes. South African swimmer Natalie du Toit, an amputee, qualified for both Olympic and Paralympic Games.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
+    
+    
+    <script>
+         // Update the showChampionships function to work with new selector
+  function showChampionships(sport) {
+    // Hide all championship sections
+    document.querySelectorAll('.sport-championships').forEach(section => {
+      section.classList.remove('active');
+    });
+    
+    // Show selected championship section
+    document.getElementById(`${sport}-championships`).classList.add('active');
+    
+    // Update active sport card
+    document.querySelectorAll('.sport-card').forEach(card => {
+      card.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
+   
+  
+  // Scroll to the sport header smoothly
+  document.querySelector('.championship-container').scrollIntoView({ behavior: 'smooth' });
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set the default active sport on page load, in case the initial section doesn't load correctly
+    document.querySelectorAll('.sport-championships').forEach(section => {
+      section.classList.remove('active'); // Remove 'active' class from all sections
+    });
+    document.getElementById('football-championships').classList.add('active'); // Make sure football section is active by default
+  });
+  
+  // Carousel navigation
+  function scrollCarousel(direction) {
+    const track = document.querySelector('.carousel-track');
+    const scrollAmount = 300; // Adjust based on card width + gap
+    track.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+  }
+        
+        function toggleTimeline(button) {
+            const timeline = button.nextElementSibling;
+            timeline.classList.toggle('open');
+            
+            // Change icon and text
+            const icon = button.querySelector('i');
+            if (timeline.classList.contains('open')) {
+                icon.classList.remove('fa-scroll');
+                icon.classList.add('fa-times-circle');
+                button.innerHTML = '<i class="fas fa-times-circle"></i> Close Chronicle';
+            } else {
+                icon.classList.remove('fa-times-circle');
+                icon.classList.add('fa-scroll');
+                button.innerHTML = '<i class="fas fa-scroll"></i> Championship Chronicle';
+            }
+        }
+        
+    </script>
+</body>
+</html>
