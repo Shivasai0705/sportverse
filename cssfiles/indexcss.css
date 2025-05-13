@@ -26,13 +26,14 @@ html{
 }
 
 body {
-    background-color: var(--light);
+background-color: #f0f0f0;
+
+
+ 
     color: var(--dark);
     line-height: 1.7;
     overflow-x: hidden;
-    background-image: 
-        radial-gradient(circle at 10% 20%, rgba(66, 153, 225, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(229, 62, 62, 0.05) 0%, transparent 20%);
+
 }
 /* Navigation */
 @keyframes slideDown {
@@ -73,6 +74,8 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
+    flex-grow: 1; 
+    max-height: 45px;
 }
 :root {
   --accent: #dc2626;
@@ -101,7 +104,8 @@ body {
   border-radius: 50px;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
+  overflow:visible;
+  text-overflow: unset; 
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -229,7 +233,9 @@ body {
 }
 /* Profile Dropdown */
 .profile-dropdown {
-  display: none;
+  opacity: 0;
+  transform: translateY(-5px);
+  pointer-events: none;
   position: absolute;
   right: 0;
   top: 45px;
@@ -238,18 +244,22 @@ body {
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   z-index: 100;
-  animation: fadeIn 0.15s ease-out;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   padding: 1rem;
 }
+
+.profile-dropdown.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.profile-dropdown.show {
-  display: block;
-}
 
 /* Profile Header */
 .profile-header {
@@ -348,13 +358,14 @@ body {
   color: var(--gray-700);
   text-align: right;
   max-width: 60%;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+ 
 }
 
 .info-value.empty {
   color: var(--gray-300);
   font-style: italic;
+  
 }
 
 /* Location Dropdown */
@@ -396,7 +407,26 @@ body {
 .location-option:hover {
   background-color: var(--gray-100);
 }
+.location-suggestions {
+    position: absolute;
+    background: white;
+    width: calc(100% - 30px);
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 1000;
+    display: none;
+}
 
+.location-suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.location-suggestion:hover {
+    background-color: #f5f5f5;
+}
 /* Action Buttons */
 .action-buttons {
   display: flex;
@@ -434,25 +464,11 @@ body {
 .btn-logout {
   background: none;
   color: var(--accent);
+margin-left: 150px;
+  
 }
 
-/* Edit Mode */
-.edit-mode .info-value {
-  display: none;
-}
 
-.edit-mode .info-input {
-  display: block;
-  width: 60%;
-  padding: 0.25rem;
-  border: 1px solid var(--gray-300);
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.info-input {
-  display: none;
-}
 
 /* Hidden File Input */
 #profilePicInput {
@@ -481,18 +497,28 @@ body {
   }
   
   /* Logo */
-  .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+ /* Logo Styles */
+.logo{
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
-    gap: 10px;
+}
+
+.logo-image {
+    height: 400px; /* Adjust based on your needs */
+
+   padding-top: 7px;
+    max-width: 180px;
+    object-fit: contain;
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .logo-image {
+    height: 35px;
+    max-width: 150px;
   }
-  
-  .logo i {
-    font-size: 1.5rem;
-    color: var(--accent);
-  }
+}
   
   /* Navigation Links */
   .nav-links {
@@ -576,12 +602,15 @@ body {
     max-height: 0;
     overflow: hidden;
     background: #f9f9f9;
-    transition: max-height 0.4s ease;
+    transition: max-height 0.8s ease;
     box-shadow: inset 0 5px 10px -5px rgba(0, 0, 0, 0.05);
+     overflow-y: auto;         /* Enable vertical scrolling */
+  scrollbar-width: none;    /* Firefox: hide scrollbar */
+  -ms-overflow-style: none; /* IE and Edge: hide scrollbar */
 }
 
 .dropdown-content.active {
-    max-height: 500px;
+    max-height: 300px;
 }
 
 .dropdown-content a {
@@ -914,6 +943,30 @@ animation: pulse 1.5s 1;
     font-size: 1.5rem;
     cursor: pointer;
 }
+.sidebarlogo {
+  display: flex;
+  flex-direction: column; /* Stack icon and text vertically */
+  align-items: center;
+  justify-content: center;
+  height: 60%; /* Adjust height as needed */
+  width: 100%;
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.logo-icon {
+  font-size: 40px; /* Icon size */
+  margin-bottom: 10px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
 
 /* Hero Section */
 /* Logo Styling */
@@ -1174,18 +1227,26 @@ animation: pulse 1.5s 1;
 }
 
 .why-sports-popup {
-  display: none;
+
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
   position: absolute;
   left: 0;
   top: calc(100% + 10px);
   width: 350px;
   background: white;
   border-radius: 10px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   padding: 20px;
   border: 1px solid #e0e0e0;
-  animation: fadeIn 0.3s ease;
+}
+.why-sports-popup.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 @keyframes fadeIn {
@@ -1566,10 +1627,177 @@ animation: pulse 1.5s 1;
         font-size: 1.8rem;
     }
 }
+/* Visualized Q&A Game Banner Styles */
+/* Sports Q&A Banner Styles */
+.sports-qa-banner {
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+ margin-top: 20px;
+ 
+}
+
+.qa-banner-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.qa-banner-content {
+  flex: 1;
+}
+
+.qa-banner-image {
+  flex: 1;
+  position: relative;
+  min-height: 300px;
+}
+
+.banner-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  margin-bottom: 15px;
+}
+
+.qa-banner-content h2 {
+  font-size: 2.5rem;
+  color: var(--dark);
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.banner-subtitle {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.sports-grid-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.sport-icon {
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.plus-more {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--primary), #ff6b6b);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 77, 77, 0.4);
+}
+
+.main-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.floating-example {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  border: 3px solid white;
+}
+
+.example-question {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.example-question-mark {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: white;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .qa-banner-container {
+    flex-direction: column;
+  }
+  
+  .qa-banner-image {
+    width: 100%;
+  }
+  
+  .floating-example {
+    right: 20px;
+    bottom: -30px;
+  }
+}
+
+@media (max-width: 768px) {
+    .game-banner {
+        height: 250px;
+    }
+    
+    .game-banner-content {
+        padding: 0 30px;
+    }
+    
+    .game-banner-content h2 {
+        font-size: 2rem;
+    }
+    
+    .game-features {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
 /* Video Section */
 .video-section {
     padding: 1rem 2rem;
     background: var(--white);
+    padding-top: 50px;
 }
 
 .video-container {

@@ -18,7 +18,7 @@
     
   <!-- Add this right after the <body> tag -->
     <nav class="navbar">
-        <div class="navbar-container">
+        <div class="navbar-container"  id="nav1">
       
           <!-- Sidebar Toggle Button -->
           <button class="sidebar-toggle">
@@ -28,13 +28,13 @@
           </button>
       
           <!-- Logo -->
-          <div class="logo">
-            <i ></i> SportVerse
-          </div>
-      
+     <!-- Logo -->
+<div class="logo">
+  <img src="lo1.png" alt="Sports Hub Logo" class="logo-image">
+</div>
           <!-- Navigation Links - Now with proper alignment -->
           <ul class="nav-links">
-            <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#nav1"><i class="fas fa-home"></i> Home</a></li>
       
             <li class="dropdown1">
               <a href="#"><i class="fas fa-basketball-ball"></i> Learn Sports <i class="fas fa-chevron-down"></i></a>
@@ -48,7 +48,7 @@
             </li>
   
             <li><a href="#news"><i class="fas fa-newspaper"></i> Sports News</a></li>
-            <li><a href="tournamnents.html"><i class="fas fa-trophy"></i> Major Tournaments</a></li>
+            <li><a href="tournaments.html"><i class="fas fa-trophy"></i> Major Tournaments</a></li>
             <li class="dropdown1">
               <a href="#"><i class="fas fa-question-circle"></i>Take Quiz<i class="fas fa-chevron-down"></i></a>
               <div class="dropdown-content1">
@@ -74,7 +74,7 @@
                   <div class="profile-pic" id="currentProfilePic">
                       <i class="fas fa-user"></i>
                   </div>
-                  <span id="currentUsername" style="color:black; font-size: medium; font-weight: bold; letter-spacing: 0.1em; ;">Guest</span>
+                  <span id="currentUsername" style="color:black; font-size: medium; font-weight: bold; letter-spacing: 0.1em; overflow: visible;">Guest</span>
               </button>
               <div class="profile-dropdown" id="profileDropdown">
                   <!-- Profile Header -->
@@ -100,11 +100,7 @@
                           <span class="info-label">Username</span>
                           <span class="info-value" id="viewUsername">Guest</span>
                       </div>
-                      
-                      <div class="info-item">
-                          <span class="info-label">Full Name</span>
-                          <span class="info-value empty" id="viewFullname">Not set</span>
-                      </div>
+                    
                       
                       <div class="info-item">
                           <span class="info-label">Email</span>
@@ -115,67 +111,20 @@
                           <span class="info-label">Location</span>
                           <div class="location-value" id="locationValue">
                               <span class="info-value empty" id="viewLocation">Not set</span>
-                              <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i>
+                             
                           </div>
-                          <div class="location-options" id="locationOptions">
-                              <div class="location-option" data-value="in">India</div>
-                              <div class="location-option" data-value="us">United States</div>
-                              <div class="location-option" data-value="uk">United Kingdom</div>
-                              <div class="location-option" data-value="au">Australia</div>
-                              <div class="location-option" data-value="ca">Canada</div>
-                          </div>
+                          
                       </div>
                       
                       <div class="action-buttons">
-                          <button class="btn btn-change" id="changeBtn">
-                              <i class="fas fa-edit"></i> Change Details
-                          </button>
+                         
                           <button class="btn btn-logout" id="logoutBtn">
                               <i class="fas fa-sign-out-alt"></i> Logout
                           </button>
                       </div>
                   </div>
                   
-                  <!-- Edit Mode (Hidden by default) -->
-                  <div class="profile-section edit-mode" id="editMode" style="display: none;">
-                      <div class="section-title12">Edit Profile</div>
-                      
-                      <div class="info-item">
-                          <span class="info-label">Username</span>
-                          <input type="text" class="info-input" maxlength="8" id="editUsername" placeholder="Max 8 characters">
-                      </div>
-                      
-                      <div class="info-item">
-                          <span class="info-label">Full Name</span>
-                          <input type="text" class="info-input" id="editFullname" placeholder="Enter full name">
-                      </div>
-                      
-                      <div class="info-item">
-                          <span class="info-label">Email</span>
-                          <input type="email" class="info-input" id="editEmail" placeholder="Enter email">
-                      </div>
-                      
-                      <div class="info-item">
-                          <span class="info-label">Location</span>
-                          <select class="info-input" id="editLocation">
-                              <option value="">Select location</option>
-                              <option value="in">India</option>
-                              <option value="us">United States</option>
-                              <option value="uk">United Kingdom</option>
-                              <option value="au">Australia</option>
-                              <option value="ca">Canada</option>
-                          </select>
-                      </div>
-                      
-                      <div class="action-buttons">
-                          <button class="btn btn-change" id="cancelEditBtn">
-                              Cancel
-                          </button>
-                          <button class="btn btn-save" id="saveBtn">
-                              <i class="fas fa-save"></i> Save
-                          </button>
-                      </div>
-                  </div>
+                  
               </div>
           </div>
       </nav>
@@ -184,15 +133,16 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div class="logo">
-                <i ></i> SportVerse
+            <div class="sidebarlogo">
+                <i class="logo-icon"></i> 
+                 <span class="logo-text">SportVerse</span>
             </div>
             <button class="close-sidebar"><i class="fas fa-times"></i></button>
         </div>
         <ul class="sidebar-links">
             <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
             <li class="dropdown">
-              <a href="#"><i class="fas fa-basketball-ball"></i> Learn Sports <i class="fas fa-chevron-down"></i></a>
+              <a href="#"><i class="fas fa-basketball-ball"></i> Learn Sports <i class="fas fa-chevron-down" style="margin-left: 6px; margin-top: 3px;"></i></a>
               <div class="dropdown-content">
                 <a href="#sports-section">Popular Sports</a>
 
@@ -204,7 +154,7 @@
             <li><a href="#news"><i class="fas fa-newspaper"></i> Sports News</a></li>
             <li><a href="tournamnents.html"><i class="fas fa-trophy"></i> Major Tournaments</a></li>
             <li class="dropdown">
-              <a href="#"><i class="fas fa-question-circle"></i>Take Quiz<i class="fas fa-chevron-down"></i></a>
+              <a href="#"><i class="fas fa-question-circle"></i>Take Quiz<i class="fas fa-chevron-down" style="margin-left: 6px; margin-top: 3px;" ></i></a>
               <div class="dropdown-content">
                 <a href="./quizfiles/cricketquiz.html">Cricket Quiz</a>
                 <a href="./quizfiles/footballquiz.html">Football Quiz</a>
@@ -225,7 +175,7 @@
     <div class="sidebar-overlay"></div>
     <!-- Hero Section -->
     <!-- Your Hero Section (unchanged) -->
-<section class="hero">
+<section class="hero" id="hero1">
     <div class="hero-image">
       <div class="slideshow">
         <div class="slide active">
@@ -275,23 +225,23 @@
           <i class="fas fa-basketball-ball"></i> Explore Sports
         </a>
         <div class="btn-wrapper">
-            <button id="whySportsBtn" class="hero-btn secondary-btn">
-              <i class="fas fa-question-circle"></i> Why Sports Matter
-            </button>
-            
-            <div class="why-sports-popup" id="whySportsPopup">
-              <button class="popup-close" aria-label="Close">&times;</button>
-              <h3><i class="fas fa-medal"></i> Why Sports Matter</h3>
-              <ul>
-                <li><i class="fas fa-heartbeat"></i> Boosts physical health & fitness</li>
-                <li><i class="fas fa-brain"></i> Improves mental wellbeing</li>
-                <li><i class="fas fa-users"></i> Develops teamwork & social skills</li>
-                <li><i class="fas fa-graduation-cap"></i> Teaches discipline & perseverance</li>
-                <li><i class="fas fa-clock"></i> Enhances time management</li>
-                <li><i class="fas fa-laugh-beam"></i> Increases happiness & reduces stress</li>
-              </ul>
-            </div>
+          <button id="whySportsBtn" class="hero-btn secondary-btn">
+            <i class="fas fa-question-circle"></i> Why Sports Matter
+          </button>
+          
+          <div class="why-sports-popup" id="whySportsPopup">
+            <button class="popup-close" aria-label="Close">&times;</button>
+            <h3><i class="fas fa-medal"></i> Why Sports Matter</h3>
+            <ul>
+              <li><i class="fas fa-heartbeat"></i> Boosts physical health & fitness</li>
+              <li><i class="fas fa-brain"></i> Improves mental wellbeing</li>
+              <li><i class="fas fa-users"></i> Develops teamwork & social skills</li>
+              <li><i class="fas fa-graduation-cap"></i> Teaches discipline & perseverance</li>
+              <li><i class="fas fa-clock"></i> Enhances time management</li>
+              <li><i class="fas fa-laugh-beam"></i> Increases happiness & reduces stress</li>
+            </ul>
           </div>
+        </div>
       </div>
     </div>
   </section>
@@ -402,9 +352,46 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
+    <!-- Visualized Q&A Game Banner Section -->
+<!-- Visualized Sports Q&A Banner -->
+<section class="sports-qa-banner" style="background-color: #f8f9fa; padding: 40px 0;">
+  <div class="container">
+    <div class="qa-banner-container">
+      <div class="qa-banner-content">
+       
+        <h2>Sports Visual Q&A Challenge</h2>
+        <p class="banner-subtitle">Guess the answer from visual clues across 10+ sports</p>
+        
+        <div class="sports-grid-mini">
+          <div class="sport-icon" style="background-image: url('https://cdn-icons-png.flaticon.com/512/53/53283.png')"></div>
+          <div class="sport-icon" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3048/3048127.png')"></div>
+          <div class="sport-icon" style="background-image: url('https://cdn-icons-png.flaticon.com/512/3129/3129334.png')"></div>
+          <div class="sport-icon" style="background-image: url('https://cdn-icons-png.flaticon.com/512/5024/5024146.png')"></div>
+          <span class="plus-more">+7 more</span>
+        </div>
+        
+        <a href="/signinauthentacation/index1.html" class="cta-button">
+          Start Challenge <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      
+      <div class="qa-banner-image">
+        <img src="https://images.unsplash.com/photo-1434648957308-5e6a859697e8?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+             alt="Sports Q&A Visual Challenge" 
+             class="main-image">
+        <div class="floating-example">
+          <img src="https://images.unsplash.com/photo-1543351611-58f69d7c1781?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" 
+               alt="Example question" 
+               class="example-question">
+          <div class="example-question-mark">?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Video Section -->
-    <section class="video-section">
+    <section class="video-section" style="background-color: white; ">
         <h2 class="section-title">The Importance of Sports</h2>
         <div class="video-container">
             <video id="sportsVideo" controls preload="metadata" style="width: 100%; height: auto;" muted>
@@ -773,56 +760,6 @@ fetch(`https://newsapi.org/v2/everything?q=cricket%20OR%20football%20OR%20hockey
             });
         });
         
-        // Edit Mode Toggle
-        changeBtn.addEventListener('click', function() {
-            viewMode.style.display = 'none';
-            editMode.style.display = 'block';
-            
-            // Populate edit fields with current data
-            document.getElementById('editUsername').value = userData.username || '';
-            document.getElementById('editFullname').value = userData.fullname || '';
-            document.getElementById('editEmail').value = userData.email || '';
-            document.getElementById('editLocation').value = userData.location || '';
-        });
-        
-        // Cancel Edit
-        cancelEditBtn.addEventListener('click', function() {
-            viewMode.style.display = 'block';
-            editMode.style.display = 'none';
-        });
-        
-        // Save Changes
-        saveBtn.addEventListener('click', function() {
-            // Get values from form
-            const rawUsername = document.getElementById('editUsername').value.trim();
-  userData.username = (rawUsername + '        ').substring(0, 8); // 8 spaces
-            userData.username = document.getElementById('editUsername').value.trim();
-            userData.fullname = document.getElementById('editFullname').value.trim();
-            userData.email = document.getElementById('editEmail').value.trim();
-            userData.location = document.getElementById('editLocation').value;
-            
-            // Simple validation
-            if (userData.username.length < 3) {
-                alert('Username must be at least 3 characters');
-                return;
-            }
-            
-            if (userData.email && !userData.email.includes('@')) {
-                alert('Please enter a valid email');
-                return;
-            }
-            
-            // Save to localStorage (in a real app, this would be an API call)
-            localStorage.setItem('sportverseProfile', JSON.stringify(userData));
-            
-            // Update display and switch back to view mode
-            updateProfileDisplay();
-            viewMode.style.display = 'block';
-            editMode.style.display = 'none';
-            
-            // Close dropdown
-            dropdown.classList.remove('show');
-        });
         
         // Logout
         logoutBtn.addEventListener('click', function() {
@@ -840,15 +777,13 @@ fetch(`https://newsapi.org/v2/everything?q=cricket%20OR%20football%20OR%20hockey
     document.getElementById('viewUsername').textContent = displayUsername;
             // Header
             document.getElementById('currentUsername').textContent = userData.username || 'Guest';
-            document.getElementById('displayFullname').textContent = userData.fullname || 'Guest User';
+            document.getElementById('displayFullname').textContent = userData.username || 'Guest User';
             document.getElementById('displayEmail').textContent = userData.email || 'guest@example.com';
             
             // View mode
             document.getElementById('viewUsername').textContent = userData.username || 'Guest';
             document.getElementById('viewUsername').className = userData.username ? 'info-value' : 'info-value empty';
-            
-            document.getElementById('viewFullname').textContent = userData.fullname || 'Not set';
-            document.getElementById('viewFullname').className = userData.fullname ? 'info-value' : 'info-value empty';
+          
             
             document.getElementById('viewEmail').textContent = userData.email || 'Not set';
             document.getElementById('viewEmail').className = userData.email ? 'info-value' : 'info-value empty';
@@ -898,48 +833,45 @@ fetch(`https://newsapi.org/v2/everything?q=cricket%20OR%20football%20OR%20hockey
   }); 
         }
         document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('whySportsBtn');
-    const popup = document.getElementById('whySportsPopup');
     const sidebar = document.getElementById('sidebar');
     const toggleButton = document.getElementById('toggleButton');
-     // Dropdown functionality
-     // Dropdown functionality with event propagation control
     const dropdowns = document.querySelectorAll('.dropdown');
-    const closeBtn = popup?.querySelector('.popup-close');
 
     function closeAllDropdowns() {
-    dropdowns.forEach(dropdown => {
-      dropdown.classList.remove('active');
-      const content = dropdown.querySelector('.dropdown-content');
-      content?.classList.remove('active');
-    });
-  }
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+            const content = dropdown.querySelector('.dropdown-content');
+            content?.classList.remove('active');
+        });
+    }
     
-     // === DROPDOWN SHOW ON HOVER ===
-  dropdowns.forEach(dropdown => {
-    const content = dropdown.querySelector('.dropdown-content');
+    // === DROPDOWN SHOW ON HOVER ===
+    dropdowns.forEach(dropdown => {
+        const content = dropdown.querySelector('.dropdown-content');
 
-    // Show dropdown on mouseenter
-    dropdown.addEventListener('mouseenter', () => {
-      closeAllDropdowns(); // Ensure only one dropdown shows
-      dropdown.classList.add('active');
-      content.classList.add('active');
+        // Show dropdown on mouseenter
+        dropdown.addEventListener('mouseenter', () => {
+            closeAllDropdowns(); // Ensure only one dropdown shows
+            dropdown.classList.add('active');
+            content.classList.add('active');
+        });
+
+        // Hide on mouseleave
+        dropdown.addEventListener('mouseleave', () => {
+            dropdown.classList.remove('active');
+            content.classList.remove('active');
+        });
+
+        // Prevent list click from closing sidebar
+        content.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
     });
 
-    // Hide on mouseleave
-    dropdown.addEventListener('mouseleave', () => {
-      dropdown.classList.remove('active');
-      content.classList.remove('active');
-    });
-
-    // Prevent list click from closing sidebar
-    content.addEventListener('click', function (e) {
-      e.stopPropagation();
-    });
-  });
-  if (toggleButton) {
+    // Sidebar toggle functionality
+    if (toggleButton) {
         toggleButton.addEventListener('click', function(e) {
-            e.stopPropagation();  // Prevent event from bubbling up
+            e.stopPropagation();
             // Toggle sidebar visibility (if it's open or closed)
             sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
         });
@@ -953,55 +885,105 @@ fetch(`https://newsapi.org/v2/everything?q=cricket%20OR%20football%20OR%20hockey
             closeAllDropdowns();
         }
     });
+
     sidebar.addEventListener('click', function(e) {
         e.stopPropagation();
     });
-    
-    if (btn && popup) {
-      const closeBtn = popup.querySelector('.popup-close');
-      
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const isOpening = popup.style.display !== 'block';
-        popup.style.display = isOpening ? 'block' : 'none';
-        
-        // Auto-scroll to show popup if opening
-        if (isOpening) {
-          setTimeout(() => {
-            popup.scrollIntoView({
-              behavior: 'smooth',
-              block: 'nearest'
-            });
-          }, 10);
-        }
-        else
-        {
-          closeAllDropdowns();
-        }
-      });
-      
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          popup.style.display = 'none';
-        });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  const popupBtn = document.getElementById('whySportsBtn');
+  const popup = document.getElementById('whySportsPopup');
+
+  if (popupBtn && popup) {
+    const closeBtn = popup.querySelector('.popup-close');
+
+    popupBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+
+      const isOpening = !popup.classList.contains('show');
+      popup.classList.toggle('show');
+
+      if (isOpening) {
+        setTimeout(() => {
+          popup.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest'
+          });
+        }, 100); // small delay to allow transition
       }
-      
-      document.addEventListener('click', function(e) {
-        if (!popup.contains(e.target) && e.target !== btn) {
-          popup.style.display = 'none';
-          closeAllDropdowns();
-        }
-      });
-      
-      popup.addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-    }
-  });
-  
+    });
+
+    closeBtn?.addEventListener('click', function (e) {
+      e.stopPropagation();
+      popup.classList.remove('show');
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!popup.contains(e.target) && e.target !== popupBtn) {
+        popup.classList.remove('show');
+      }
+    });
+
+    popup.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
+});
   
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Get user data from localStorage
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  
+  if (userData) {
+    console.log('Loaded user data:', userData); // Debugging
     
+      const emailToDisplay = userData.email || userData.Email || 'No email set';
+    // Update username display
+    const usernameDisplay = document.getElementById('currentUsername');
+    if (usernameDisplay) usernameDisplay.textContent = userData.username || userData.name;
+    
+    // Update profile header
+    const displayFullname = document.getElementById('displayFullname');
+    if (displayFullname) displayFullname.textContent = userData.fullName || userData.name;
+    
+   const displayEmail = document.getElementById('displayEmail');
+        if (displayEmail) displayEmail.textContent = emailToDisplay;
+    
+    // Update view mode section
+    const viewUsername = document.getElementById('viewUsername');
+    if (viewUsername) viewUsername.textContent = userData.username || userData.name;
+    
+   
+    
+   const viewEmail = document.getElementById('viewEmail');
+        if (viewEmail) {
+            viewEmail.textContent = emailToDisplay;
+            viewEmail.classList.toggle('empty', !userData.email);
+        }
+    
+    // Update edit mode inputs
+    const editUsername = document.getElementById('editUsername');
+    if (editUsername) editUsername.value = userData.username || userData.name;
+    
+    const editFullname = document.getElementById('editFullname');
+    if (editFullname) editFullname.value = userData.fullName || userData.name;
+    
+      const editEmail = document.getElementById('editEmail');
+        if (editEmail) editEmail.value = emailToDisplay;
+  } else {
+    console.log('No user data found in localStorage');
+  }
+  
+  // Add logout functionality
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('userData');
+    window.location.href = './signinauthentacation/loginpage.html';
+  });
+  
+  // Rest of your existing profile JavaScript code...
+});
+</script>
 </body>
 </html>
